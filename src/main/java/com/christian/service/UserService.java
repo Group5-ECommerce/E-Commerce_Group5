@@ -24,6 +24,10 @@ public class UserService {
 	public Optional<User> getUserById(int id) {
 		return repo.findById(id);
 	}
+	
+	public Optional<User> getUserByUsername(String username) {
+		return repo.findByUsername(username);
+	}
 
 	public void updateUser(User updatedUser) {
 		repo.save(updatedUser);

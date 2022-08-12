@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user") // Table name
+@Table(name="orders") // Table name
 public class Order {
     @Column(name="orderId")
 	@Id	
