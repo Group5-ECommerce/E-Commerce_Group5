@@ -17,12 +17,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig {
 	@Autowired
-    private DataSource dataSource;
+    private GroupUserDetailsService groupUserDetailsService;
 	
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		// auth.jdbcAuthentication()
-		// .usersByUsernameQuery("select username, password, id from users where username = ?");
-		// I'm going to follow the SpringBootRoleBased demo, and not use this usersByUsernameQuery method.
+		auth.userDetailsService()
 	}
 	
 	protected void configure(HttpSecurity http) throws Exception{
