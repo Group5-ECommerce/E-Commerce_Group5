@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name="user") // Table name
 public class User {
     @Column(name="userId")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id	
     private int userId;
     @Column(name="username")
@@ -32,7 +34,7 @@ public class User {
     private String email;
     
     // Thanks to https://www.baeldung.com/jpa-many-to-many#basic-many-to-many for a guide on ManyToMany and joining tables.
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 	  name = "user_roles", 
 	  joinColumns = @JoinColumn(name = "userId"), 
