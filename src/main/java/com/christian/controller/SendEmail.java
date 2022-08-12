@@ -1,4 +1,4 @@
-package com.christian;
+package com.christian.controller;
 
 import java.util.Properties;
 import com.christian.Secret;
