@@ -20,11 +20,14 @@ public class GroupUserDetails implements UserDetails {
 	public GroupUserDetails(User user) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
-		this.authorities = user.getRoles().stream().map(r -> r.getRoleType().toString())
+		this.authorities = user.getRoles().stream().map(r -> r.toString())
 		.map(SimpleGrantedAuthority::new)
 		.collect(Collectors.toList());
+		System.out.println("Authorities: " + this.getAuthorities());
 	}
-
+	
+	// Have to link user to joined table roles.
+	// Register user: via Postman?
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

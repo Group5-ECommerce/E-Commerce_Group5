@@ -22,48 +22,52 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
+	
+	@GetMapping("/")
+	public String getError() {
+		return "Error: this user probably doesn't have any roles.";
+	}
+	
 	@GetMapping("/users")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    // @PreAuthorize("hasAuthority('ADMIN')")
 	public List<User> listAllUser() {
 		return service.getAllUsers();
+	}
+	
+	@GetMapping("/user")
+    // @PreAuthorize("hasAuthority('USER')")
+	public String userPage() {
+		return "Welcome to the USER page.";
+	}
+	
+	@PostMapping("/test")
+	public String test(@RequestBody User user) {
+		return "working";
+	}
+	
+	@PostMapping("/register")
+	public void addUser(@RequestBody User user) {
+		service.addUser(user);
+	}
+	
+	@PutMapping("/users")
+	//@PreAuthorize("hasAuthority('ADMIN')")
+	public void updateUser(@RequestBody User newuser){
+		service.updateUser(newuser);
+	}
+	
+	
+	@GetMapping("/admin")
+    // @PreAuthorize("hasAuthority('ADMIN')")
+	public String adminPage() {
+		return "Welcome to the ADMIN page.";
 
 	}
 
 	@GetMapping("/users/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public Optional<User> getUserId(@PathVariable Integer id) {
 		Optional<User> user = service.getUserById(id);
 		return user;
-	}
-	
-	@GetMapping("/loginUser")
-	public String userLogin() {
-		return "<p>User login page</p>\r\n"
-				+ "<form name=\"f\" action=\"user_login\" method=\"POST\">\r\n"
-				+ "    <table>\r\n"
-				+ "        <tr>\r\n"
-				+ "            <td>User:</td>\r\n"
-				+ "            <td><input type=\"text\" name=\"username\" value=\"\"></td>\r\n"
-				+ "        </tr>\r\n"
-				+ "        <tr>\r\n"
-				+ "            <td>Password:</td>\r\n"
-				+ "            <td><input type=\"password\" name=\"password\" /></td>\r\n"
-				+ "        </tr>\r\n"
-				+ "        <tr>\r\n"
-				+ "            <td><input name=\"submit\" type=\"submit\" value=\"submit\" /></td>\r\n"
-				+ "        </tr>\r\n"
-				+ "    </table>\r\n"
-				+ "</form>";
-	}
-	
-	@PutMapping("/users")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public void updateUser(@RequestBody User newuser){
-		service.updateUser(newuser);
-	}
-
-	@PostMapping("/users")
-	public void addUser(@RequestBody User user) {
-		service.addUser(user);
 	}
 }

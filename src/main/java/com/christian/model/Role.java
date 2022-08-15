@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -17,16 +19,41 @@ import lombok.NoArgsConstructor;
 import com.christian.model.User;
 import com.christian.model.RoleName;
 
-@Data
+
+@NoArgsConstructor
 @Entity
 @Table(name="role") // Table name
 public class Role {
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="roleId")
-	@Id	
     private int roleId;
-    @Column(name="roleType")
-    @Enumerated(EnumType.STRING)
-    private RoleName roleType;
+    @Column(name="roleType", length = 20)
+    private String roleType;
     
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
