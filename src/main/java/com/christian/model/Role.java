@@ -1,5 +1,6 @@
 package com.christian.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.christian.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.christian.model.RoleName;
 
 
@@ -55,6 +57,7 @@ public class Role {
     @Column(name="roleType", length = 20)
     private String roleType;
     
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 }

@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,9 +40,10 @@ public class User {
     
     // Thanks to https://www.baeldung.com/jpa-many-to-many#basic-many-to-many for a guide on ManyToMany and joining tables.
 	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@JsonIgnore
 	@JoinTable(
 	  name = "user_roles", 
 	  joinColumns = @JoinColumn(name = "userId"), 
 	  inverseJoinColumns = @JoinColumn(name = "roleId"))
-	private Set<Role> roles = new HashSet();
+	private Set<Role> roles;
 }

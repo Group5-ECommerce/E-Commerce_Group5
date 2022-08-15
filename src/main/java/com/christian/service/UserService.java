@@ -41,7 +41,7 @@ public class UserService {
 
 	public void addUser(User user) {
 		Role role = new Role();
-		role.setRoleType("ADMIN");
+		role.setRoleType("CUSTOMER");
 		user.getRoles().add(role);
 		repo.save(user);
 		SendEmail.sendMessage(user.getEmail());
