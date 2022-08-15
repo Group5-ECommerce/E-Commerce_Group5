@@ -1,11 +1,10 @@
 package com.christian.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.christian.controller.SendEmail;
@@ -18,6 +17,9 @@ public class UserService {
 
 	@Autowired
 	UserRepository repo;
+	
+	// @Autowired
+	// BCryptPasswordEncoder encoder;
 
 	public List<User> getAllUsers() {
 		return repo.findAll();
@@ -43,6 +45,7 @@ public class UserService {
 		Role role = new Role();
 		role.setRoleType("CUSTOMER");
 		user.getRoles().add(role);
+		// user.setPassword(encoder.encode(user.getPassword()));
 		repo.save(user);
 		SendEmail.sendMessage(user.getEmail());
 	}

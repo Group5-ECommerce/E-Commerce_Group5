@@ -4,9 +4,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.christian.model.User;
 
@@ -17,9 +19,13 @@ public class GroupUserDetails implements UserDetails {
 	private String password;
 	private List<GrantedAuthority> authorities;
 	
+	@Autowired
+	BCryptPasswordEncoder encoder;
+	
 	public GroupUserDetails(User user) {
 		this.username = user.getUsername();
-		this.password = user.getPassword();
+		this.password = encoder.encode(user.getPassword());
+
 		this.authorities = user.getRoles().stream().map(r -> r.toString())
 		.map(SimpleGrantedAuthority::new)
 		.collect(Collectors.toList());
