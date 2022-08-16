@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
-		.antMatchers("/admin").hasRole("ADMIN")
+		.antMatchers("/admin").hasAuthority("ROLE_ADMIN") //Do I need to mark this here and in the controller?
+		.antMatchers("/customer").hasAuthority("ROLE_CUSTOMER")
 		.antMatchers("/").permitAll()
 		.and().formLogin();
 		
