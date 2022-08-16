@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name="product") // Table name
 public class Product {
     @Column(name="productId")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id	
     private int productId;
     @Column(name="productName")
@@ -25,8 +26,8 @@ public class Product {
     private int productStock;
     @Column(name="productImage")
     private String productImage;
-    @Column(name="productPrice")
-    private int productPrice;
+    @Column(name="productPrice", columnDefinition="Decimal(10,2)")
+    private double productPrice;
     @Column(name="storageId")
     private String storageId;
 }
