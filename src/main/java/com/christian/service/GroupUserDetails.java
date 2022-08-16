@@ -23,7 +23,7 @@ public class GroupUserDetails implements UserDetails {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 
-		this.authorities = user.getRoles().stream().map(r -> r.toString())
+		this.authorities = user.getRoles().stream().map(r -> r.getRoleType())
 		.map(SimpleGrantedAuthority::new)
 		.collect(Collectors.toList());
 		System.out.println("Authorities: " + this.getAuthorities());

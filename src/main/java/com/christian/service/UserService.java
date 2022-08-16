@@ -41,9 +41,12 @@ public class UserService {
 		repo.deleteById(id);
 	}
 
-	public void addUser(User user) {
+	public void addUser(User user, int roleNum) {
 		Role role = new Role();
-		role.setRoleType("CUSTOMER");
+		if (roleNum == 1) {
+			role.setRoleType("ADMIN");
+		}
+		else role.setRoleType("CUSTOMER");
 		user.getRoles().add(role);
 		user.setPassword(encoder.encode(user.getPassword()));
 		repo.save(user);
