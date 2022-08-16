@@ -19,12 +19,9 @@ public class GroupUserDetails implements UserDetails {
 	private String password;
 	private List<GrantedAuthority> authorities;
 	
-	@Autowired
-	BCryptPasswordEncoder encoder;
-	
 	public GroupUserDetails(User user) {
 		this.username = user.getUsername();
-		this.password = encoder.encode(user.getPassword());
+		this.password = user.getPassword();
 
 		this.authorities = user.getRoles().stream().map(r -> r.toString())
 		.map(SimpleGrantedAuthority::new)

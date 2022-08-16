@@ -18,8 +18,8 @@ public class UserService {
 	@Autowired
 	UserRepository repo;
 	
-	// @Autowired
-	// BCryptPasswordEncoder encoder;
+	@Autowired
+	BCryptPasswordEncoder encoder;
 
 	public List<User> getAllUsers() {
 		return repo.findAll();
@@ -45,7 +45,7 @@ public class UserService {
 		Role role = new Role();
 		role.setRoleType("CUSTOMER");
 		user.getRoles().add(role);
-		// user.setPassword(encoder.encode(user.getPassword()));
+		user.setPassword(encoder.encode(user.getPassword()));
 		repo.save(user);
 		SendEmail.sendMessage(user.getEmail());
 	}
