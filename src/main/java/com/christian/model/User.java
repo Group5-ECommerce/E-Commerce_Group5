@@ -37,9 +37,10 @@ public class User {
     private String password;
     @Column(name="email")
     private String email;
-    
+        
     // Thanks to https://www.baeldung.com/jpa-many-to-many#basic-many-to-many for a guide on ManyToMany and joining tables.
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    // Special thanks to https://stackoverflow.com/a/49592082 for the CascadeTypes when merging an existing entity (role).
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JsonIgnore
 	@JoinTable(
 	  name = "user_roles", 

@@ -43,10 +43,8 @@ public class UserService {
 
 	public void addUser(User user, int roleNum) {
 		Role role = new Role();
-		if (roleNum == 1) {
-			role.setRoleType("ROLE_ADMIN");
-		}
-		else role.setRoleType("ROLE_CUSTOMER");
+		//roleNum is 0 if null, so it is incremented by 1. RoleID of 1 corresponds to ROLE_CUSTOMER.
+		role.setRoleId(roleNum + 1);
 		user.getRoles().add(role);
 		user.setPassword(encoder.encode(user.getPassword()));
 		repo.save(user);
