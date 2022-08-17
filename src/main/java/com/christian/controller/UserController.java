@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.model.User;
 import com.christian.service.UserService;
+import com.mysql.cj.Session;
 
 @RestController
 public class UserController {
@@ -25,8 +26,8 @@ public class UserController {
 
 	
 	@GetMapping("/")
-	public String getError() {
-		return "Error: this user probably doesn't have any roles.";
+	public String getDefaultPage() {
+		return "This is the default page.";
 	}
 	
 	@GetMapping("/customer")
@@ -60,7 +61,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/users")
-	//@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void updateUser(@RequestBody User newuser){
 		service.updateUser(newuser);
 	}

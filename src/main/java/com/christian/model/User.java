@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -39,8 +42,8 @@ public class User {
     private String email;
         
     // Thanks to https://www.baeldung.com/jpa-many-to-many#basic-many-to-many for a guide on ManyToMany and joining tables.
-    // Special thanks to https://stackoverflow.com/a/49592082 for the CascadeTypes when merging an existing entity (role).
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    // Special thanks to https://stackoverflow.com/a/49592082 for the CascadeTypes when saving an existing role.
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonIgnore
 	@JoinTable(
 	  name = "user_roles", 
