@@ -27,7 +27,7 @@ public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
 	
-	@PostMapping("/cart/{id}")
+	@PostMapping("/cart/{id}/{amt}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
@@ -54,12 +54,19 @@ public class CartController {
 	//Todo: make it an array of two variables. Item and quantity.
 	@PutMapping("/cart/{id}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void updateItemInCart(@PathVariable Integer id, HttpSession session) {
+	public void updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
-		if (items == null) items = new ArrayList<Integer>();
-		items.add(id);
+		if (items == null) items = new ArrayList<cartItem>();
+		items.add(new cartItem(id, amt));
 		session.setAttribute("items", items);
 	}
+	
+	@DeleteMapping("/cart")
+    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public void emptyCart(HttpSession session) {
+		session.setAttribute("items", null);
+	}
+	
 	
 	@DeleteMapping("/cart/{id}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
