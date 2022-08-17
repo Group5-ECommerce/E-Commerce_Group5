@@ -3,6 +3,7 @@ package com.christian.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,43 +25,57 @@ import com.christian.repo.ProductRepository;
 @RestController
 public class CartController {
 	@Autowired
-	private ProductRepository repo;
+	private ProductRepository productRepo;
 	
 	@PostMapping("/cart/{id}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void addItemToCart(@PathVariable Integer id, HttpSession session) {
-		List<Integer> items = (List<Integer>) session.getAttribute("items");
-		if (items == null) items = new ArrayList<Integer>();
-		items.add(id);
-		System.out.println("Cart items: " + items);
+	public void addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
+		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
+		if (items == null) items = new ArrayList<cartItem>();
+		items.add(new cartItem(id, amt));
 		session.setAttribute("items", items);
 	}
 	
 	@GetMapping("/cart")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Object getCart(HttpSession session) {
-		List<Integer> items = (List<Integer>) session.getAttribute("items");
-		return repo.findAllById(items);
+		System.out.println(session.toString());
+		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
+		if (items == null) return null;
+		return productRepo.findAllById(items.stream().map(i->i.itemId).collect(Collectors.toList()));
+	}
+	
+	@GetMapping("/cartAsIds")
+    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public Object getCartAsIds(HttpSession session) {
+		return session.getAttribute("items");
 	}
 	
 	//Todo: make it an array of two variables. Item and quantity.
 	@PutMapping("/cart/{id}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void updateItemInCart(@PathVariable Integer id, HttpSession session) {
-		List<Integer> items = (List<Integer>) session.getAttribute("items");
+		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null) items = new ArrayList<Integer>();
 		items.add(id);
-		System.out.println("Cart items: " + items);
 		session.setAttribute("items", items);
 	}
 	
 	@DeleteMapping("/cart/{id}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
-		List<Integer> items = (List<Integer>) session.getAttribute("items");
-		if (items == null) items = new ArrayList<Integer>();
+		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
+		if (items == null) items = new ArrayList<cartItem>();
 		items.remove(id);
-		System.out.println("Cart items: " + items);
 		session.setAttribute("items", id);
+	}
+	
+	final class cartItem
+	{
+		public int itemId, amt;
+		public cartItem(int id, int amt) {
+			this.itemId = id;
+			this.amt = amt;
+		}
 	}
 }

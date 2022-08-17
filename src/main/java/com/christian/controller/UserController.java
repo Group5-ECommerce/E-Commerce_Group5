@@ -61,9 +61,16 @@ public class UserController {
 	}
 	
 	@PutMapping("/user")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER') or hasAuthority('ROLE_ADMIN')")
-	public void updateUser(@RequestBody User newuser){
-		service.updateUser(newuser);
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public void updateUser(@RequestBody User updatedUser){
+		service.updateUser(updatedUser);
+	}
+	
+	// Make it so the customer can only edit themself.
+	@PutMapping("/userAsCustomer")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public void updateUserAsCustomer(@RequestBody User updatedUser){
+		service.updateUser(updatedUser);
 	}
 	
 	@DeleteMapping("/user/{id}")
