@@ -23,7 +23,9 @@ import com.christian.repo.ProductRepository;
 
 @RestController
 public class CartController {
-
+	@Autowired
+	private ProductRepository repo;
+	
 	@PostMapping("/cart/{id}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void addItemToCart(@PathVariable Integer id, HttpSession session) {
@@ -34,11 +36,11 @@ public class CartController {
 		session.setAttribute("items", items);
 	}
 	
-	//Todo: to demo functionality, get the items from the product repo.
 	@GetMapping("/cart")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Object getCart(HttpSession session) {
-		return session.getAttribute("items");
+		List<Integer> items = (List<Integer>) session.getAttribute("items");
+		return repo.findAllById(items);
 	}
 	
 	//Todo: make it an array of two variables. Item and quantity.
