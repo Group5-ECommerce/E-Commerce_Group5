@@ -36,6 +36,7 @@ public class GroupUserDetails implements UserDetails {
 		return authorities;
 	}
 
+	//Java8, intermittent, terminal functions
 	@Override
 	public String getPassword() {
 		return password;

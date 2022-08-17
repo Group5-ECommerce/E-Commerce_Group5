@@ -47,7 +47,7 @@ public class UserController {
 		service.addUser(user, role);
 	}
 
-	@GetMapping("/users")
+	@GetMapping("/user")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public List<User> listAllUser() {
 		return service.getAllUsers();
@@ -60,8 +60,8 @@ public class UserController {
 		return user;
 	}
 	
-	@PutMapping("/users")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PutMapping("/user")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER') or hasAuthority('ROLE_ADMIN')")
 	public void updateUser(@RequestBody User newuser){
 		service.updateUser(newuser);
 	}

@@ -41,6 +41,8 @@ public class UserService {
 		repo.deleteById(id);
 	}
 
+	// Todo: check if username exists. Currently mySQL doesn't create the row, but Hibernate marks an id for it.
+	// This results in the id skipping numbers, since it's generator gets confused.
 	public void addUser(User user, int roleNum) {
 		Role role = new Role();
 		//roleNum is 0 if null, so it is incremented by 1. RoleID of 1 corresponds to ROLE_CUSTOMER.
