@@ -53,7 +53,7 @@ public class UserController {
 	
 	@GetMapping("/user/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public Optional<User> getUserId(@PathVariable Integer id) {
+	public Optional<User> getUserById(@PathVariable Integer id) {
 		Optional<User> user = service.getUserById(id);
 		return user;
 	}
@@ -64,13 +64,14 @@ public class UserController {
 		service.updateUser(updatedUser);
 	}
 	
-	// Make it so the customer can only edit themself. Also can delete themself.
 	@PutMapping("/userAsCustomer")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void updateUserAsCustomer(@RequestBody User updatedUser, Principal principal){
-		//It is not updating, but setting a new user...
-		if (principal.getName().equals(updatedUser.getUsername())) {
-			service.updateUser(updatedUser);
+		Optional<User> user = service.getUserByUsername(principal.getName());
+		int id = user.get().getUserId();
+		if (principal.getName().equals(user.get().getUsername())) {
+			user.get().setUsername(updatedUser.getUsername());
+			service.updateUser(user.get());
 		}
 	}
 	
