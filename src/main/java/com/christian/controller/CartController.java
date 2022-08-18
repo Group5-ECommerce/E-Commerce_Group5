@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.christian.model.Product;
+import com.christian.entity.Product;
+import com.christian.model.cartItem;
 import com.christian.repo.ProductRepository;
 
 @RestController
@@ -51,14 +52,27 @@ public class CartController {
 		return session.getAttribute("items");
 	}
 	
-	//Todo: make it an array of two variables. Item and quantity.
-	@PutMapping("/cart/{id}")
+	@PutMapping("/cart/{id}/{amt}")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
+	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null) items = new ArrayList<cartItem>();
-		items.add(new cartItem(id, amt));
-		session.setAttribute("items", items);
+		
+		int indexOfItem = -1;
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getAmt() == id) {
+				indexOfItem = i;
+				break;
+			}
+		}
+		
+		if (indexOfItem >= 0) {
+			items.get(indexOfItem).setAmt(amt);
+			session.setAttribute("items", items);
+			return "Updated item";
+		}
+		else return "Failed to update: item of id " + id + " not in cart.";
+		
 	}
 	
 	@DeleteMapping("/cart")
@@ -77,12 +91,12 @@ public class CartController {
 		session.setAttribute("items", id);
 	}
 	
-	final class cartItem
-	{
-		public int itemId, amt;
-		public cartItem(int id, int amt) {
-			this.itemId = id;
-			this.amt = amt;
-		}
+	@GetMapping("/checkout")
+    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public void checkout(HttpSession session) {
+		System.out.println(session.toString());
+		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
+		if (items == null) return;
+		productRepo.findAllById(items.stream().map(i->i.itemId).collect(Collectors.toList()));
 	}
 }

@@ -1,4 +1,4 @@
-package com.christian.model;
+package com.christian.entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,9 +17,10 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.christian.model.User;
+
+import com.christian.entity.RoleName;
+import com.christian.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.christian.model.RoleName;
 
 
 @NoArgsConstructor

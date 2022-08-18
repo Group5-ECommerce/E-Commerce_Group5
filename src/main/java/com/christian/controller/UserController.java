@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.christian.model.User;
+import com.christian.entity.User;
 import com.christian.service.UserService;
 
 @RestController
@@ -58,20 +58,32 @@ public class UserController {
 		return user;
 	}
 	
+	//Make sure this accounts for userIds. Admin has to send an id with the request, unlike customer who wouldn't know.
 	@PutMapping("/user")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public void updateUser(@RequestBody User updatedUser){
-		service.updateUser(updatedUser);
+		service.saveUser(updatedUser);
 	}
 	
-	@PutMapping("/userAsCustomer")
+	@PutMapping("/changeUsername")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void updateUserAsCustomer(@RequestBody User updatedUser, Principal principal){
+	public void changeUsername(@RequestBody User updatedUser, Principal principal){
 		Optional<User> user = service.getUserByUsername(principal.getName());
-		int id = user.get().getUserId();
-		if (principal.getName().equals(user.get().getUsername())) {
+		if (user.isPresent()) // If this user exists in the database.
+		{
 			user.get().setUsername(updatedUser.getUsername());
-			service.updateUser(user.get());
+			service.saveUser(user.get());
+		}
+	}
+	
+	// I should probably ask for the user's current password to be sure of this. I'd have to encrypt it over traffic though.
+	@PutMapping("/changePassword")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public void changePassword(@RequestBody User updatedUser, Principal principal){
+		Optional<User> user = service.getUserByUsername(principal.getName());
+		if (user.isPresent() && updatedUser.getUsername() == user.get().getUsername()) {
+			user.get().setPassword(updatedUser.getPassword());
+			service.encodeAndChangePassword(user.get());
 		}
 	}
 	
