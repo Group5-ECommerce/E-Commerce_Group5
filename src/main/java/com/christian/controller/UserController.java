@@ -1,11 +1,10 @@
 package com.christian.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.model.User;
 import com.christian.service.UserService;
-import com.mysql.cj.Session;
 
 @RestController
 public class UserController {
@@ -69,8 +67,11 @@ public class UserController {
 	// Make it so the customer can only edit themself. Also can delete themself.
 	@PutMapping("/userAsCustomer")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void updateUserAsCustomer(@RequestBody User updatedUser){
-		service.updateUser(updatedUser);
+	public void updateUserAsCustomer(@RequestBody User updatedUser, Principal principal){
+		//It is not updating, but setting a new user...
+		if (principal.getName().equals(updatedUser.getUsername())) {
+			service.updateUser(updatedUser);
+		}
 	}
 	
 	@DeleteMapping("/user/{id}")
