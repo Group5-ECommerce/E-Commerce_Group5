@@ -76,7 +76,7 @@ public class CartController {
 
 		int indexOfItem = -1;
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getAmt() == id) {
+			if (items.get(i).getItemId() == id) {
 				indexOfItem = i;
 				break;
 			}
@@ -113,7 +113,7 @@ public class CartController {
 		session.setAttribute("items", items);
 	}
 
-	@GetMapping("/checkout")
+	@PutMapping("/checkout")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void checkout(HttpSession session, Principal principal) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
@@ -131,7 +131,7 @@ public class CartController {
 		Order order = new Order();
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
-		order.setUserId(user.get().getUserId());
+		order.setUser(user.get());
 		order.setTotalPrice(totalPrice);
 		order.setShippingAddressId(0);
 		orderRepo.save(order);

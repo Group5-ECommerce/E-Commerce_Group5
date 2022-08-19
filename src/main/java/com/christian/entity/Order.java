@@ -31,9 +31,9 @@ public class Order {
 	@Id	
     private int orderId;
     
-    // @ManyToOne
-    // @JoinColumn(name = "userId")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
     
     @Column(name="trackingNumber")
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -48,7 +48,7 @@ public class Order {
     @Column(name="orderStatus")
     private String orderStatus;
 
-    // @OneToMany
-    // @JoinColumn(name = "itemId")
-    // private List<cartItem> items;
+    @OneToMany
+    @JoinColumn(name = "productId")
+    private List<Product> items;
 }
