@@ -1,5 +1,7 @@
 package com.christian.controller;
 
+import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,13 +23,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.entity.Product;
+import com.christian.entity.User;
+import com.christian.entity.Order;
 import com.christian.model.cartItem;
+import com.christian.repo.OrderRepository;
 import com.christian.repo.ProductRepository;
+import com.christian.service.UserService;
 
 @RestController
 public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
+	
+	@Autowired
+	private OrderRepository orderRepo;
+	
+	@Autowired
+	UserService userService;
 
 	@PostMapping("/cart/{id}/{amt}")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
@@ -103,11 +115,28 @@ public class CartController {
 
 	@GetMapping("/checkout")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void checkout(HttpSession session) {
-		System.out.println(session.toString());
+	public void checkout(HttpSession session, Principal principal) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			return;
-		productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
+		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
+		
+		double totalPrice = 0.00;
+		Iterator<Product> iter = products.iterator();
+		while(iter.hasNext()) {
+			totalPrice += iter.next().getProductPrice();
+		}
+		Optional<User> user = userService.getUserByUsername(principal.getName());
+		
+		Order order = new Order();
+		order.setOrderStatus("Processing");
+		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
+		order.setUserId(user.get().getUserId());
+		order.setTotalPrice(totalPrice);
+		order.setShippingAddressId(0);
+		orderRepo.save(order);
+		
+		items = null;
+		session.setAttribute("items", items);
 	}
 }

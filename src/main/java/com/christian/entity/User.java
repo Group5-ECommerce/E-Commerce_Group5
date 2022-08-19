@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name="user") // Table name
 public class User {
     @Column(name="userId")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
 	@Id	
     private int userId;
     @Column(name="username", unique=true)

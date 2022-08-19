@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Table(name="orders") // Table name
 public class Order {
     @Column(name="orderId")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	@Id	
     private int orderId;
     
@@ -36,7 +36,9 @@ public class Order {
     private int userId;
     
     @Column(name="trackingNumber")
-    private String trackingNumber;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int trackingNumber; //should I make this a UUID?
+    
     @Column(name="totalPrice")
     private double totalPrice;
     @Column(name="shippingAddressId")
