@@ -1,6 +1,7 @@
 package com.christian.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,37 +28,40 @@ import com.christian.repo.ProductRepository;
 public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
-	
+
 	@PostMapping("/cart/{id}/{amt}")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
-		if (items == null) items = new ArrayList<cartItem>();
+		if (items == null)
+			items = new ArrayList<cartItem>();
 		items.add(new cartItem(id, amt));
 		session.setAttribute("items", items);
 	}
-	
+
 	@GetMapping("/cart")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Object getCart(HttpSession session) {
 		System.out.println(session.toString());
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
-		if (items == null) return null;
-		return productRepo.findAllById(items.stream().map(i->i.itemId).collect(Collectors.toList()));
+		if (items == null)
+			return null;
+		return productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
 	}
-	
+
 	@GetMapping("/cartAsIds")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Object getCartAsIds(HttpSession session) {
 		return session.getAttribute("items");
 	}
-	
+
 	@PutMapping("/cart/{id}/{amt}")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
-		if (items == null) items = new ArrayList<cartItem>();
-		
+		if (items == null)
+			items = new ArrayList<cartItem>();
+
 		int indexOfItem = -1;
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getAmt() == id) {
@@ -65,38 +69,45 @@ public class CartController {
 				break;
 			}
 		}
-		
+
 		if (indexOfItem >= 0) {
 			items.get(indexOfItem).setAmt(amt);
 			session.setAttribute("items", items);
 			return "Updated item";
-		}
-		else return "Failed to update: item of id " + id + " not in cart.";
-		
+		} else
+			return "Failed to update: item of id " + id + " not in cart.";
+
 	}
-	
+
 	@DeleteMapping("/cart")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void emptyCart(HttpSession session) {
 		session.setAttribute("items", null);
 	}
-	
-	
+
 	@DeleteMapping("/cart/{id}")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
 		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
-		if (items == null) items = new ArrayList<cartItem>();
-		items.remove(id);
-		session.setAttribute("items", id);
+		if (items == null)
+			items = new ArrayList<cartItem>();
+			
+		// Thanks to https://www.geeksforgeeks.org/how-to-solve-concurrentmodificationexception-in-java/ for explaining 
+		// why Lists run into a concurrent modification exception, but iterators do not.
+		Iterator<cartItem> iter = items.iterator();
+		while(iter.hasNext()) {
+			if (iter.next().getItemId() == id) iter.remove();
+		}
+		session.setAttribute("items", items);
 	}
-	
+
 	@GetMapping("/checkout")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void checkout(HttpSession session) {
 		System.out.println(session.toString());
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
-		if (items == null) return;
-		productRepo.findAllById(items.stream().map(i->i.itemId).collect(Collectors.toList()));
+		if (items == null)
+			return;
+		productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
 	}
 }
