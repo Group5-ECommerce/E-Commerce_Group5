@@ -132,6 +132,7 @@ public class CartController {
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 		order.setUser(user.get());
+		order.setItems(items);
 		order.setTotalPrice(totalPrice);
 		order.setShippingAddressId(0);
 		orderRepo.save(order);

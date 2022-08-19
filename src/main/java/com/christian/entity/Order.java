@@ -1,6 +1,8 @@
 package com.christian.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,6 +51,5 @@ public class Order {
     private String orderStatus;
 
     @OneToMany
-    @JoinColumn(name = "productId")
-    private List<Product> items;
+    private Set<cartItem> items = new HashSet<cartItem>();
 }
