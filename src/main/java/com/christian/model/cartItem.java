@@ -1,6 +1,7 @@
 package com.christian.model;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public final class cartItem implements Serializable{
 	@ManyToOne
 	@Id
     @JoinColumn(name = "productId")
-	private Product productId;
+	private Product product;
 	
 	@Id
 	private int amt;
