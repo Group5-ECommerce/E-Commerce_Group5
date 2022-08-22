@@ -47,7 +47,7 @@ public class CartController {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			items = new ArrayList<cartItem>();
-		items.add(new cartItem(productRepo.findById(id).get(), amt));
+		items.add(new cartItem(id, amt));
 		session.setAttribute("items", items);
 	}
 
@@ -58,7 +58,7 @@ public class CartController {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			return null;
-		return items;
+		return productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/cartAsIds")
@@ -76,7 +76,7 @@ public class CartController {
 
 		int indexOfItem = -1;
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getProduct().getProductId() == id) {
+			if (items.get(i).getItemId() == id) {
 				indexOfItem = i;
 				break;
 			}
@@ -108,7 +108,7 @@ public class CartController {
 		// why Lists run into a concurrent modification exception, but iterators do not.
 		Iterator<cartItem> iter = items.iterator();
 		while(iter.hasNext()) {
-			if (iter.next().getProduct().getProductId() == id) iter.remove();
+			if (iter.next().getItemId() == id) iter.remove();
 		}
 		session.setAttribute("items", items);
 	}
@@ -119,7 +119,7 @@ public class CartController {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			return;
-		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.getProduct().getProductId()).collect(Collectors.toList()));
+		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
 		
 		double totalPrice = 0.00;
 		Iterator<Product> iter = products.iterator();

@@ -51,5 +51,5 @@ public class Order {
     private String orderStatus;
 
     @OneToMany
-    private List<cartItem> items = new ArrayList<cartItem>();
+    private Set<cartItem> items = new HashSet<cartItem>();
 }
