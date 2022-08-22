@@ -17,6 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.christian.entity.OrderItem;
 
 import lombok.AllArgsConstructor;
@@ -51,10 +55,9 @@ public class Order {
     @Column(name="orderStatus")
     private String orderStatus;
 
-    @OneToMany(
-            mappedBy = "product",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-        )
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    // Thanks to https://stackoverflow.com/a/61870411 for this property.
+    // Marking CascadeType as all in the OneToMany annotation wasn't adding a property, and I wasn't sure why. It seems to be a Hibernate <-> JPA nuance.
+    @OnDelete(action = OnDeleteAction.CASCADE) 
     private List<OrderItem> items = new ArrayList<OrderItem>();
 }

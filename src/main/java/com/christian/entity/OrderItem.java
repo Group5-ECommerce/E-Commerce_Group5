@@ -3,6 +3,7 @@ package com.christian.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,14 +16,15 @@ import lombok.Data;
 @AllArgsConstructor //review page to see how to map
 @Entity
 public class OrderItem implements Serializable{
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Id
-    @JoinColumn(name = "orderId") //Hmmm, do I want to do ManyToOne w/orderId
+    @JoinColumn(name = "orderId") 
 	private Order order;
 	
 	@OneToOne
 	@Id
-    @JoinColumn(name = "productId") //Hmmm, do I want to do ManyToOne w/orderId
+    @JoinColumn(name = "productId") 
 	private Product product;
 	
 	@Id

@@ -126,16 +126,17 @@ public class CartController {
 		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.getProductId()).collect(Collectors.toList()));
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
 		
+		Order order = new Order();
+
 		// Creates a list of order items from the list of products and list of amounts.
 		double totalPrice = 0.00;
 		for (int i = 0; i < items.size(); i++) {
-			orderItems.add(new OrderItem(products.get(i), items.get(i).getAmt()));
-			totalPrice += products.get(i).getProductPrice();
+			orderItems.add(new OrderItem(order, products.get(i), items.get(i).getAmt()));
+			totalPrice += products.get(i).getProductPrice() * items.get(i).getAmt();
 		}
 		Optional<User> user = userService.getUserByUsername(principal.getName());
 		
 		// Creates an order based on the list of products and amounts.
-		Order order = new Order();
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 		order.setUser(user.get());

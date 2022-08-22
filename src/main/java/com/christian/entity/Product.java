@@ -31,6 +31,6 @@ public class Product {
     private double productPrice;
     @Column(name="storageId")
     private String storageId;
-    //store quanityty to order, set up addresses?
+    //store quantity to order, set up addresses?
     //Set up way for database to store roles if created in mySQL? Does writing to userRoles fix this?
 }
