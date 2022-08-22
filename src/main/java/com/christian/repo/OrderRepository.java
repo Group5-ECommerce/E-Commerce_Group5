@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.christian.entity.Product;
+import com.christian.entity.Order;
 
  
-public interface ProductRepository extends JpaRepository<Product, Integer>{
+public interface OrderRepository extends JpaRepository<Order, Integer>{
 }
 
 

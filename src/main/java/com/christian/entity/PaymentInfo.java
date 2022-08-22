@@ -1,4 +1,4 @@
-package com.christian.model;
+package com.christian.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="paymentInfo") // Table name
+@Table(name="payment_info") // Table name
 public class PaymentInfo {
-    @Column(name="userId")
+    @Column(name="paymentId")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id	
     private int paymentId;
     @Column(name="billingAddressId")

@@ -1,4 +1,4 @@
-package com.christian.model;
+package com.christian.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

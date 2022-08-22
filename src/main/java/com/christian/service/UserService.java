@@ -8,8 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.christian.controller.SendEmail;
-import com.christian.model.Role;
-import com.christian.model.User;
+import com.christian.entity.Role;
+import com.christian.entity.User;
 import com.christian.repo.UserRepository;
 
 @Service
@@ -32,9 +32,14 @@ public class UserService {
 	public Optional<User> getUserByUsername(String username) {
 		return repo.findByUsername(username);
 	}
-
-	public void updateUser(User updatedUser) {
-		repo.save(updatedUser);
+	
+	public void saveUser(User user) {
+		repo.save(user);
+	}
+	
+	public void encodeAndChangePassword(User user) {
+		user.setPassword(encoder.encode(user.getPassword()));
+		repo.save(user);
 	}
 
 	public void deleteUser(Integer id) {

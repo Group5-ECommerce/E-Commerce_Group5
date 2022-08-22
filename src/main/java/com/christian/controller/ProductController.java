@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.christian.model.Product;
+import com.christian.entity.Product;
 import com.christian.repo.ProductRepository;
 
 @RestController

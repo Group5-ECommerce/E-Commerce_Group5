@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.christian.model.User;
+import com.christian.entity.User;
 
 
 public class GroupUserDetails implements UserDetails {
@@ -26,17 +26,13 @@ public class GroupUserDetails implements UserDetails {
 		this.authorities = user.getRoles().stream().map(r -> r.getRoleType())
 		.map(SimpleGrantedAuthority::new)
 		.collect(Collectors.toList());
-		System.out.println("Authorities: " + this.getAuthorities());
 	}
 	
-	// Have to link user to joined table roles.
-	// Register user: via Postman?
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 
-	//Java8, intermittent, terminal functions
 	@Override
 	public String getPassword() {
 		return password;

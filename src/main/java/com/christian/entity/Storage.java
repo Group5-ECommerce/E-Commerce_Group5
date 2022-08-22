@@ -1,4 +1,4 @@
-package com.christian.model;
+package com.christian.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name="storage") // Table name
 public class Storage {
     @Column(name="storageId")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id	
     private int storageId;
     @Column(name="streetAddress")
