@@ -65,11 +65,26 @@ public class UserController {
 		service.saveUser(updatedUser);
 	}
 	
+	// Lets the user completely update their database entry. 
+	// This isn't traditionally done on a website, but I included it for completion sake.
+	@PutMapping("/changeAllDetails")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public void updateUserAsUser(@RequestBody User updatedUser, Principal principal){
+		Optional<User> user = service.getUserByUsername(principal.getName());
+		if (user.isPresent())
+		{
+			// Set the updated user's id to the current entry's id.
+			// This is more efficient than copying all of the updated properties to the current user.
+			updatedUser.setUserId(user.get().getUserId());
+			service.saveUser(updatedUser);
+		}
+	}
+	
 	@PutMapping("/changeUsername")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public void changeUsername(@RequestBody User updatedUser, Principal principal){
 		Optional<User> user = service.getUserByUsername(principal.getName());
-		if (user.isPresent()) // If this user exists in the database.
+		if (user.isPresent())
 		{
 			user.get().setUsername(updatedUser.getUsername());
 			service.saveUser(user.get());
@@ -84,6 +99,17 @@ public class UserController {
 		if (user.isPresent() && updatedUser.getUsername() == user.get().getUsername()) {
 			user.get().setPassword(updatedUser.getPassword());
 			service.encodeAndChangePassword(user.get());
+		}
+	}
+	
+	@PutMapping("/changeEmail")
+	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	public void changeEmail(@RequestBody User updatedUser, Principal principal){
+		Optional<User> user = service.getUserByUsername(principal.getName());
+		if (user.isPresent()) // If this user exists in the database.
+		{
+			user.get().setEmail(updatedUser.getEmail());
+			service.saveUser(user.get());
 		}
 	}
 	

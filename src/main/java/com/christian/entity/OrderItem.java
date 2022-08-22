@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor //review page to see how to map
 @Entity
+@Table(name="order_item") // Table name
 public class OrderItem implements Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)

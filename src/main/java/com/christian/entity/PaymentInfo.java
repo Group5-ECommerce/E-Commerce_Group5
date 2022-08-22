@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="paymentInfo") // Table name
+@Table(name="payment_info") // Table name
 public class PaymentInfo {
     @Column(name="paymentId")
     @GeneratedValue(strategy=GenerationType.IDENTITY)

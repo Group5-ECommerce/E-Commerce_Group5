@@ -44,12 +44,17 @@ public class CartController {
 
 	@PostMapping("/cart/{id}/{amt}")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public void addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
+	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			items = new ArrayList<cartItem>();
-		items.add(new cartItem(id, amt));
-		session.setAttribute("items", items);
+		Optional<Product> product = productRepo.findById(id);
+		if(product.isPresent()) {
+			items.add(new cartItem(product.get(), amt));
+			session.setAttribute("items", items);
+			return "";
+		}
+		else return "A product with id " + id + " does not exist.";
 	}
 
 	@GetMapping("/cart")
@@ -59,7 +64,7 @@ public class CartController {
 		if (items == null)
 			return null;
 		// The items attribute stores a list of productIds and amounts. This returns all of the products corresponding to the product ids.
-		return productRepo.findAllById(items.stream().map(i -> i.getProductId()).collect(Collectors.toList()));
+		return items;
 	}
 
 	@GetMapping("/cartAsIds")
@@ -78,7 +83,7 @@ public class CartController {
 		int indexOfItem = -1;
 		// Find the index of the item in the cart.
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getProductId() == id) {
+			if (items.get(i).getProduct().getProductId() == id) {
 				indexOfItem = i;
 				break;
 			}
@@ -111,7 +116,7 @@ public class CartController {
 		// why Lists run into a concurrent modification exception, but iterators do not.
 		Iterator<cartItem> iter = items.iterator();
 		while(iter.hasNext()) {
-			if (iter.next().getProductId() == id) iter.remove();
+			if (iter.next().getProduct().getProductId() == id) iter.remove();
 		}
 		session.setAttribute("items", items);
 	}
@@ -122,8 +127,8 @@ public class CartController {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			return;
+		
 		// Creates a list of products from the cart items.
-		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.getProductId()).collect(Collectors.toList()));
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
 		
 		Order order = new Order();
@@ -131,8 +136,8 @@ public class CartController {
 		// Creates a list of order items from the list of products and list of amounts.
 		double totalPrice = 0.00;
 		for (int i = 0; i < items.size(); i++) {
-			orderItems.add(new OrderItem(order, products.get(i), items.get(i).getAmt()));
-			totalPrice += products.get(i).getProductPrice() * items.get(i).getAmt();
+			orderItems.add(new OrderItem(order, items.get(i).getProduct(), items.get(i).getAmt()));
+			totalPrice += items.get(i).getProduct().getProductPrice() * items.get(i).getAmt();
 		}
 		Optional<User> user = userService.getUserByUsername(principal.getName());
 		
