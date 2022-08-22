@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.christian.entity.Product;
 import com.christian.entity.User;
 import com.christian.entity.Order;
+import com.christian.entity.OrderItem;
 import com.christian.model.cartItem;
 import com.christian.repo.OrderRepository;
 import com.christian.repo.ProductRepository;
@@ -54,11 +55,11 @@ public class CartController {
 	@GetMapping("/cart")
 	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Object getCart(HttpSession session) {
-		System.out.println(session.toString());
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			return null;
-		return productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
+		// The items attribute stores a list of productIds and amounts. This returns all of the products corresponding to the product ids.
+		return productRepo.findAllById(items.stream().map(i -> i.getProductId()).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/cartAsIds")
@@ -75,13 +76,15 @@ public class CartController {
 			items = new ArrayList<cartItem>();
 
 		int indexOfItem = -1;
+		// Find the index of the item in the cart.
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getItemId() == id) {
+			if (items.get(i).getProductId() == id) {
 				indexOfItem = i;
 				break;
 			}
 		}
 
+		// If the cart contains an item with the requested product id, then update its amount.
 		if (indexOfItem >= 0) {
 			items.get(indexOfItem).setAmt(amt);
 			session.setAttribute("items", items);
@@ -108,7 +111,7 @@ public class CartController {
 		// why Lists run into a concurrent modification exception, but iterators do not.
 		Iterator<cartItem> iter = items.iterator();
 		while(iter.hasNext()) {
-			if (iter.next().getItemId() == id) iter.remove();
+			if (iter.next().getProductId() == id) iter.remove();
 		}
 		session.setAttribute("items", items);
 	}
@@ -119,20 +122,24 @@ public class CartController {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
 			return;
-		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.itemId).collect(Collectors.toList()));
+		// Creates a list of products from the cart items.
+		List<Product> products = productRepo.findAllById(items.stream().map(i -> i.getProductId()).collect(Collectors.toList()));
+		List<OrderItem> orderItems = new ArrayList<OrderItem>();
 		
+		// Creates a list of order items from the list of products and list of amounts.
 		double totalPrice = 0.00;
-		Iterator<Product> iter = products.iterator();
-		while(iter.hasNext()) {
-			totalPrice += iter.next().getProductPrice();
+		for (int i = 0; i < items.size(); i++) {
+			orderItems.add(new OrderItem(products.get(i), items.get(i).getAmt()));
+			totalPrice += products.get(i).getProductPrice();
 		}
 		Optional<User> user = userService.getUserByUsername(principal.getName());
 		
+		// Creates an order based on the list of products and amounts.
 		Order order = new Order();
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 		order.setUser(user.get());
-		order.setItems(items);
+		order.setItems(orderItems);
 		order.setTotalPrice(totalPrice);
 		order.setShippingAddressId(0);
 		orderRepo.save(order);

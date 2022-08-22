@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.christian.model.cartItem;
+import com.christian.entity.OrderItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +51,10 @@ public class Order {
     @Column(name="orderStatus")
     private String orderStatus;
 
-    @OneToMany
-    private Set<cartItem> items = new HashSet<cartItem>();
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+        )
+    private List<OrderItem> items = new ArrayList<OrderItem>();
 }
