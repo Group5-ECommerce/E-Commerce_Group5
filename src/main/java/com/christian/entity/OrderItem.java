@@ -2,6 +2,7 @@ package com.christian.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,17 +19,16 @@ import lombok.Data;
 @Entity
 @Table(name="order_item") // Table name
 public class OrderItem implements Serializable{
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
 	@Id
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId") 
 	private Order order;
 	
-	@OneToOne
 	@Id
-    @JoinColumn(name = "productId") 
+	@ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "productId", unique = false) 
 	private Product product;
 	
-	@Id
 	private int amt;
 }

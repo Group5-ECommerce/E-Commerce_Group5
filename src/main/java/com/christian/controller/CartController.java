@@ -133,11 +133,17 @@ public class CartController {
 		
 		Order order = new Order();
 
-		// Creates a list of order items from the list of products and list of amounts.
 		double totalPrice = 0.00;
+		// Loops through the items list to create orderItem entries from it, 
+		// decrease product stock, and calculate total price.
 		for (int i = 0; i < items.size(); i++) {
-			orderItems.add(new OrderItem(order, items.get(i).getProduct(), items.get(i).getAmt()));
-			totalPrice += items.get(i).getProduct().getProductPrice() * items.get(i).getAmt();
+			Product product = items.get(i).getProduct();
+			int amt = items.get(i).getAmt();
+			// Adds an OrderItem entry connected to this order, which holds a product and amount.
+			orderItems.add(new OrderItem(order, product, amt));
+			// Decrease the product's stock since it has just been ordered.
+			product.setProductStock(product.getProductStock() - amt);
+			totalPrice += product.getProductPrice() * amt;
 		}
 		Optional<User> user = userService.getUserByUsername(principal.getName());
 		
