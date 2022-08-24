@@ -3,7 +3,7 @@ package com.christian.service;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.christian.Secret;
+import com.christian.config.Secret;
 import com.christian.entity.Order;
 
 import javax.mail.Message;

@@ -32,4 +32,4 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/java/com/christian/Secret.java
+e-commerce_springboot/src/main/java/com/christian/config/Secret.java
