@@ -11,6 +11,8 @@ import com.hcl.entity.User;
  
 public interface OrderRepository extends JpaRepository<Order, Integer>{
 	List<Order> findAllByUser(User user);
+
+	Optional<Order> findByTrackingNumber(String trackingNumber);
 }
 
 
