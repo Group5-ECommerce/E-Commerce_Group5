@@ -33,3 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 e-commerce_springboot/src/main/java/com/christian/config/Secret.java
+angular/src/config/app.config.ts
