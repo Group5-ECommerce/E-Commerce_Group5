@@ -32,4 +32,9 @@ public class OrderService{
 	public Optional<Order> findById(Integer id) {
 		return orderRepo.findById(id);
 	}
+
+	public Optional<Order> findByTrackingNumber(String trackingNumber) {
+		return orderRepo.findByTrackingNumber(trackingNumber);
+	}
+
 }
