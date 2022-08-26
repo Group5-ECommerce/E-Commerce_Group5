@@ -44,7 +44,7 @@ public class OktaOAuth2WebSecurityConfigurerAdapter extends WebSecurityConfigure
     }
     
     @RestController
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://localhost:4200")
     public class MessageOfTheDayController {
 
         @GetMapping("/api/userProfile")
