@@ -32,7 +32,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/product")
-    @PreAuthorize("hasAuthority('Customer')")
+    //@PreAuthorize("hasAuthority('Customer')")
 	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}

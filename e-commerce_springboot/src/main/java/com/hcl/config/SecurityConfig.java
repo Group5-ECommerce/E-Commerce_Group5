@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
         	.antMatchers("/admin").hasAuthority("Admin")
         	.antMatchers("/order").hasAuthority("Customer")
-            .antMatchers("/").authenticated()
+            .antMatchers("/").permitAll()
         .and()
             .oauth2ResourceServer().jwt(); //or .opaqueToken();
 
