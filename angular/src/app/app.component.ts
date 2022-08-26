@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
   }
 
   public async signIn() : Promise<void> {
+  
+    // This may be useful in the future: { originalUri: '/' }
     await this._oktaAuth.signInWithRedirect().then(
       _ => this._router.navigate(['/profile'])
     );

@@ -26,33 +26,32 @@ public class ProductController {
 	private ProductRepository repo;
 	
 	@PostMapping("/product")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_product:create')")
 	public void addProduct(@RequestBody Product product) {
 		repo.save(product);
 	}
 
 	@GetMapping("/product")
-    @PreAuthorize("hasAuthority('GROUP_Admin')")
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('SCOPE_product')")
 	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 	
 	@GetMapping("/product/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_product:view')")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
 		Optional<Product> product = repo.findById(id);
 		return product;
 	}
 	
 	@PutMapping("/product")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_product:edit')")
 	public void updateProduct(@RequestBody Product newProduct){
 		repo.save(newProduct);
 	}
 	
 	@DeleteMapping("/product/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_product:delete')")
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}

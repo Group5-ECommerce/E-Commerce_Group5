@@ -34,7 +34,7 @@ public class OrderController {
 	UserService userService;
 	
 	@PutMapping("/checkout")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('SCOPE_checkout')")
 	public void checkout(HttpSession session, Principal principal) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -74,7 +74,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_order:viewAll')")
 	public List<Order> getAllOrders(){
 		return orderService.findAll();
 	}

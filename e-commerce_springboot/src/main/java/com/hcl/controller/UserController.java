@@ -39,7 +39,7 @@ public class UserController {
 	public String adminPage() {
 		return "Welcome to the ROLE_ADMIN page.";
 	}
-	
+	/*
 	@PostMapping("/user/{role}")
 	public void addUser(@RequestBody User user, @PathVariable(required=false) Integer role) {
 		service.addUser(user, role);
@@ -112,10 +112,12 @@ public class UserController {
 			service.saveUser(user.get());
 		}
 	}
+	*
 	
 	@DeleteMapping("/user/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public void deleteUser(@PathVariable Integer id) {
 		service.deleteUser(id);
 	}
+	*/
 }

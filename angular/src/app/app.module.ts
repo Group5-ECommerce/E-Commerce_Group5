@@ -11,7 +11,7 @@ import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './profile/profile.component';
 
-import {config} from "../config/app.config";
+import { config } from "../config/app.config";
 import { GetProductsComponent } from './get-products/get-products.component';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
@@ -19,7 +19,7 @@ import { GetProductsComponent } from './get-products/get-products.component';
 const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
-  redirectUri: window.location.origin + '/login/callback'
+  redirectUri: window.location.origin + '/login/callback',
 });
 
 @NgModule({
@@ -35,7 +35,7 @@ const oktaAuth = new OktaAuth({
     HttpClientModule
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
