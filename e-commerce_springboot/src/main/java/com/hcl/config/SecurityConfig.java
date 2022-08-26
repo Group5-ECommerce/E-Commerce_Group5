@@ -27,8 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        	.antMatchers("/admin").hasAuthority("ROLE_ADMIN")
-        	.antMatchers("/order").hasAuthority("ROLE_CUSTOMER")
+        	.antMatchers("/admin").hasAuthority("Admin")
+        	.antMatchers("/order").hasAuthority("Customer")
             .antMatchers("/").authenticated()
         .and()
             .oauth2ResourceServer().jwt(); //or .opaqueToken();
@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             return authentication.getTokenAttributes();
         }
 
-        //For JWT only
+        //For JWT only. [This setup uses JWT]
         @GetMapping("/api/userProfileJWT")
         @PreAuthorize("hasAuthority('SCOPE_profile')")
         public Map<String, Object> getUserDetails(JwtAuthenticationToken authentication) {

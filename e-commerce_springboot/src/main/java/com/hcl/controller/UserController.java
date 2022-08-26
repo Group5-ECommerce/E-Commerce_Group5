@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.hcl.entity.User;
 import com.hcl.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	@Autowired
 	private UserService service;
@@ -29,13 +31,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/customer")
-    @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public String userPage() {
 		return "Welcome to the ROLE_CUSTOMER page.";
 	}
 	
 	@GetMapping("/admin")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public String adminPage() {
 		return "Welcome to the ROLE_ADMIN page.";
 	}

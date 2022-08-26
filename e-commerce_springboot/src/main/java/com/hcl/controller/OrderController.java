@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
@@ -34,7 +36,7 @@ public class OrderController {
 	UserService userService;
 	
 	@PutMapping("/checkout")
-    @PreAuthorize("hasAuthority('SCOPE_checkout')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public void checkout(HttpSession session, Principal principal) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -74,19 +76,19 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order")
-    @PreAuthorize("hasAuthority('SCOPE_order:viewAll')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public List<Order> getAllOrders(){
 		return orderService.findAll();
 	}
 	
 	@GetMapping("/myOrders")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public List<Order> getMyOrders(Principal principal){
 		return orderService.findByUsername(principal.getName());
 	}
   
 	@GetMapping("/trackOrder/{trackingNumber}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public String trackOrder(@PathVariable String trackingNumber) {
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
