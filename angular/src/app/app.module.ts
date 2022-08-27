@@ -10,7 +10,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './profile/profile.component';
-
+import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { config } from "../config/app.config";
 import { GetProductsComponent } from './get-products/get-products.component';
 
@@ -32,10 +32,11 @@ const oktaAuth = new OktaAuth({
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  CustomerGuard, AdminGuard
   ],
   bootstrap: [AppComponent]
 })

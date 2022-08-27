@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+import { OktaCallbackComponent } from '@okta/okta-angular';
 import { ProfileComponent } from './profile/profile.component';
+import { CustomerGuard, AdminGuard} from './auth/auth.guard';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
-{ path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] }
+{ path: 'profile', component: ProfileComponent, canActivate: [CustomerGuard] }
 ];
 
 @NgModule({
