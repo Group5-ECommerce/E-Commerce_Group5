@@ -308,15 +308,15 @@
   <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
     <button (click)="signIn()"> Sign in </button>
   </ng-container>
-
+  <h1 class = "mx-auto">E-Commerce App</h1>
   <ng-template #signout>
-    <button (click)="signOut()">Sign out</button>
+    <button class = "float-end" (click)="signOut()">Sign out</button>
   </ng-template>
-
 </div>
-<br><br>
-<app-profile></app-profile>
+<br><br><br><br>
+<!--<app-profile></app-profile>
 <app-get-products></app-get-products>
+<app-product-list></app-product-list> -->
 <router-outlet></router-outlet>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
