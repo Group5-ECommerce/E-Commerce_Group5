@@ -15,7 +15,7 @@ export class GetProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get("http://localhost:8080/product").subscribe(products => {
-      this.products = products.toString();
+      this.products = JSON.stringify(products);
     })
 
   }
