@@ -19,51 +19,38 @@ import com.hcl.repo.ProductRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
 	@Autowired
 	private ProductRepository repo;
 
 	@PostMapping("/product")
-<<<<<<< HEAD
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAuthority('Admin')")
->>>>>>> 45898151d97d1eda3a79bea0154b74a6a50ea620
+	@PreAuthorize("hasAuthority('Admin')")
 	public void addProduct(@RequestBody Product product) {
 		repo.save(product);
 	}
 
 	@GetMapping("/product")
-<<<<<<< HEAD
-//	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_CUSTOMER')")
-=======
-    //@PreAuthorize("hasAuthority('Customer')")
->>>>>>> 45898151d97d1eda3a79bea0154b74a6a50ea620
+
+	// @PreAuthorize("hasAuthority('Customer')")
 	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 
 	@GetMapping("/product/{id}")
-    @PreAuthorize("hasAuthority('Customer')")
+	@PreAuthorize("hasAuthority('Customer')")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
 		Optional<Product> product = repo.findById(id);
 		return product;
 	}
 
 	@PutMapping("/product")
-<<<<<<< HEAD
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('Admin')")
 	public void updateProduct(@RequestBody Product newProduct) {
-=======
-    @PreAuthorize("hasAuthority('Admin')")
-	public void updateProduct(@RequestBody Product newProduct){
->>>>>>> 45898151d97d1eda3a79bea0154b74a6a50ea620
 		repo.save(newProduct);
 	}
 
 	@DeleteMapping("/product/{id}")
-    @PreAuthorize("hasAuthority('Admin')")
+	@PreAuthorize("hasAuthority('Admin')")
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}
