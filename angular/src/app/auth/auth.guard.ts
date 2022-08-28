@@ -14,11 +14,9 @@ export class AdminGuard implements CanActivate {
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
         const auth = await this._oktaAuth.isAuthenticated();
         if (auth == true) {
-           let isAdmin = false;
-           let obs = new Observable<boolean>();
-           obs = this.oktaSvc.hasAnyGroups("Admin");
-           obs.subscribe(res => isAdmin = res);
-           await firstValueFrom(obs);
+           // Thanks to https://stackoverflow.com/a/71136301 for this await observable's first value structure.
+           // This makes the function wait to return until the service's request comes back as true or false.
+           const isAdmin = await firstValueFrom(this.oktaSvc.hasAnyGroups("Admin"));
 
            return isAdmin;
        }
@@ -38,11 +36,7 @@ export class CustomerGuard implements CanActivate {
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
          const auth = await this._oktaAuth.isAuthenticated();
          if (auth == true) {
-            let isCustomer = false;
-            let obs = new Observable<boolean>();
-            obs = this.oktaSvc.hasAnyGroups("Customer");
-            obs.subscribe(res => isCustomer = res);
-            await firstValueFrom(obs);
+            let isCustomer = await firstValueFrom(this.oktaSvc.hasAnyGroups("Customer"));
 
             return isCustomer;
         }
