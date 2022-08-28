@@ -6,17 +6,17 @@ import { AuthState } from '@okta/okta-auth-js';
 @Component({
   selector: 'app-profile',
   template: `
-  <div class="profile-card">
+  <div class="profile-card text-center">
     <div class="shield">
-    <p *ngIf="name$ | async as name">
+    <h1 *ngIf="name$ | async as name">
         Hello {{name}}!
-    </p>
+    </h1>
     </div>
     <div *oktaHasAnyGroup="['Admin']">
-      Welcome admin
+      <h2>Welcome admin</h2>
     </div>
     <div *oktaHasAnyGroup="['Customer']">
-      Welcome Customer
+      <h2>Welcome Customer</h2>
     </div>
   </div>
   `,
