@@ -27,7 +27,6 @@ export class ProfileComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? '')
     );
-
   }
 }
 

@@ -313,14 +313,11 @@
     <button (click)="signOut()">Sign out</button>
   </ng-template>
 
-  <app-profile></app-profile>
 </div>
-
-<div class="content" role="main">
-
-
-
-</div>
+<br><br>
+<app-profile></app-profile>
+<app-get-products></app-get-products>
+<router-outlet></router-outlet>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
@@ -329,5 +326,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<router-outlet></router-outlet>

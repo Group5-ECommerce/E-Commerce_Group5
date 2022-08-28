@@ -32,5 +32,4 @@ build/
 
 ### VS Code ###
 .vscode/
-angular/src/config/app.config.ts
 e-commerce_springboot/src/main/java/com/hcl/config/Secret.java
