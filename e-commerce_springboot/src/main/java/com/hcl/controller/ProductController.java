@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,37 +20,38 @@ import com.hcl.entity.Product;
 import com.hcl.repo.ProductRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
 	@Autowired
 	private ProductRepository repo;
 	
 	@PostMapping("/product")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public void addProduct(@RequestBody Product product) {
 		repo.save(product);
 	}
 
 	@GetMapping("/product")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_CUSTOMER')")
+    //@PreAuthorize("hasAuthority('Customer')")
 	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 	
 	@GetMapping("/product/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
 		Optional<Product> product = repo.findById(id);
 		return product;
 	}
 	
 	@PutMapping("/product")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public void updateProduct(@RequestBody Product newProduct){
 		repo.save(newProduct);
 	}
 	
 	@DeleteMapping("/product/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}
