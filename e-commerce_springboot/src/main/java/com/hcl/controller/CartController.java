@@ -43,7 +43,7 @@ public class CartController {
 	UserService userService;
 
 	@PostMapping("/cart/{id}/{amt}")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -59,7 +59,7 @@ public class CartController {
 	}
 
 	@GetMapping("/cart")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public Object getCart(HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -68,14 +68,8 @@ public class CartController {
 		return items;
 	}
 
-	@GetMapping("/cartAsIds")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public Object getCartAsIds(HttpSession session) {
-		return session.getAttribute("items");
-	}
-
 	@PutMapping("/cart/{id}/{amt}")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -101,13 +95,13 @@ public class CartController {
 	}
 
 	@DeleteMapping("/cart")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public void emptyCart(HttpSession session) {
 		session.setAttribute("items", null);
 	}
 
 	@DeleteMapping("/cart/{id}")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
 		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
 		if (items == null)

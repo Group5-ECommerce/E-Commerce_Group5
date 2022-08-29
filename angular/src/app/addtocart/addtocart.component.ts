@@ -14,7 +14,7 @@ export class AddtocartComponent implements OnInit {
   }
 
   product?: Product;
-  saveToCart(): void
+  saveToCart(product?: Product): void
   {
     
     const data = {
