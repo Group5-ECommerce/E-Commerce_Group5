@@ -10,16 +10,16 @@ import { ProductService } from '../product/product.service';
 })
 export class EditProductComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private productService: ProductService) { }
+  constructor(private route: ActivatedRoute, private productService: ProductService) { }
   id!: number;
-  product: Product = new Product();
+  product = new Product();
   showAlert = false;
   
-  ngOnInit(): void {
+  ngOnInit(){
     this.id = this.route.snapshot.params.id;
 
     this.productService.getProduct(this.id).subscribe((response: any) => {
-      this.product = response.data;
+      this.product = response;
     })
   }
 

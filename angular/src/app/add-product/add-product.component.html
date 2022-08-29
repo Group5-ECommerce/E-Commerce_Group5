@@ -27,7 +27,7 @@
             <div class="form-group">
                 <button class="btn btn-primary" (click)="saveProduct()">Save</button>
             </div>
-        <div class="card-footer" **ngIf="showAlert">
+        <div class="card-footer" *ngIf="showAlert">
               <div class="alert alert-success" role="alert">
                 <button class ="close" (click)="closeAlert()">&times;</button>
                 <strong>Successfully saved</strong>
