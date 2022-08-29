@@ -10,9 +10,13 @@ import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './profile/profile.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
+
 import { config } from "../config/app.config";
 import { GetProductsComponent } from './get-products/get-products.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
+import { OrderTrackComponent } from './order-track/order-track.component';
+
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -27,7 +31,12 @@ const oktaAuth = new OktaAuth({
     AppComponent,
     ProfileComponent,
     ProductListComponent,
-    GetProductsComponent
+    GetProductsComponent,
+    AdminProductListComponent,
+    CustomerProductListComponent,
+    AddProductComponent,
+    EditProductComponent,
+    OrderTrackComponent,
 
   ],
   imports: [
