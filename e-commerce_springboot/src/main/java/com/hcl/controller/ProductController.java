@@ -24,7 +24,7 @@ public class ProductController {
 	private ProductRepository repo;
 
 	@PostMapping("/product")
-	@PreAuthorize("hasAuthority('Admin')")
+	// @PreAuthorize("hasAuthority('Admin')")
 	public void addProduct(@RequestBody Product product) {
 		repo.save(product);
 	}
@@ -36,20 +36,20 @@ public class ProductController {
 	}
 
 	@GetMapping("/product/{id}")
-	@PreAuthorize("hasAuthority('Customer')")
+	// @PreAuthorize("hasAuthority('Customer')")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
 		Optional<Product> product = repo.findById(id);
 		return product;
 	}
 
 	@PutMapping("/product")
-	@PreAuthorize("hasAuthority('Admin')")
+	// @PreAuthorize("hasAuthority('Admin')")
 	public void updateProduct(@RequestBody Product newProduct) {
 		repo.save(newProduct);
 	}
 
 	@DeleteMapping("/product/{id}")
-	@PreAuthorize("hasAuthority('Admin')")
+	// @PreAuthorize("hasAuthority('Admin')")
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}

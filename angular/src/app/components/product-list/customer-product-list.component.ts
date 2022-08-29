@@ -4,11 +4,11 @@ import { ProductService } from 'src/app/services/product.service';
 import { AddtocartComponent } from 'src/app/addtocart/addtocart.component';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  selector: 'app-customer-product-list',
+  templateUrl: './customer-product-list.component.html',
+  styleUrls: ['./customer-product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class CustomerProductListComponent implements OnInit {
 
   products?: Product[];
   currentIndex = -1;
