@@ -306,15 +306,20 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <button class="p-2 me-2 invisible" (click)="signOut()">Sign out</button>
-  <h1 class="mx-auto text-center">E-Commerce App</h1>
+  <h1 class = "mx-auto text-center">E-Commerce App</h1>
   <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
-    <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
+    <button class = "p-2 me-2"(click)="signIn()"> Sign in </button>
   </ng-container>
-    <ng-template #signout>
-      <button class="p-2 me-2" (click)="signOut()">Sign out</button>
-    </ng-template>
+  <ng-template #signout>
+    <button class = "p-2 me-2" (click)="signOut()">Sign out</button>
+  </ng-template>
 </div>
+
 <br><br><br><br>
+<ul>
+<li><a href = "product-list">Admin Product List</a></li>
+<li><a href = "product">Customer Product List</a></li>
+</ul>
 <!--<app-profile></app-profile>
 <app-get-products></app-get-products>
 <app-product-list></app-product-list> -->

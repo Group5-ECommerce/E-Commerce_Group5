@@ -9,10 +9,15 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './profile/profile.component';
+
+import {config} from "../config/app.config";
+import { AdminProductListComponent } from './product-list/admin-product-list.component';
+import { ProductService } from './product/product.service';
+import { AddProductComponent } from './add-product/add-product.component';
+import { FormsModule } from '@angular/forms';
+import { EditProductComponent } from './edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
-import { config } from "../config/app.config";
-import { GetProductsComponent } from './get-products/get-products.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
+import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -26,16 +31,17 @@ const oktaAuth = new OktaAuth({
   declarations: [
     AppComponent,
     ProfileComponent,
-    ProductListComponent,
-    GetProductsComponent
-
+    AdminProductListComponent,
+    CustomerProductListComponent,
+    AddProductComponent,
+    EditProductComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
     HttpClientModule,
-
+    FormsModule
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
