@@ -1,0 +1,120 @@
+<!-- <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="title" />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          (click)="searchTitle()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div> -->
+<!-- <div class="container ">
+  <div class="row d-flex justify-content-center ">
+
+    <div class="col-12">
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col" class="col-">Name</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Capacity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
+
+
+
+<!-- <div class="col-md-6">
+  <h4>Product List</h4>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let product of products; let i = index" [class.active]="i == currentIndex">
+      {{ product.productName }}
+    </li>
+  </ul> -->
+
+<!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllTutorials()">
+      Remove All
+    </button> -->
+
+
+<!-- <div class="container ">
+  <div class="row d-flex justify-content-center">
+    <div class="card col-md-12 ">
+      <div class="card-header">Header</div>
+      <div class="card-body ">
+        <h5 class="card-title">Primary card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+          content.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<br> -->
+
+
+<div class="container">
+  <div class="row d-flex flex-column justify-content-center">
+    <h1 class = "text-center">Product List</h1>
+    <div class="card-columns col-lg-6  mt-2 mx-auto " *ngFor="let product of products; let i = index"
+      [class.active]="i == currentIndex">
+      <div class="card flex-row">
+        <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;;
+          height: 100px;">
+        <div class="card-body">
+          <h4 class="card-title">{{product.productName}}</h4>
+          <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
+          <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="card">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+      content.
+      This card has even longer content than the first to show that equal height action.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div> -->
+
+
+<!-- <div class="col-md-6">
+    <app-tutorial-details
+      [viewMode]="true"
+      [currentTutorial]="currentTutorial"
+    ></app-tutorial-details>
+  </div> -->

@@ -6,11 +6,18 @@ import { AuthState } from '@okta/okta-auth-js';
 @Component({
   selector: 'app-profile',
   template: `
-  <div class="profile-card">
-    <div class="shield"></div>
-    <p *ngIf="name$ | async as name">
+  <div class="profile-card text-center">
+    <div class="shield">
+    <h1 *ngIf="name$ | async as name">
         Hello {{name}}!
-    </p>
+    </h1>
+    </div>
+    <div *oktaHasAnyGroup="['Admin']">
+      <h2>Welcome admin</h2>
+    </div>
+    <div *oktaHasAnyGroup="['Customer']">
+      <h2>Welcome Customer</h2>
+    </div>
   </div>
   `,
   styleUrls: ['./profile.component.css']
@@ -27,7 +34,6 @@ export class ProfileComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? '')
     );
-
   }
 }
 
