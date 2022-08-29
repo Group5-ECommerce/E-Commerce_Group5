@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/product.model';
+import { Product } from '../../models/product.model';
 import { ProductService } from 'src/app/services/product.service';
+import { AddtocartserviceService } from 'src/app/services/addtocartservice.service';
 
 @Component({
   selector: 'app-customer-product-list',
@@ -12,10 +13,26 @@ export class CustomerProductListComponent implements OnInit {
   products?: Product[];
   currentIndex = -1;
   title = "product list"
-  constructor(private productService:ProductService) { }
+  constructor(private productService:ProductService, private addtocartservice:AddtocartserviceService) { }
 
   ngOnInit(): void {
     this.retrieveProducts();
+  }
+
+  saveToCart(el:HTMLElement, product: Product): void
+  {
+    this.addtocartservice.addProduct(product);
+    if (el.classList.contains("btn-primary")){
+      el.classList.remove("btn-primary");
+      el.classList.add("btn-danger");
+      el.textContent = "Remove From Cart";
+    }
+    else {
+      el.textContent = "Add to Cart";
+      el.classList.remove("btn-danger");
+      el.classList.add("btn-primary");
+    }
+
   }
 
 
