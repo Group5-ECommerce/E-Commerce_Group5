@@ -305,13 +305,14 @@
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
+  <button class="p-2 me-2 invisible" (click)="signOut()">Sign out</button>
+  <h1 class="mx-auto text-center">E-Commerce App</h1>
   <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
-    <button (click)="signIn()"> Sign in </button>
+    <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
   </ng-container>
-  <h1 class = "mx-auto">E-Commerce App</h1>
-  <ng-template #signout>
-    <button class = "float-end" (click)="signOut()">Sign out</button>
-  </ng-template>
+    <ng-template #signout>
+      <button class="p-2 me-2" (click)="signOut()">Sign out</button>
+    </ng-template>
 </div>
 <br><br><br><br>
 <!--<app-profile></app-profile>
