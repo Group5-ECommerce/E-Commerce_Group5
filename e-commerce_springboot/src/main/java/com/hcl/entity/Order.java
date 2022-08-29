@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -46,13 +48,15 @@ public class Order {
     private User user;
     
     @Column(name="trackingNumber")
-    @GeneratedValue(strategy=GenerationType.AUTO) 
-    private int trackingNumber; //All tracking numbers are 0 atm... but I'm not sure what they should be.
+    private String trackingNumber; 
     
     @Column(name="totalPrice", columnDefinition="Decimal(10,2)")
     private double totalPrice;
-    @Column(name="shippingAddressId")
-    private int shippingAddressId;
+    
+    @OneToOne
+    @JoinColumn(name="shippingAddressId")
+    private Address shippingAddress;
+    
     @Column(name="orderTime")
     private Timestamp orderTime;
     @Column(name="orderStatus")
