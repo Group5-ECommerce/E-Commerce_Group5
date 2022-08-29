@@ -9,6 +9,14 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './profile/profile.component';
+import {HttpClientModule} from '@angular/common/http'; 
+
+import {config} from "../config/app.config";
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductService } from './product/product.service';
+import { AddProductComponent } from './add-product/add-product.component';
+import { FormsModule } from '@angular/forms';
+import { EditProductComponent } from './edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { config } from "../config/app.config";
 import { GetProductsComponent } from './get-products/get-products.component';
@@ -27,14 +35,19 @@ const oktaAuth = new OktaAuth({
     AppComponent,
     ProfileComponent,
     ProductListComponent,
+    AddProductComponent,
+    EditProductComponent
     GetProductsComponent
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
     HttpClientModule,
+    FormsModule
+  ],
+  providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } }, ProductService],
+
 
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
