@@ -9,7 +9,8 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './profile/profile.component';
 
 import { AddtocartComponent } from './addtocart/addtocart.component';
-
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
 const oktaAuth = new OktaAuth({
@@ -22,7 +23,6 @@ const oktaAuth = new OktaAuth({
   declarations: [
     AppComponent,
     ProfileComponent,
-    CartComponent,
     AddtocartComponent
   ],
   imports: [
