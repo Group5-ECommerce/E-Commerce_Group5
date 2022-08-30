@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
-import { ProductService } from 'src/app/services/product.service';
 import { AddtocartserviceService } from 'src/app/services/addtocartservice.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-customer-product-list',
@@ -39,7 +39,7 @@ export class CustomerProductListComponent implements OnInit {
 
 
   retrieveProducts(): void{
-    this.productService.getAll().subscribe({
+    this.productService.getProductList().subscribe({
       next: (data)=>{
         this.products=data;
         console.log(data);

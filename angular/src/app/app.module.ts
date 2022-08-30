@@ -8,14 +8,14 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 import {config} from "../config/app.config";
-import { AdminProductListComponent } from './product-list/admin-product-list.component';
-import { ProductService } from './product/product.service';
-import { AddProductComponent } from './add-product/add-product.component';
+import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
+import { ProductService } from './services/product/product.service';
+import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { FormsModule } from '@angular/forms';
-import { EditProductComponent } from './edit-product/edit-product.component';
+import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 
