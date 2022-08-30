@@ -16,12 +16,12 @@ export class AddtocartserviceService {
     const cart = localStorage.getItem('cart');
     if (cart) {
       const cartJSON = JSON.parse(cart);
-      cartJSON.cart.push(cartItem);
+      cartJSON.push(cartItem);
       const cartString = JSON.stringify(cartJSON);
       localStorage.setItem("cart", cartString);
     }
     else {
-      const startCart = {"cart": [cartItem]};
+      const startCart = [cartItem];
       localStorage.setItem('cart', JSON.stringify(startCart));
     }
 
