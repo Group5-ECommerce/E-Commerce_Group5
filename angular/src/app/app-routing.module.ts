@@ -7,6 +7,7 @@ import { AdminProductListComponent } from './components/admin/product-list/admin
 import { CustomerGuard, AdminGuard} from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'product', component: CustomerProductListComponent},
   { path: 'product-list', component: AdminProductListComponent},
   { path: 'add-product', component: AddProductComponent},
-  { path: 'edit-product/:id', component: EditProductComponent}
+  { path: 'edit-product/:id', component: EditProductComponent},
+  {path: 'edit-user', component: EditUserComponent}
 ];
 
 @NgModule({
