@@ -25,6 +25,9 @@
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    /* Thanks to https://stackoverflow.com/a/30467081 for this code to align the dropdown on the left of the right element.*/
+    left: auto !important;
+    right: 0 !important;
   }
   
   .dropdown-content a {

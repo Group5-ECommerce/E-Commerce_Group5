@@ -1,40 +1,21 @@
-<form class="row gy-2 gx-3 mx-auto align-items-center justify-content-center">
+<form id = "editUserForm"class="row gy-2 gx-3 mx-auto align-items-center justify-content-center">
     <div class="row g-3 justify-content-center">
         <div class="col-auto">
-            <input type="text" class="form-control" placeholder="First Name" aria-label="State">
+            <input id = "fName" type="text" class="form-control" placeholder="First Name" aria-label="State">
         </div>
         <div class="col-auto">
-            <input type="text" class="form-control" placeholder="Last Name" aria-label="Zip">
+            <input id = "lName" type="text" class="form-control" placeholder="Last Name" aria-label="Zip">
         </div>
     </div>
     <div class="row g-3 justify-content-center">
         <div class="col-auto">
-            <input type="text" class="form-control" placeholder="Email" aria-label="State">
+            <input id="email" type="text" class="form-control" placeholder="Email" aria-label="State">
         </div>
         <div class="col-auto">
-            <input type="text" class="form-control" placeholder="Username" aria-label="Zip">
+            <input id = "username" type="text" class="form-control" placeholder="Username" aria-label="Zip">
         </div>
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Update Information</button>
-    </div>
-</form>
-<br><br><br><br>
-<form class="row gy-2 gx-3 mx-auto align-items-center justify-content-center">
-    <div class="row g-3 justify-content-center">
-        <div class="col-auto">
-            <input type="text" class="form-control" placeholder="First Name" aria-label="State">
-        </div>
-    </div>
-    <div class="row g-3 justify-content-center">
-        <div class="col-auto">
-            <input type="text" class="form-control" placeholder="New Password" aria-label="State">
-        </div>
-        <div class="col-auto">
-            <input type="text" class="form-control" placeholder="Confirm New Password" aria-label="State">
-        </div>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Change Password</button>
+        <button type="submit" (click) = "updateUserInfo($event)" class="btn btn-primary">Update Information</button>
     </div>
 </form>
