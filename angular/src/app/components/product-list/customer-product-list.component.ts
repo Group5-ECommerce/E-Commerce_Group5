@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
+import { Product } from '../../models/product.model';
+import { AddtocartserviceService } from 'src/app/services/addtocartservice.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-customer-product-list',
@@ -12,15 +13,33 @@ export class CustomerProductListComponent implements OnInit {
   products?: Product[];
   currentIndex = -1;
   title = "product list"
-  constructor(private productService:ProductService) { }
+  constructor(private productService:ProductService, private addtocartservice:AddtocartserviceService) { }
 
   ngOnInit(): void {
     this.retrieveProducts();
   }
 
+  saveToCart(el:HTMLElement, product: Product): void
+  {
+    // If it is a primary button, meaning it should "Add To Cart"
+    if (el.classList.contains("btn-primary")){
+      this.addtocartservice.addProduct(product);
+      el.classList.remove("btn-primary");
+      el.classList.add("btn-danger");
+      el.textContent = "Remove From Cart";
+    }
+    else {
+      this.addtocartservice.removeProduct(product);
+      el.textContent = "Add to Cart";
+      el.classList.remove("btn-danger");
+      el.classList.add("btn-primary");
+    }
+
+  }
+
 
   retrieveProducts(): void{
-    this.productService.getAll().subscribe({
+    this.productService.getProductList().subscribe({
       next: (data)=>{
         this.products=data;
         console.log(data);

@@ -10,6 +10,7 @@
           <h4 class="card-title">{{product.productName}}</h4>
           <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
           <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
+          <button #refEl class="d-inline-block mx-3" type="button" class="btn btn-primary" (click) = "saveToCart(refEl, product)">Add To Cart</button>
         </div>
       </div>
     </div>

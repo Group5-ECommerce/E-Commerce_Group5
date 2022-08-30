@@ -35,4 +35,8 @@ export class AppComponent implements OnInit {
   public async signOut(): Promise<void> {
     await this._oktaAuth.signOut();
   }
+
+  toggleDropdown(){
+    document.getElementById("accountDropdown")?.classList.toggle("show");
+  }
 }
