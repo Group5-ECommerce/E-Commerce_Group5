@@ -8,6 +8,8 @@ import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
@@ -16,7 +18,8 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'product-list', component: AdminProductListComponent },
 { path: 'add-product', component: AddProductComponent },
 { path: 'edit-product/:id', component: EditProductComponent },
-{ path: 'cart-list', component: CartListComponent }
+{ path: 'cart-list', component: CartListComponent },
+  { path: 'checkout', component: CheckoutComponent}
 ];
 
 @NgModule({

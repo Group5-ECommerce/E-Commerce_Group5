@@ -15,6 +15,7 @@ export class CustomerProductListComponent implements OnInit {
   title = "product list"
   constructor(private productService: ProductService, private cartService: CartService) { }
 
+
   ngOnInit(): void {
     this.retrieveProducts();
   }
@@ -35,6 +36,7 @@ export class CustomerProductListComponent implements OnInit {
     }
 
   }
+
 
 
   retrieveProducts(): void {
