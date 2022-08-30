@@ -20,7 +20,7 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

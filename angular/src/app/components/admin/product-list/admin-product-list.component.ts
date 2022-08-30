@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from '../../../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -10,8 +11,12 @@ import { ProductService } from '../../../services/product.service';
 
 export class AdminProductListComponent implements OnInit {
   products!: Product[];
-
-  constructor(private productService: ProductService) { }
+  
+  constructor(private productService: ProductService, private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+   }
 
   ngOnInit(): void {
     this.productService.getProductList().subscribe((response: any) => {
