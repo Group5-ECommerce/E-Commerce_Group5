@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/models/product.model';
+import { ProductService } from '../../../services/product.service';
 import { Router } from '@angular/router';
-import { Product } from '../../../services/product/product';
-import { ProductService } from '../../../services/product/product.service';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -24,10 +24,12 @@ export class AdminProductListComponent implements OnInit {
     });
   }
 
-  deleteProduct(id: any){
+  deleteProduct(id: any) {
     this.productService.deleteProduct(id).subscribe((response) => {
       console.log(response);
-      this.router.navigateByUrl('/product-list');
+      this.products = this.products.filter((p: any) => {
+        return id != p.id;
+      })
     })
   }
 

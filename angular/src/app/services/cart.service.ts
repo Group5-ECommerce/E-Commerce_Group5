@@ -1,29 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CartItem } from '../models/cart-item.model';
 import { Product } from "../models/product.model";
 
-const baseUrl = "http://localhost:8080/cart";
+// const baseUrl = "http://localhost:8080/cart";
 @Injectable({
   providedIn: 'root'
 })
-export class AddtocartserviceService {
+export class CartService {
 
   constructor(private http: HttpClient) { }
 
   addProduct(data: Product) {
-    const cartItem = { product: data, amt: 1 };
+    const cartItem = { product: data, amount: 1 };
     const cart = localStorage.getItem('cart');
     if (cart) {
       let cartJSON = JSON.parse(cart);
       let index = -1;
-      for (let i = 0; i < cartJSON.length; i++){
-        if (cartJSON[i].product.productId === data.productId){
+      for (let i = 0; i < cartJSON.length; i++) {
+        if (cartJSON[i].product.productId === data.productId) {
           index = i;
         }
       };
       //This runs if the item already exists in the cartItem array.
-      if (index > -1){
+      if (index > -1) {
         //cartItem.amt += 1;
         cartJSON[index] = cartItem;
       }
@@ -41,8 +42,19 @@ export class AddtocartserviceService {
   removeProduct(data: Product) {
     const cart = localStorage.getItem('cart');
     let cartJSON = JSON.parse(cart!);
-    cartJSON = cartJSON.filter((item: { product: Product, amt: 1 }) => item.product.productId !== data.productId);
+    cartJSON = cartJSON.filter((item: { product: Product, amount: 1 }) => item.product.productId !== data.productId);
     const cartString = JSON.stringify(cartJSON);
     localStorage.setItem("cart", cartString);
+  }
+
+  viewItems() {
+    let cartString = localStorage.getItem('cart')
+    let cartObj: CartItem[] = [];
+
+    if (cartString) {
+      let cartJSON: CartItem[] = JSON.parse(cartString);
+      cartObj = cartJSON;
+    }
+    return cartObj;
   }
 }
