@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '../product/product';
-import { ProductService } from '../product/product.service';
+import { Product } from '../../../services/product/product';
+import { ProductService } from '../../../services/product/product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -24,7 +24,7 @@ export class EditProductComponent implements OnInit {
   }
 
   updateProduct(){
-    this.productService.updateProduct(this.product).subscribe((response) =>{
+    this.productService.updateProduct(this.product).subscribe((response:any) =>{
       console.log(response);
       this.product = new Product();
       this.showAlert = true;
