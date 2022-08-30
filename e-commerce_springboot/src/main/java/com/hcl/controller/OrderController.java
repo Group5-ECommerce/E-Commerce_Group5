@@ -32,6 +32,7 @@ import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
 import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
+import com.hcl.repo.UserRepository;
 import com.hcl.service.AddressService;
 import com.hcl.service.OrderService;
 import com.hcl.service.SendEmail;
@@ -54,17 +55,21 @@ public class OrderController {
 	
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	
-	@PostMapping("/checkout")
+	@PostMapping("/checkout/{userId}")
 	//@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public Purchase checkout(HttpSession session, Principal principal, @RequestBody Purchase p) {
-		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
-		System.out.println(items);
+	public Purchase  checkout(@RequestBody Purchase p, @PathVariable Integer userId) 
+	{	
+		List<cartItem> items = p.getItems();
 		if (items == null)
 			System.out.println("null");
 		
 		// Creates a list of products from the cart items.
+		//Principal principal
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
 		
 		Order order = new Order();
@@ -81,7 +86,7 @@ public class OrderController {
 			product.setProductStock(product.getProductStock() - amt);
 			totalPrice += product.getProductPrice() * amt;
 		}
-		User u = userService.getUserByUsername(principal.getName()).get();
+		User u = userRepo.findById(userId).get();
 		
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
@@ -106,6 +111,7 @@ public class OrderController {
 		payment.setCardHolderFirstName(p.getPayment().getCardHolderFirstName());
 		payment.setCardHolderLastName(p.getPayment().getCardHolderLastName());
 		payment.setCardNumber(p.getPayment().getCardNumber());
+		payment.setCvv(p.getPayment().getCvv());
 		payment.setOrder(order);
 		paymentRepo.save(payment);
 				
@@ -113,11 +119,10 @@ public class OrderController {
 		
 		
 		SendEmail.sendOrderConfirmation(u.getEmail(), u.getUsername(), order);
-		items = null;
-		session.setAttribute("items", items);
+	
 		
 		String message = p.getMessage();
-		return new Purchase(payment, message);
+		return new Purchase(payment,items, message);
 		
 	}
 	

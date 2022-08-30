@@ -22,7 +22,7 @@ import com.hcl.repo.ProductRepository;
 import com.hcl.repo.StorageRepository;
 
 @RestController
-@RequestMapping("/prd")
+
 @CrossOrigin(origins = "http://localhost:4200")
 
 public class ProductController {

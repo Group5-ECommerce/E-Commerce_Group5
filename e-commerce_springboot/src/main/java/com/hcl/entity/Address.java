@@ -28,7 +28,10 @@ public class Address {
     @ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-    
+    @Column(name = "firstName")
+    private String firstName;
+    @Column(name = "lastName")
+    private String lastName;
     @Column(name="streetAddress")
     private String streetAddress;
     @Column(name="city")
@@ -39,6 +42,8 @@ public class Address {
     private String zip ;
     @Column(name="country")
     private String country;
+    
+    
 
     
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
@@ -41,7 +43,7 @@ public class CartController {
 	UserService userService;
 
 	@PostMapping("/cart/{id}/{amt}")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	//@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -59,7 +61,7 @@ public class CartController {
 	}
 
 	@GetMapping("/cart")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	//@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Object getCart(HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)

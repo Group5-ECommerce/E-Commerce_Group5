@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="payment_info") // Table name
 public class PaymentInfo {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="paymentId")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Id	
     private int paymentId;
  
     @Column(name="cardHolderFirstName")
@@ -34,6 +34,9 @@ public class PaymentInfo {
     
     @Column(name="cardNumber")
     private String cardNumber;
+    
+    @Column(name = "CVV")
+    private String cvv;
     
     @OneToOne
     @JoinColumn(name = "billingAddress")
