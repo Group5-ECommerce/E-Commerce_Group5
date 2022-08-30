@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../../../services/product/product';
 import { ProductService } from '../../../services/product/product.service';
 
@@ -11,7 +12,11 @@ import { ProductService } from '../../../services/product/product.service';
 export class AdminProductListComponent implements OnInit {
   products!: Product[];
   
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+   }
 
   ngOnInit(): void {
     this.productService.getProductList().subscribe((response: any) => {
@@ -22,9 +27,7 @@ export class AdminProductListComponent implements OnInit {
   deleteProduct(id: any){
     this.productService.deleteProduct(id).subscribe((response) => {
       console.log(response);
-      this.products=this.products.filter((p: any) => {
-        return id!= p.id;
-      })
+      this.router.navigateByUrl('/product-list');
     })
   }
 
