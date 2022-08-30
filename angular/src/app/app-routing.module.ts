@@ -4,11 +4,13 @@ import { OktaCallbackComponent } from '@okta/okta-angular';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
-import { CustomerGuard, AdminGuard} from './auth/auth.guard';
+import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CartListComponent } from './components/cart-list/cart-list.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
@@ -19,10 +21,12 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
   { path: 'edit-product/:id', component: EditProductComponent},
   {path: 'edit-user', component: EditUserComponent},
   {path: 'change-password', component: ChangePasswordComponent}
-];
+{ path: 'cart-list', component: CartListComponent },
+  { path: 'checkout', component: CheckoutComponent}
+
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

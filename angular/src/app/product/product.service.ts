@@ -19,7 +19,7 @@ export class ProductService {
   }
 
   getProductList(){
-    return this.http.get<Product[]>(this.url + "/product");
+    return this.http.get(this.url + "/product");
   }
 
   getProduct(id:number){

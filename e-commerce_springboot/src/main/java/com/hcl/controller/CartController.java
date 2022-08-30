@@ -33,8 +33,8 @@ import com.hcl.repo.ProductRepository;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
@@ -42,6 +42,7 @@ public class CartController {
 	@Autowired
 	UserService userService;
 
+/*
 	@PostMapping("/cart/{id}/{amt}")
     // @PreAuthorize("hasAuthority('Customer')")
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
@@ -53,9 +54,11 @@ public class CartController {
 		if(product.isPresent()) {
 			items.add(new cartItem(product.get(), amt));
 			session.setAttribute("items", items);
+			System.out.println(items);
 			return "";
 		}
 		else return "A product with id " + id + " does not exist.";
+		
 	}
 
 	@GetMapping("/cart")
@@ -115,4 +118,5 @@ public class CartController {
 		}
 		session.setAttribute("items", items);
 	}
+	*/
 }
