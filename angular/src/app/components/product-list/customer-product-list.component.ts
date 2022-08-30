@@ -21,13 +21,15 @@ export class CustomerProductListComponent implements OnInit {
 
   saveToCart(el:HTMLElement, product: Product): void
   {
-    this.addtocartservice.addProduct(product);
+    // If it is a primary button, meaning it should "Add To Cart"
     if (el.classList.contains("btn-primary")){
+      this.addtocartservice.addProduct(product);
       el.classList.remove("btn-primary");
       el.classList.add("btn-danger");
       el.textContent = "Remove From Cart";
     }
     else {
+      this.addtocartservice.removeProduct(product);
       el.textContent = "Add to Cart";
       el.classList.remove("btn-danger");
       el.classList.add("btn-primary");
