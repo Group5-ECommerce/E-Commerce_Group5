@@ -1,6 +1,6 @@
 import { Product } from "./product.model"
 
 export class CartItem {
-  amount!: number
+  amt!: number
   product!: Product
 }

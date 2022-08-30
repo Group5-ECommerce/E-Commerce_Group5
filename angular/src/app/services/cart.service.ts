@@ -13,7 +13,7 @@ export class CartService {
   constructor(private http: HttpClient) { }
 
   addProduct(data: Product) {
-    const cartItem = { product: data, amount: 1 };
+    const cartItem = { product: data, amt: 1 };
     const cart = localStorage.getItem('cart');
     if (cart) {
       let cartJSON = JSON.parse(cart);
@@ -42,7 +42,7 @@ export class CartService {
   removeProduct(data: Product) {
     const cart = localStorage.getItem('cart');
     let cartJSON = JSON.parse(cart!);
-    cartJSON = cartJSON.filter((item: { product: Product, amount: 1 }) => item.product.productId !== data.productId);
+    cartJSON = cartJSON.filter((item: { product: Product, amt: 1 }) => item.product.productId !== data.productId);
     const cartString = JSON.stringify(cartJSON);
     localStorage.setItem("cart", cartString);
   }
