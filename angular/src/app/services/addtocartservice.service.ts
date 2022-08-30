@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from "../models/product.model";
 
-const baseUrl = "http://localhost:8080/cart";
+// const baseUrl = "http://localhost:8080/cart";
 @Injectable({
   providedIn: 'root'
 })
@@ -17,13 +17,13 @@ export class AddtocartserviceService {
     if (cart) {
       let cartJSON = JSON.parse(cart);
       let index = -1;
-      for (let i = 0; i < cartJSON.length; i++){
-        if (cartJSON[i].product.productId === data.productId){
+      for (let i = 0; i < cartJSON.length; i++) {
+        if (cartJSON[i].product.productId === data.productId) {
           index = i;
         }
       };
       //This runs if the item already exists in the cartItem array.
-      if (index > -1){
+      if (index > -1) {
         //cartItem.amt += 1;
         cartJSON[index] = cartItem;
       }

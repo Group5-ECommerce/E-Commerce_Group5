@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../../services/product/product';
-import { ProductService } from '../../../services/product/product.service';
+import { Product } from 'src/app/models/product.model';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -14,8 +14,8 @@ export class EditProductComponent implements OnInit {
   id!: number;
   product = new Product();
   showAlert = false;
-  
-  ngOnInit(){
+
+  ngOnInit() {
     this.id = this.route.snapshot.params.id;
 
     this.productService.getProduct(this.id).subscribe((response: any) => {
@@ -23,15 +23,15 @@ export class EditProductComponent implements OnInit {
     })
   }
 
-  updateProduct(){
-    this.productService.updateProduct(this.product).subscribe((response:any) =>{
+  updateProduct() {
+    this.productService.updateProduct(this.product).subscribe((response: any) => {
       console.log(response);
       this.product = new Product();
       this.showAlert = true;
     })
   }
 
-  closeAlert(){
+  closeAlert() {
     this.showAlert = false;
   }
 }

@@ -306,19 +306,19 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <button class="p-2 me-2 invisible" (click)="signOut()">Sign out</button>
-  <h1 class = "mx-auto text-center">E-Commerce App</h1>
+  <h1 class="mx-auto text-center">E-Commerce App</h1>
   <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
-    <button class = "p-2 me-2"(click)="signIn()"> Sign in </button>
+    <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
   </ng-container>
   <ng-template #signedIn>
     <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
     <div class="dropdown p-2 me-4">
-      <button (click) = "toggleDropdown()" class="dropbtn">
+      <button (click)="toggleDropdown()" class="dropbtn">
         User</button>
       <div id="accountDropdown" class="dropdown-content">
         <a href="#home">View Orders</a>
         <a href="#about">Change Password</a>
-        <a role = "button" (click)="signOut()">Sign out</a>
+        <a role="button" (click)="signOut()">Sign out</a>
       </div>
     </div>
   </ng-template>
@@ -326,9 +326,9 @@
 
 <br><br><br><br>
 <ul>
-<li><a href = "product-list">Admin Product List</a></li>
-<li><a href = "product">Customer Product List</a></li>
-<li><a href = "add-product">Add Product List</a></li>
+  <li><a href="product-list">Admin Product List</a></li>
+  <li><a href="product">Customer Product List</a></li>
+  <li><a href="add-product">Add Product</a></li>
 </ul>
 <!--<app-profile></app-profile>
 <app-get-products></app-get-products>
