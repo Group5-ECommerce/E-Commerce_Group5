@@ -30,6 +30,7 @@ export class AdminProductListComponent implements OnInit {
       this.products = this.products.filter((p: any) => {
         return id != p.id;
       })
+      this.router.navigateByUrl('/product-list');
     })
   }
 
