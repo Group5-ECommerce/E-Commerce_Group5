@@ -39,8 +39,7 @@ export class EditUserComponent implements OnInit {
     if (username) Object.assign(profile, {'username': username});
     if (email) Object.assign(profile, {'email': email});
 
-    const url = config.issuer + "/api/v2/users/" + this.userId;
-    console.log(url);
+    const url = config.apiBaseURL + "/api/v2/users/" + this.userId;
     this.http.post(url, profile);
   }
 }
