@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,23 +18,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@AllArgsConstructor //review page to see how to map
+@AllArgsConstructor // review page to see how to map
 @NoArgsConstructor
 @Entity
-@Table(name="order_item") // Table name
-public class OrderItem implements Serializable{
-	
+@Table(name = "order_item") // Table name
+public class OrderItem implements Serializable {
+
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderId") 
+	@JoinColumn(name = "orderId")
 	@JsonIgnore
-    @ToString.Exclude // Thanks to https://stackoverflow.com/a/56263668 for mentioning this annotation.
+	@ToString.Exclude // Thanks to https://stackoverflow.com/a/56263668 for mentioning this
+						// annotation.
 	private Order order;
-	
+
 	@Id
-	@ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "productId", unique = false) 
+	@ManyToOne(cascade = { CascadeType.MERGE })
+	@JoinColumn(name = "productId", unique = false)
 	private Product product;
-	
+
 	private int amt;
 }
