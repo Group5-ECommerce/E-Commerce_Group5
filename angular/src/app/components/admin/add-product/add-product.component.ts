@@ -10,27 +10,40 @@ import { ProductService } from 'src/app/services/product.service';
 export class AddProductComponent implements OnInit {
   product = new Product();
   showAlert = false;
-
+  file?: File;
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
   }
 
-  saveProduct(event: any) {
-    // console.log(event)
-    // await this.uploadImgToCloud(event)
+  async saveProduct() {
+    await this.uploadImgToCloud();
     this.productService.createProduct(this.product).subscribe((response: any) => {
       this.product = new Product(); //reset
       this.showAlert = true;
     })
   }
 
-  uploadImgToCloud(event: any) {
-    this.productService.saveImgToCloudinary(event.target.files[0]).subscribe((response: any) => {
-      this.product.productImage = response.secure_url;
-    })
-
+  getFile(event: any) {
+    this.file = event.target.files[0];
+    console.log(this.file)
   }
+
+  uploadImgToCloud() {
+    return new Promise<string>((resolve, reject) => {
+
+      if (this.file) {
+        this.productService.saveImgToCloudinary(this.file).subscribe((response: any) => {
+          console.log(response)
+          this.product.productImage = response.secure_url;
+          resolve("image cloud api url saved")
+        })
+      } else { reject('img file null or undefined') }
+
+    })
+  }
+
+
 
   closeAlert() {
     this.showAlert = false;
