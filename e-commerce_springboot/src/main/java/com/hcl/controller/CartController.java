@@ -33,7 +33,7 @@ import com.hcl.repo.ProductRepository;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
