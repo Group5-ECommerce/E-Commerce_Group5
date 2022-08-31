@@ -1,4 +1,4 @@
-import { CartItem } from "../cart-item.model";
+import { CartItem } from "src/app/models/cart-item.model";
 import { PaymentInfo } from "../paymentInfo/payment-info";
 
 export class Purchase

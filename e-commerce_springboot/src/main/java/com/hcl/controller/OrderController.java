@@ -38,15 +38,15 @@ import com.hcl.service.OrderService;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	private AddressRepository addressRepo;
 	
@@ -132,24 +132,24 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
 	public List<Order> getAllOrders(){
 		return orderService.findAll();
 	}
 	
 	@GetMapping("/myOrders")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAuthority('Customer')")
 	public List<Order> getMyOrders(Principal principal){
 		return orderService.findByUsername(principal.getName());
 	}
-	
-	@GetMapping("/trackOrder/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public String trackOrder(@PathVariable Integer id) {
-		Optional<Order> order = orderService.findById(id);
+  
+	@GetMapping("/trackOrder/{trackingNumber}")
+    @PreAuthorize("hasAuthority('Admin')")
+	public String trackOrder(@PathVariable String trackingNumber) {
+		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
 			return order.get().getOrderStatus();
 		}
-		else return "An order of id " + id + " does not exist.";
+		else return "An order of id " + trackingNumber + " does not exist.";
 	}
 }

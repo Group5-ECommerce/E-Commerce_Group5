@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,10 +46,11 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "userId")
     @ToString.Exclude
+    @JsonIgnore
     private User user;
     
     @Column(name="trackingNumber")
-    private String trackingNumber; 
+    private String trackingNumber = UUID.randomUUID().toString();
     
     @Column(name="totalPrice", columnDefinition="Decimal(10,2)")
     private double totalPrice;

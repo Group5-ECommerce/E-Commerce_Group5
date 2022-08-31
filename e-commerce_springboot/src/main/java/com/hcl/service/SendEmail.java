@@ -56,7 +56,7 @@ public class SendEmail {
 	public static void sendOrderConfirmation(String email, String username, Order order) {
 		String to = email;
 		String from = "no-reply@e-commerce.com";
-		
+
 		Session session = setUpAndGetSession();
 
 		try {
@@ -64,19 +64,23 @@ public class SendEmail {
 			message.setFrom(new InternetAddress(from));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			message.setSubject("Thank you for your order!");
-			
+
 			// Rather than doing this forEach statement, we should look into using templates
 			// with something like https://freemarker.apache.org/
-			AtomicReference<String> messageContent = new AtomicReference<String>("<h1>Hello " + username + ", thank you for ordering on our E-Commerce website!</h1>"
-					+ "\n<h2>Order Details</h2><table><tr><th></th><th></th><th></th><th></th></tr>");
+			AtomicReference<String> messageContent = new AtomicReference<String>(
+					"<h1>Hello " + username + ", thank you for ordering on our E-Commerce website!</h1>"
+							+ "\n<h2>Order Details</h2><table><tr><th></th><th></th><th></th><th></th></tr>");
 			// AtomicReference allows us to adjust the string in the forEach/lambda scope.
 			// We could do a for loop, but this permits use of Java8 features.
 			order.getItems().stream().forEach(i -> {
-				messageContent.set(messageContent + String.format("<tr><td><img width=\"200\" height=\"200\" src=\"%s\" alt=\"Product Image\" /></td>"
-						+ "<td>%s</td><td>$%.2f</td><td>%d</td></tr>", i.getProduct().getProductImage(),
-						i.getProduct().getProductName(), i.getProduct().getProductPrice(), i.getAmt()));
+				messageContent.set(messageContent + String.format(
+						"<tr><td><img width=\"200\" height=\"200\" src=\"%s\" alt=\"Product Image\" /></td>"
+								+ "<td>%s</td><td>$%.2f</td><td>%d</td></tr>",
+						i.getProduct().getProductImage(), i.getProduct().getProductName(),
+						i.getProduct().getProductPrice(), i.getAmt()));
 			});
-			messageContent.set(messageContent + String.format("</table><h2>Total Price: $%.2f</h2>", order.getTotalPrice()));
+			messageContent
+					.set(messageContent + String.format("</table><h2>Total Price: $%.2f</h2>", order.getTotalPrice()));
 			message.setContent(messageContent.get(), "text/html");
 			Transport.send(message);
 			System.out.println("Sent order confirmation successfully....");
