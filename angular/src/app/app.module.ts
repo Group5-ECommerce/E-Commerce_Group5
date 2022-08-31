@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
+import { CartComponent } from './cart/cart.component';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -36,6 +37,7 @@ const oktaAuth = new OktaAuth({
     CustomerProductListComponent,
     AddProductComponent,
     EditProductComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
