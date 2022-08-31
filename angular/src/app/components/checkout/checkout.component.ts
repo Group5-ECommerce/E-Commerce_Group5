@@ -6,6 +6,7 @@ import { PaymentInfo } from 'src/app/common/paymentInfo/payment-info';
 import { Purchase } from 'src/app/common/purchase/purchase';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Product } from 'src/app/product/product';
+import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
@@ -21,8 +22,9 @@ export class CheckoutComponent implements OnInit {
   billingAddressId = new Address()
   shippingAddressId = new Address()
   cart: CartItem[]
+  isSubmitted = false
 
-  constructor(private service: CheckoutService) { }
+  constructor(private service: CheckoutService, private cartService: CartService) { }
   ngOnInit(): void { }
 
   submitOrder() {
@@ -51,9 +53,14 @@ export class CheckoutComponent implements OnInit {
       {
         next: (res) => {
           console.log(res);
+          this.isSubmitted = true;
+          this.cartService.clearCart();
         }
       }
     )
+  }
+  closeAlert() {
+    this.isSubmitted = false;
   }
 
   // constructor(private service: CheckoutService) { }
