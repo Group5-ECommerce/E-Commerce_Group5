@@ -11,7 +11,7 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody *ngIf="cartLength!=0">
+      <tbody>
         <tr *ngFor="let c of cartItems">
           <td>{{c.product.productId}}</td>
           <td>{{c.product.productName}}</td>

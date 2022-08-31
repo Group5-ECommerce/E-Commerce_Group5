@@ -9,6 +9,8 @@ import { CustomerProductListComponent } from './components/product-list/customer
 import { ProfileComponent } from './components/profile/profile.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 
 
 
@@ -19,7 +21,9 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'add-product', component: AddProductComponent },
 { path: 'edit-product/:id', component: EditProductComponent },
 { path: 'cart-list', component: CartListComponent },
-  { path: 'checkout', component: CheckoutComponent}
+{ path: 'checkout', component: CheckoutComponent },
+{ path: 'order-list', component: OrderListComponent },
+{ path: 'ordered-products/:tracker', component: OrdereredProductsComponent }
 ];
 
 @NgModule({

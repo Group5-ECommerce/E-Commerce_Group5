@@ -16,71 +16,49 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 export class CheckoutComponent implements OnInit {
 
   // checkoutFormGroup!: FormGroup;
-  
-    payment = new PaymentInfo()
-    billingAddressId = new Address()
-    shippingAddressId = new Address()
-    cart: CartItem[]
-    
-  
-    constructor(private service: CheckoutService)
-    {
 
-    }
+  payment = new PaymentInfo()
+  billingAddressId = new Address()
+  shippingAddressId = new Address()
+  cart: CartItem[]
 
-    ngOnInit(): void {
-        
-    }
+  constructor(private service: CheckoutService) { }
+  ngOnInit(): void { }
 
-    submitOrder()
-    {
-      // this.payment.billingAddressId.firstName = this.billingAddressId.firstName;
-      // this.payment.billingAddressId.lastName = this.billingAddressId.lastName;
-      // this.payment.billingAddressId.streetAddress = this.billingAddressId.streetAddress;
-      // this.payment.billingAddressId.city = this.billingAddressId.city;
-      // this.payment.billingAddressId.state = this.billingAddressId.state;
-      // this.payment.billingAddressId.zip = this.billingAddressId.zip;
-      // this.payment.billingAddressId.country = this.billingAddressId.country;
+  submitOrder() {
 
-      // this.payment.shippingAddressId.firstName = this.shippingAddressId.firstName;
-      // this.payment.shippingAddressId.lastName = this.shippingAddressId.lastName;
-      // this.payment.shippingAddressId.streetAddress = this.shippingAddressId.streetAddress;
-      // this.payment.shippingAddressId.city = this.shippingAddressId.city;
-      // this.payment.shippingAddressId.state = this.shippingAddressId.state;
-      // this.payment.shippingAddressId.zip = this.shippingAddressId.zip;
-      // this.payment.shippingAddressId.country = this.shippingAddressId.country;
 
-      let purchase = new Purchase();
-    
-      this.payment.billingAddressId = this.billingAddressId
-      this.payment.shippingAddressId = this.shippingAddressId
 
-      const cart = localStorage.getItem('cart');
-      this.cart = JSON.parse(cart!)
-      purchase.payment = this.payment
-      purchase.items = this.cart
-      purchase.message = "Payment Succeeded!"
+    this.payment.billingAddressId = this.billingAddressId
+    this.payment.shippingAddressId = this.shippingAddressId
 
-      console.log(purchase)
+    const cart = localStorage.getItem('cart');
+    this.cart = JSON.parse(cart!)
 
-      
-      let userid: number
-      userid = 4
-     
+    let purchase = new Purchase();
+    purchase.payment = this.payment
+    purchase.items = this.cart
+    purchase.message = "Payment Succeeded!"
 
-      this.service.confirmOrder(purchase, userid).subscribe(
+    console.log(purchase)
+
+
+    let userid: number
+    userid = 4
+
+
+    this.service.confirmOrder(purchase, userid).subscribe(
       {
-           next: (res) => 
-        {
-           console.log(res);
+        next: (res) => {
+          console.log(res);
         }
       }
-      )
-    }
+    )
+  }
 
   // constructor(private service: CheckoutService) { }
 
-  // ngOnInit(): void 
+  // ngOnInit(): void
   // {
   //   this.checkoutFormGroup = this.formBuilder.group
   //   ({
@@ -100,7 +78,7 @@ export class CheckoutComponent implements OnInit {
   //         country: new FormControl('')
 
   //       }),
-      
+
   //       billingAddress: this.formBuilder.group(
   //         {
   //           streetAddress: new FormControl(''),
@@ -108,7 +86,7 @@ export class CheckoutComponent implements OnInit {
   //           state: new FormControl(''),
   //           zip: new FormControl(),
   //           country: new FormControl('')
-  
+
   //         })
   //    });
   // }
@@ -121,7 +99,7 @@ export class CheckoutComponent implements OnInit {
   // {
   //   // await fetch("http://localhost:8080/cart/1/2", {method: "post"});
   //   // await fetch("http://localhost:8080/cart").then(res => res.text().then(json => console.log(json)));
-    
+
   //   let payment = new PaymentInfo ();
   //   payment.cardHolderFirstName = this.checkoutFormGroup.get(['cardInformation'])?.value.cardHolderFirstName
   //   payment.cardHolderLastName = this.checkoutFormGroup.get(['cardInformation'])?.value.cardHolderLastName
@@ -139,7 +117,7 @@ export class CheckoutComponent implements OnInit {
   //  this.service.confirmOrder(purchase).subscribe
   //  (
   //   {
-  //      next: (res) => 
+  //      next: (res) =>
   //      {
   //       console.log(res);
   //      }
@@ -148,12 +126,10 @@ export class CheckoutComponent implements OnInit {
 
   // }
 
-  copyShippingAddressToBillingAddress(event: { target: { checked: any; }; }) 
-   {
+  copyShippingAddressToBillingAddress(event: { target: { checked: any; }; }) {
 
-    if(event.target.checked)
-    {
+    if (event.target.checked) {
       this.shippingAddressId = this.billingAddressId;
     }
-   }
+  }
 }

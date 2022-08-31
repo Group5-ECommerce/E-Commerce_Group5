@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
-import { ProductService } from '../../../services/product.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-add-product',
@@ -16,9 +16,10 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveProduct() {
-    this.productService.createProduct(this.product).subscribe((response) => {
-      console.log(response);
+  saveProduct(event: any) {
+    // console.log(event)
+    // await this.uploadImgToCloud(event)
+    this.productService.createProduct(this.product).subscribe((response: any) => {
       this.product = new Product(); //reset
       this.showAlert = true;
     })
