@@ -1,13 +1,16 @@
 <form id = "editUserForm"class="row gy-2 gx-3 mx-auto align-items-center justify-content-center">
     <div class="row g-3 justify-content-center">
+        <label for="fName" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-auto">
             <input input [(ngModel)] ="user.fName" id = "fName" type="text" class="form-control" aria-label="First Name" name="first">
         </div>
+        <label for="lName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-auto">
             <input input [(ngModel)] ="user.lName" id = "lName" type="text" class="form-control" aria-label="Last Name" name="last">
         </div>
     </div>
     <div class="row g-3 justify-content-center">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
         <div class="col-auto">
             <input [(ngModel)] ="user.email" id="email" type="text" class="form-control" aria-label="Email" name="email">
         </div>
