@@ -31,7 +31,6 @@ export class EditUserComponent implements OnInit {
     let data = {"profile": {}};
     if (fName) Object.assign(data.profile, {'firstName': fName});
     if (lName) Object.assign(data.profile, {'lastName': lName});
-    // if (username) Object.assign(data.profile, {'username': username});
     if (email) Object.assign(data.profile, {'email': email});
     
     // const data = JSON.stringify(profile);
