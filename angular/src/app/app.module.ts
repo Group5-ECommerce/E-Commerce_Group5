@@ -29,6 +29,7 @@ const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
   redirectUri: window.location.origin + '/login/callback',
+  scopes:["openid", "email", "profile", "okta.users.manage.self"]
 });
 
 @NgModule({

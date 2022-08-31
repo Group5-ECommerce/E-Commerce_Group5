@@ -18,14 +18,15 @@ export class UserDetailsService {
       }
     );
   }
-  postUserDetails(data: any): void
+  postUserDetails(data: any)
   {
-    const url = config.apiBaseURL + "/api/v2/users/" + this.userId;
-    this.httpClient.post(url, data);
+    const url = config.apiBaseURL + "/api/v1/users/me";
+    console.log(url);
+    return this.httpClient.post(url, data).subscribe();
   }
-  changePassword(data: any): void
+  changePassword(data: any)
   {
-    const url = config.apiBaseURL + "/api/v2/users/" + this.userId;
-    this.httpClient.post(url, data);
+    const url = config.apiBaseURL + "/api/v1/users/me/credentials/change_password";
+    return this.httpClient.post(url, data).subscribe();
   }
 }

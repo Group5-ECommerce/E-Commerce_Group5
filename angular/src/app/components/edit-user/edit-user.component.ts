@@ -28,15 +28,14 @@ export class EditUserComponent implements OnInit {
     let username = (<HTMLInputElement>document.querySelector("#editUserForm #username")).value;
     let email = (<HTMLInputElement>document.querySelector("#editUserForm #email")).value;
 
-    let profile:Object = new Object();
-    if (fName) Object.assign(profile, {'firstName': fName});
-    if (lName) Object.assign(profile, {'lastName': lName});
-    if (username) Object.assign(profile, {'username': username});
-    if (email) Object.assign(profile, {'email': email});
-
-    fetch("http://localhost:8080/product");
-
-    this.userDetailsService.postUserDetails(profile);
+    let data = {"profile": {}};
+    if (fName) Object.assign(data.profile, {'firstName': fName});
+    if (lName) Object.assign(data.profile, {'lastName': lName});
+    // if (username) Object.assign(data.profile, {'username': username});
+    if (email) Object.assign(data.profile, {'email': email});
+    
+    // const data = JSON.stringify(profile);
+    this.userDetailsService.postUserDetails(data);
   }
 }
 
