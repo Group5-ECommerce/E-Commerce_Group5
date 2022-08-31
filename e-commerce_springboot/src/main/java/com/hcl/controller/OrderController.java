@@ -26,6 +26,7 @@ import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
 import com.hcl.repo.PaymentRepository;
+import com.hcl.repo.ProductRepository;
 import com.hcl.repo.UserRepository;
 import com.hcl.service.AddressService;
 import com.hcl.service.OrderService;
@@ -53,6 +54,9 @@ public class OrderController {
 	@Autowired
 	private UserRepository userRepo;
 
+	@Autowired
+	private ProductRepository productRepository;
+
 	@PostMapping("/checkout/{userId}")
 	// @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	public Purchase checkout(@RequestBody Purchase p, @PathVariable Integer userId) {
@@ -74,10 +78,14 @@ public class OrderController {
 			int amt = items.get(i).getAmt();
 			// Adds an OrderItem entry connected to this order, which holds a product and
 			// amount.
+
 			orderItems.add(new OrderItem(order, product, amt));
-			// Decrease the product's stock since it has just been ordered.
-			product.setProductStock(product.getProductStock() - amt);
+
 			totalPrice += product.getProductPrice() * amt;
+
+			// save stock changes after checkout
+			product.setProductStock(product.getProductStock() - amt);
+			productRepository.save(product);
 		}
 		User u = userRepo.findById(userId).get();
 
