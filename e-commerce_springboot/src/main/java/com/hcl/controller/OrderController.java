@@ -60,9 +60,9 @@ public class OrderController {
 	private UserRepository userRepo;
 
 	
-	@PostMapping("/checkout/{userId}")
+	@PostMapping("/checkout/{email}")
 	//@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public Purchase  checkout(@RequestBody Purchase p, @PathVariable Integer userId) 
+	public Purchase  checkout(@RequestBody Purchase p, @PathVariable String email) 
 	{	
 		List<cartItem> items = p.getItems();
 		if (items == null)
@@ -86,7 +86,7 @@ public class OrderController {
 			product.setProductStock(product.getProductStock() - amt);
 			totalPrice += product.getProductPrice() * amt;
 		}
-		User u = userRepo.findById(userId).get();
+		User u = userRepo.findByEmail(email).get();
 		
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();

@@ -64,11 +64,9 @@ export class CheckoutComponent implements OnInit {
       console.log(purchase)
 
       
-      let userid: number
-      userid = 4
-     
-
-      this.service.confirmOrder(purchase, userid).subscribe(
+      let userEmail: string = 'av902@gmail.com' //add okta-email here
+      
+      this.service.confirmOrder(purchase, userEmail).subscribe(
       {
            next: (res) => 
         {
