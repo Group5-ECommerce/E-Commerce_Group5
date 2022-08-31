@@ -10,20 +10,29 @@ import { config } from 'src/config/app.config';
 export class UserDetailsService {
 
   username: String;
-  userId: String;
+  lastName: String;
+  firstName: String;
   constructor(private _oktaStateService: OktaAuthStateService, private httpClient: HttpClient) {
     this._oktaStateService.authState$.subscribe(
       (s) => {
-        this.username = s.accessToken!.claims.sub;
-        this.userId = (s.accessToken!.claims as any).uid;
+        console.log(s);
+        this.username = s.idToken!.claims.preferred_username!;
+        let fullName = s.idToken?.claims.name!;
+        let splitName = fullName.split(' ');
+        this.firstName = splitName[0];
+        this.lastName = splitName[1];
       }
     );
   }
+
   postUserDetails(data: any) {
     const url = config.apiBaseURL + "/api/v1/users/me";
-    return this.httpClient.post(url, data).pipe(catchError(async (error) => console.log("error")))
-      .subscribe((response) => { console.log("response") }
-      );
+    return this.httpClient.post(url, data).pipe(catchError(async (e) => {
+      if (e.error.errorCode == "E0000001") {
+        alert("Error: Choose another email. That email corresponds to another account");
+      }
+    }))
+      .subscribe((response) => { console.log("response") });
   }
   changePassword(data: any) {
     const url = config.apiBaseURL + "/api/v1/users/me/credentials/change_password";

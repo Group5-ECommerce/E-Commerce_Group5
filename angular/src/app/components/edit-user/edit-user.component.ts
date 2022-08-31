@@ -16,9 +16,14 @@ export class EditUserComponent implements OnInit {
   username: String = "";
   userId: String = "";
 
+  user = {'fName':'', 'lName':'', 'email' : '', 'username': ''};
+
   constructor(private userDetailsService:UserDetailsService) { }
 
   public ngOnInit(): void {
+    this.user.email = this.userDetailsService.username as string;
+    this.user.fName=this.userDetailsService.firstName as string;
+    this.user.lName = this.userDetailsService.lastName as string;
   }
 
   updateUserInfo(e: Event) {
