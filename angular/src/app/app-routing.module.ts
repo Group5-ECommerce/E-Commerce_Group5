@@ -20,10 +20,9 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
   { path: 'add-product', component: AddProductComponent},
   { path: 'edit-product/:id', component: EditProductComponent},
   {path: 'edit-user', component: EditUserComponent},
-  {path: 'change-password', component: ChangePasswordComponent}
-{ path: 'cart-list', component: CartListComponent },
-  { path: 'checkout', component: CheckoutComponent}
-
+  {path: 'change-password', component: ChangePasswordComponent},
+  { path: 'cart-list', component: CartListComponent },
+  { path: 'checkout', component: CheckoutComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],

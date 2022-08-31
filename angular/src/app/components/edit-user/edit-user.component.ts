@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { OktaAuthStateService } from '@okta/okta-angular';
 import { AuthState } from '@okta/okta-auth-js';
 import { map, filter } from 'rxjs';
+import { UserDetailsService } from 'src/app/services/user-details.service';
 import { config } from 'src/config/app.config';
 
 @Component({
@@ -15,15 +16,9 @@ export class EditUserComponent implements OnInit {
   username: String = "";
   userId: String = "";
 
-  constructor(private _oktaStateService: OktaAuthStateService, private http: HttpClient) { }
+  constructor(private userDetailsService:UserDetailsService) { }
 
   public ngOnInit(): void {
-    this._oktaStateService.authState$.subscribe(
-      (s) => {
-        this.username = s.accessToken!.claims.sub;
-        this.userId = (s.accessToken!.claims as any).uid;
-      }
-    );
   }
 
   updateUserInfo(e: Event) {
@@ -39,8 +34,9 @@ export class EditUserComponent implements OnInit {
     if (username) Object.assign(profile, {'username': username});
     if (email) Object.assign(profile, {'email': email});
 
-    const url = config.apiBaseURL + "/api/v2/users/" + this.userId;
-    this.http.post(url, profile);
+    fetch("http://localhost:8080/product");
+
+    this.userDetailsService.postUserDetails(profile);
   }
 }
 

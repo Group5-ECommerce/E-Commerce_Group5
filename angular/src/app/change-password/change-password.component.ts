@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDetailsService } from '../services/user-details.service';
 
 @Component({
   selector: 'app-change-password',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }
+
+  constructor(private userDetailsService:UserDetailsService) { }
 
   changePassword(e: Event) {
     e.preventDefault();
@@ -24,13 +27,10 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    let profile:Object = new Object();
-    if (oldPass) Object.assign(profile, {'oldPassword': oldPass});
-    if (newPass) Object.assign(profile, {'newPassword': newPass});
+    let data:Object = new Object();
+    Object.assign(data, {'oldPassword': oldPass, 'newPassword': newPass});
 
-    // const url = config.issuer + "/api/v2/users/" + this.userId;
-    // console.log(url);
-    //this.http.post(url, profile);
+    this.userDetailsService.changePassword(data);
   }
 
 }
