@@ -37,7 +37,6 @@ export class CustomerGuard implements CanActivate {
          const auth = await this._oktaAuth.isAuthenticated();
          if (auth == true) {
             let isCustomer = await firstValueFrom(this.oktaSvc.hasAnyGroups("Customer"));
-
             return isCustomer;
         }
         this._oktaAuth.signInWithRedirect({'originalUri': state.url});
