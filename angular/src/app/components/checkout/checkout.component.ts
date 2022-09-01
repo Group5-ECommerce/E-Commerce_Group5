@@ -29,18 +29,11 @@ export class CheckoutComponent implements OnInit {
 
   submitOrder() {
 
-
-
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
     const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!)
-
-
-      
-      
-      
+    this.cart = JSON.parse(cart!) 
  
     let purchase = new Purchase();
     purchase.payment = this.payment
@@ -50,11 +43,12 @@ export class CheckoutComponent implements OnInit {
     console.log(purchase)
 
 
-    let userid: number
-    userid = 4
+    let email: string
+    email = "av902@gmail.com"  // okta - email
 
 
-    this.service.confirmOrder(purchase, userid).subscribe(
+
+    this.service.confirmOrder(purchase, email).subscribe(
 
       {
         next: (res) => {

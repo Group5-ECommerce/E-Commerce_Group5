@@ -25,6 +25,7 @@ import com.hcl.entity.Product;
 import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
+import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
 import com.hcl.repo.ProductRepository;
 import com.hcl.repo.UserRepository;
@@ -53,14 +54,17 @@ public class OrderController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private OrderRepository orderRepo;
 
 
 	@Autowired
 	private ProductRepository productRepository;
 
-	@PostMapping("/checkout/{userId}")
+	@PostMapping("/checkout/{email}")
 	// @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-	public Purchase checkout(@RequestBody Purchase p, @PathVariable Integer userId) {
+	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email) {
 
 		List<cartItem> items = p.getItems();
 		if (items == null)
@@ -93,7 +97,7 @@ public class OrderController {
 	
 		
 
-		User u = userRepo.findById(userId).get();
+		User u = userRepo.findByEmail(email).get();
 
 
 		Address s = p.getPayment().getShippingAddressId();
@@ -110,7 +114,7 @@ public class OrderController {
 		order.setShippingAddress(p.getPayment().getShippingAddressId());
 		String number = generateTrackingNumber();
 		order.setTrackingNumber(number);
-		orderService.save(order);
+		orderRepo.save(order);
 
 		PaymentInfo payment = new PaymentInfo();
 
