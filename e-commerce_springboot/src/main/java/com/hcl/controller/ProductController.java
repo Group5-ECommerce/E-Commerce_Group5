@@ -1,5 +1,6 @@
 package com.hcl.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,8 @@ public class ProductController {
 
 	@GetMapping("/product")
 	@ApiOperation(value = "Show All Products")
-	public List<Product> listAllProduct() {
+	public List<Product> listAllProduct(Principal principal) {
+		System.out.println(principal);
 		return repo.findAll();
 	}
 

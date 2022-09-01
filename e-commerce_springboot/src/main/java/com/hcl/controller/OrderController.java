@@ -67,7 +67,6 @@ public class OrderController {
 	private ProductRepository productRepository;
 
 	@PostMapping("/checkout/{email}")
-  @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 	@ApiOperation(value = "Checkout for Order")
 	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email) {
 		List<cartItem> items = p.getItems();
@@ -145,14 +144,14 @@ public class OrderController {
 	}
 
 	@GetMapping("/order")
-  @ApiOperation(value = "Gets All Orders")
-	@PreAuthorize("hasAuthority('Admin')")
+	@ApiOperation(value = "Gets All Orders")
+	@PreAuthorize("hasAuthority('Customer')")
 	public List<Order> getAllOrders() {
 		return orderService.findAll();
 	}
 
 	@GetMapping("/myOrders")
-  @PreAuthorize("hasAuthority('Customer')")
+	@PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Gets all Orders by Username")
 	public List<Order> getMyOrders(Principal principal) {
 		return orderService.findByUsername(principal.getName());
@@ -160,7 +159,7 @@ public class OrderController {
 
 	@GetMapping("/trackOrder/{trackingNumber}")
 	@ApiOperation(value = "Find Order by Tracking Number")
-	@PreAuthorize("hasAuthority('Admin')")
+	@PreAuthorize("hasAuthority('Customer')")
 	public List<OrderItem> trackOrder(@PathVariable String trackingNumber) {
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {

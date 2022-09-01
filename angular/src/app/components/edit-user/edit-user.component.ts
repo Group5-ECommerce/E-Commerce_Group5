@@ -22,9 +22,10 @@ export class EditUserComponent implements OnInit {
   constructor(private userDetailsService:UserDetailsService) { }
 
   public ngOnInit(): void {
-    this.user.email = this.userDetailsService.username as string;
+    this.user.email = this.userDetailsService.email as string;
     this.user.fName=this.userDetailsService.firstName as string;
     this.user.lName = this.userDetailsService.lastName as string;
+    this.user.username = this.userDetailsService.username as string;
   }
 
   updateUserInfo(e: Event) {
@@ -32,12 +33,15 @@ export class EditUserComponent implements OnInit {
     let fName = (<HTMLInputElement>document.querySelector("#editUserForm #fName")).value;
     let lName = (<HTMLInputElement>document.querySelector("#editUserForm #lName")).value;
     let email = (<HTMLInputElement>document.querySelector("#editUserForm #email")).value;
+    let username = (<HTMLInputElement>document.querySelector("#editUserForm #username")).value;
+
 
     let data = {"profile": {}};
     if (fName) Object.assign(data.profile, {'firstName': fName});
     if (lName) Object.assign(data.profile, {'lastName': lName});
     if (email) Object.assign(data.profile, {'email': email});
-    
+    if (username) Object.assign(data.profile, {'login': username});
+
     this.userDetailsService.postUserDetails(data);
     this.isSubmitted = true;
   }
