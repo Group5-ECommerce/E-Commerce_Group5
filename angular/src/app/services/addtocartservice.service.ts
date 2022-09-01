@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from "../models/product.model";
+import { Product } from '../model/product';
 
 const baseUrl = "http://localhost:8080/cart";
 @Injectable({

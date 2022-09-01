@@ -9,7 +9,6 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './components/profile/profile.component';
-
 import { config } from "../config/app.config";
 import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
 import { ProductService } from './services/product.service';
@@ -48,6 +47,7 @@ const oktaAuth = new OktaAuth({
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
+    FormsModule, 
     HttpClientModule,
     FormsModule, ReactiveFormsModule
   ],

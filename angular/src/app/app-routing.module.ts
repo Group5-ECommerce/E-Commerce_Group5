@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OktaCallbackComponent } from '@okta/okta-angular';
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
@@ -15,15 +15,17 @@ import { OrdereredProductsComponent } from './components/orderered-products/orde
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
-{ path: 'profile', component: ProfileComponent },
+
+{ path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] },
 { path: 'product', component: CustomerProductListComponent },
-{ path: 'product-list', component: AdminProductListComponent },
-{ path: 'add-product', component: AddProductComponent },
-{ path: 'edit-product/:id', component: EditProductComponent },
+{ path: 'product-list', component: AdminProductListComponent, canActivate: [OktaAuthGuard] },
+{ path: 'add-product', component: AddProductComponent, canActivate: [OktaAuthGuard] },
+{ path: 'edit-product/:id', component: EditProductComponent, canActivate: [OktaAuthGuard] },
 { path: 'cart-list', component: CartListComponent },
-{ path: 'checkout', component: CheckoutComponent },
+{ path: 'checkout', component: CheckoutComponent, canActivate: [OktaAuthGuard] },
 { path: 'order-list', component: OrderListComponent },
-{ path: 'ordered-products/:tracker', component: OrdereredProductsComponent }
+{ path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
+{ path: '', redirectTo: "product", pathMatch: "full" },
 ];
 
 @NgModule({
