@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,15 +33,12 @@ import com.hcl.repo.ProductRepository;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
-<<<<<<< Updated upstream
-=======
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:4200")
->>>>>>> Stashed changes
-@RestController
 @Api(tags= "Cart")
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
@@ -48,13 +46,9 @@ public class CartController {
 	@Autowired
 	UserService userService;
 
+
 	@PostMapping("/cart/{id}/{amt}")
-<<<<<<< Updated upstream
-    @PreAuthorize("hasAuthority('Customer')")
-=======
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Creates new Cart")
->>>>>>> Stashed changes
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -64,18 +58,15 @@ public class CartController {
 		if(product.isPresent()) {
 			items.add(new cartItem(product.get(), amt));
 			session.setAttribute("items", items);
+			System.out.println(items);
 			return "";
 		}
 		else return "A product with id " + id + " does not exist.";
+		
 	}
 
 	@GetMapping("/cart")
-<<<<<<< Updated upstream
-    @PreAuthorize("hasAuthority('Customer')")
-=======
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Show Cart")
->>>>>>> Stashed changes
 	public Object getCart(HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -85,12 +76,7 @@ public class CartController {
 	}
 
 	@PutMapping("/cart/{id}/{amt}")
-<<<<<<< Updated upstream
-    @PreAuthorize("hasAuthority('Customer')")
-=======
 	@ApiOperation(value = "Add item to cart")
-    // @PreAuthorize("hasAuthority('Customer')")
->>>>>>> Stashed changes
 	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -116,23 +102,13 @@ public class CartController {
 	}
 
 	@DeleteMapping("/cart")
-<<<<<<< Updated upstream
-    @PreAuthorize("hasAuthority('Customer')")
-=======
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Deletes all items in cart")
->>>>>>> Stashed changes
 	public void emptyCart(HttpSession session) {
 		session.setAttribute("items", null);
 	}
 
 	@DeleteMapping("/cart/{id}")
-<<<<<<< Updated upstream
-    @PreAuthorize("hasAuthority('Customer')")
-=======
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Deletes item in cart by Id")
->>>>>>> Stashed changes
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
 		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -146,4 +122,5 @@ public class CartController {
 		}
 		session.setAttribute("items", items);
 	}
+	*/
 }

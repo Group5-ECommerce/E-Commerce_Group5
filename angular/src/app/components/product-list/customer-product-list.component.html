@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row d-flex flex-column justify-content-center">
-    <h1 class = "text-center">Product List</h1>
+    <h3 class="text-center">Product List</h3>
     <div class="card-columns col-lg-6  mt-2 mx-auto " *ngFor="let product of products; let i = index"
       [class.active]="i == currentIndex">
       <div class="card flex-row">
@@ -10,6 +10,8 @@
           <h4 class="card-title">{{product.productName}}</h4>
           <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
           <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
+          <button #refEl class="d-inline-block mx-3" type="button" class="btn btn-primary"
+            (click)="saveToCart(refEl, product)">Add To Cart</button>
         </div>
       </div>
     </div>

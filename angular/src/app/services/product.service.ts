@@ -1,20 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 
-
-
-const baseUrl = 'http://localhost:8080/product';
-
 @Injectable({
-  providedIn: 'root',
- })
+  providedIn: 'root'
+})
 export class ProductService {
 
   constructor(private http: HttpClient) { }
+  url = "http://localhost:8080";
+  private coudinaryImgSaveUrl = "https://api.cloudinary.com/v1_1/gaurav-cloudinary/image/upload";
 
-  getAll(): Observable<Product[]> {
-    return this.http.get<Product[]>(baseUrl);
+  createProduct(product: Product) {
+    return this.http.post(this.url + "/product", product);
+  }
+
+  updateProduct(product: Product) {
+    return this.http.put(this.url + "/product", product);
+  }
+
+  getProductList() {
+    return this.http.get<Product[]>(this.url + "/product");
+  }
+
+  getProduct(id: number) {
+    return this.http.get(this.url + "/product/" + id);
+  }
+
+  deleteProduct(id: number) {
+    return this.http.delete(this.url + "/product/" + id);
+  }
+
+  saveImgToCloudinary(file: any) {
+    const imgForm = new FormData();
+    imgForm.append("file", file)
+    imgForm.append("upload_preset", "default_preset")
+    imgForm.append("cloud_name", "gaurav-cloudinary")
+    return this.http.post(this.coudinaryImgSaveUrl, imgForm)
   }
 }
