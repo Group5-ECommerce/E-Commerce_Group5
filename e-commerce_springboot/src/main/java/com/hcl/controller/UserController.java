@@ -18,26 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.entity.User;
 import com.hcl.service.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Api(tags= "Users")
 public class UserController {
 	@Autowired
 	private UserService service;
 
 	
 	@GetMapping("/")
+	@ApiOperation(value = "Home Screen")
 	public String getDefaultPage() {
 		return "This is the default page.";
 	}
 	
 	@GetMapping("/customer")
     @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "User Is Customer")
 	public String userPage() {
 		return "Welcome to the ROLE_CUSTOMER page.";
 	}
 	
 	@GetMapping("/admin")
     @PreAuthorize("hasAuthority('Admin')")
+	@ApiOperation(value = "User Is Admin")
 	public String adminPage() {
 		return "Welcome to the ROLE_ADMIN page.";
 	}
