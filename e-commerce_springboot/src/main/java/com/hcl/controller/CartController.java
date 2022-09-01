@@ -33,7 +33,10 @@ import com.hcl.repo.ProductRepository;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(tags= "Cart")
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
@@ -43,9 +46,9 @@ public class CartController {
 	@Autowired
 	UserService userService;
 
-/*
+
 	@PostMapping("/cart/{id}/{amt}")
-    // @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Creates new Cart")
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -63,7 +66,7 @@ public class CartController {
 	}
 
 	@GetMapping("/cart")
-    // @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Show Cart")
 	public Object getCart(HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -73,7 +76,7 @@ public class CartController {
 	}
 
 	@PutMapping("/cart/{id}/{amt}")
-    // @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Add item to cart")
 	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -99,13 +102,13 @@ public class CartController {
 	}
 
 	@DeleteMapping("/cart")
-    // @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Deletes all items in cart")
 	public void emptyCart(HttpSession session) {
 		session.setAttribute("items", null);
 	}
 
 	@DeleteMapping("/cart/{id}")
-    // @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Deletes item in cart by Id")
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
 		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
 		if (items == null)
