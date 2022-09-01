@@ -11,7 +11,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.hcl.config.Secret;
 import com.hcl.entity.Order;
 
 public class SendEmail {
@@ -91,8 +90,8 @@ public class SendEmail {
 	}
 
 	private static Session setUpAndGetSession() {
-		final String username = Secret.username;
-		final String password = Secret.password;
+		final String username = "dfdef266157cbc";
+		final String password = "b02bcd907537b3";
 
 		// Paste host address from the SMTP settings tab in your Mailtrap Inbox
 		String host = "smtp.mailtrap.io";
