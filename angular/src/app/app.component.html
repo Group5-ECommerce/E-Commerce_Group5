@@ -7,11 +7,10 @@
     <ng-template #signedIn>
       <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
       <ul class="nav justify-content-end">
-        <li class="navbarlinks text-white"><a class="text-white" routerLink="/product-list">Admin Product List</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/product">Customer Product List</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/checkout">Checkout</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
+        <li class="navbarlinks"><a class="text-white btn" routerLink="/product-list">Admin Product List</a></li>
+        <li class="navbarlinks"><a class="text-white btn" routerLink="/product">Customer Product List</a></li>
+        <li class="navbarlinks"><a class="text-white btn" routerLink="/cart-list">Cart</a></li>
+        <li class="navbarlinks"><a class="text-white btn" routerLink="/order-list">Orders</a></li>
       </ul>
       <div class="dropdown p-2 me-4">
         <button (click)="toggleDropdown()" class="dropbtn">User</button>

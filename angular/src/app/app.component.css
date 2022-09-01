@@ -75,11 +75,10 @@ p {
   right: 0;
   height: 100px;
   display: flex;
-  align-items: center;
+  align-items:baseline;
   background-color: #1976d2;
   color: white;
   font-weight: 600;
-  resize: both;
   overflow: auto;
 }
 
