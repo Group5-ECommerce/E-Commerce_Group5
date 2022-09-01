@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
@@ -28,6 +30,7 @@ const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
   redirectUri: window.location.origin + '/login/callback',
+  scopes:["openid", "profile", "groups", "okta.users.manage.self"]
 });
 
 @NgModule({
@@ -38,6 +41,8 @@ const oktaAuth = new OktaAuth({
     CustomerProductListComponent,
     AddProductComponent,
     EditProductComponent,
+    EditUserComponent,
+    ChangePasswordComponent,
     CartListComponent,
     CheckoutComponent,
     OrderListComponent,
