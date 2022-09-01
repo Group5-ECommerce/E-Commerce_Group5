@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
 import { Product } from "../models/product.model";
 
@@ -8,9 +8,21 @@ import { Product } from "../models/product.model";
 @Injectable({
   providedIn: 'root'
 })
+
+/*
+  EVERY FUNCTION MUST ASSIGN
+  NEXT VALUE TO THE WATCHER SUBJECT
+  TO CONTINUOUSLY UPDATE THE CART VIEW
+*/
+
 export class CartService {
+  private watcher = new Subject();
 
   constructor(private http: HttpClient) { }
+
+  activateWatcher(): Observable<any> {
+    return this.watcher.asObservable();
+  }
 
   addProduct(data: Product) {
     const cartItem = { product: data, amt: 1 };
@@ -26,35 +38,68 @@ export class CartService {
       //This runs if the item already exists in the cartItem array.
       if (index > -1) {
         //cartItem.amt += 1;
-        cartJSON[index] = cartItem;
+        cartJSON[index].amt += 1;
       }
       else cartJSON.push(cartItem);
+      this.watcher.next(cartJSON)
 
       const cartString = JSON.stringify(cartJSON);
       localStorage.setItem("cart", cartString);
     }
     else {
       const startCart = [cartItem];
+      this.watcher.next(startCart)
+
       localStorage.setItem('cart', JSON.stringify(startCart));
+    }
+  }
+
+  updateCart(data: CartItem[]) {
+    if (data) {
+      localStorage.setItem("cart", JSON.stringify(data));
+      this.watcher.next(data)
     }
   }
 
   removeProduct(data: Product) {
     const cart = localStorage.getItem('cart');
-    let cartJSON = JSON.parse(cart!);
-    cartJSON = cartJSON.filter((item: { product: Product, amt: 1 }) => item.product.productId !== data.productId);
-    const cartString = JSON.stringify(cartJSON);
-    localStorage.setItem("cart", cartString);
+    if (cart) {
+      let cartJSON = JSON.parse(cart);
+      cartJSON = cartJSON.filter((item: { product: Product, amt: number }) => item.product.productId !== data.productId);
+      this.watcher.next(cartJSON)
+
+      const cartString = JSON.stringify(cartJSON);
+      localStorage.setItem("cart", cartString);
+    } else {
+      console.log("cart is empty!")
+    }
+
   }
+
+  clearCart() {
+    localStorage.removeItem('cart')
+    console.log("cart cleared!")
+  }
+
+  // updateProductAmount(amount:number){
+  //   const cart = localStorage.getItem('cart');
+  //   if(cart){
+  //     let cartJSON = JSON.parse(cart);
+  //     cartJSON = cartJSON.filter((item: { product: Product }) => item.product.productId !== data.productId);
+  //     const cartString = JSON.stringify(cartJSON);
+  //     localStorage.setItem("cart", cartString);
+  //   }
+  // }
 
   viewItems() {
     let cartString = localStorage.getItem('cart')
-    let cartObj: CartItem[] = [];
+    let cartList: CartItem[] = [];
 
     if (cartString) {
       let cartJSON: CartItem[] = JSON.parse(cartString);
-      cartObj = cartJSON;
+      cartList = cartJSON;
     }
-    return cartObj;
+    // return cartObj;
+    this.watcher.next(cartList);
   }
 }
