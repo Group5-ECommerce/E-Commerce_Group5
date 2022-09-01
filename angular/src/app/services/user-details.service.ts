@@ -31,12 +31,17 @@ export class UserDetailsService {
       if (e.error.errorCode == "E0000001") {
         alert("Error: Choose another email. That email corresponds to another account");
       }
+      return false;
     }))
-      .subscribe((response) => { console.log(response) });
+      .subscribe((response) => { console.log(response); return true; });
   }
   changePassword(data: any) {
-    const url = config.apiBaseURL + "/api/v1/users/me/credentials/change_password";
-    return this.httpClient.post(url, data).pipe(catchError(async (error) => console.log("error")))
-      .subscribe((response) => { console.log(response) });
+    const url = config.apiBaseURL + "/api/v1/authn/credentials/change_password";
+//    /api/v1/authn
+
+  /*
+    return this.httpClient.post(url, data).pipe(catchError(async (error) => {console.log(error); return false;}))
+      .subscribe((response) => { console.log(response); return true; }); */
   }
+
 }
