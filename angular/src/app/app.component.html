@@ -1,6 +1,6 @@
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
+<div class="toolbar navbar" role="banner">
     <h1 class="mx-auto text-center">E-Commerce App</h1>
     <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
       <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
