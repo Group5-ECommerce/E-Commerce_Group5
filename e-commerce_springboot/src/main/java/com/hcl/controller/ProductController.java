@@ -28,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
 public class ProductController {
 	@Autowired
 	private ProductRepository repo;
+	
 	@PostMapping("/product")
 	@ApiOperation(value = "Add Product")
 	@PreAuthorize("hasAuthority('Admin')")
