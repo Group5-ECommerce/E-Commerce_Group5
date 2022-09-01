@@ -33,7 +33,7 @@ export class EditProductComponent implements OnInit {
     })
   }
 
-  getFile(event: any) {
+  setFile(event: any) {
     this.file = event.target.files[0];
     console.log(this.file)
   }
