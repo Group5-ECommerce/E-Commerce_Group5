@@ -32,11 +32,11 @@ export class UserDetailsService {
         alert("Error: Choose another email. That email corresponds to another account");
       }
     }))
-      .subscribe((response) => { console.log("response") });
+      .subscribe((response) => { console.log(response) });
   }
   changePassword(data: any) {
     const url = config.apiBaseURL + "/api/v1/users/me/credentials/change_password";
     return this.httpClient.post(url, data).pipe(catchError(async (error) => console.log("error")))
-      .subscribe();
+      .subscribe((response) => { console.log(response) });
   }
 }
