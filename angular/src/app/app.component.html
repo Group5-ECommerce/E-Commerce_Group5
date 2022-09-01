@@ -1,3 +1,4 @@
+
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
     <h1 class="mx-auto text-center">E-Commerce App</h1>
@@ -7,9 +8,9 @@
     <ng-template #signedIn>
       <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
       <ul class="nav justify-content-end">
-        <li class="navbarlinks text-white"><a class="text-white" routerLink="/product-list">Admin Product List</a></li>
+        <li *oktaHasAnyGroup="['Admin']" class="navbarlinks text-white"><a class="text-white" routerLink="/product-list">Admin Product List</a></li>
+        <li *oktaHasAnyGroup="['Admin']" class="navbarlinks"><a class="text-white" routerLink="/add-product">Add Product</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/product">Customer Product List</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/add-product">Add Product</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/checkout">Checkout</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
@@ -18,8 +19,8 @@
         <button (click)="toggleDropdown()" class="dropbtn">User</button>
         <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
         <div id="accountDropdown" class="dropdown-content">
-          <a href="#home">View Orders</a>
-          <a href="#about">Change Password</a>
+          <a href="/edit-user">Edit Details</a>
+          <a href="/change-password">Change Password</a>
           <a role="button" (click)="signOut()">Sign out</a>
         </div>
       </div>
