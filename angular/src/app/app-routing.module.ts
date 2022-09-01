@@ -16,7 +16,8 @@ import { OrdereredProductsComponent } from './components/orderered-products/orde
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
-{ path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard]},
+
+{ path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] },
 { path: 'product', component: CustomerProductListComponent },
 { path: 'product-list', component: AdminProductListComponent, canActivate: [AdminGuard] },
 { path: 'add-product', component: AddProductComponent, canActivate: [AdminGuard] },
