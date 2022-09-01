@@ -26,8 +26,12 @@ import com.hcl.service.OrderService;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Api(tags= "Products")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
@@ -37,6 +41,7 @@ public class OrderController {
 	
 	@PutMapping("/checkout")
     @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Checkout for Order")
 	public void checkout(HttpSession session, Principal principal) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -77,18 +82,21 @@ public class OrderController {
 	
 	@GetMapping("/order")
     @PreAuthorize("hasAuthority('Admin')")
+	@ApiOperation(value = "Gets All Orders")
 	public List<Order> getAllOrders(){
 		return orderService.findAll();
 	}
 	
 	@GetMapping("/myOrders")
     @PreAuthorize("hasAuthority('Customer')")
+	@ApiOperation(value = "Gets all Orders by Username")
 	public List<Order> getMyOrders(Principal principal){
 		return orderService.findByUsername(principal.getName());
 	}
   
 	@GetMapping("/trackOrder/{trackingNumber}")
     @PreAuthorize("hasAuthority('Admin')")
+	@ApiOperation(value = "Find Order by Tracking Number")
 	public String trackOrder(@PathVariable String trackingNumber) {
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {

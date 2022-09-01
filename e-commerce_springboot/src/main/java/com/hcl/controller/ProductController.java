@@ -17,26 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.entity.Product;
 import com.hcl.repo.ProductRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Api(tags= "Products")
 public class ProductController {
 	@Autowired
 	private ProductRepository repo;
 
 	@PostMapping("/product")
+	@ApiOperation(value = "Add Product")
 	// @PreAuthorize("hasAuthority('Admin')")
 	public void addProduct(@RequestBody Product product) {
 		repo.save(product);
 	}
 
 	@GetMapping("/product")
-
+	@ApiOperation(value = "Show All Products")
 	// @PreAuthorize("hasAuthority('Customer')")
 	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 
 	@GetMapping("/product/{id}")
+	@ApiOperation(value = "Get Product With Id")
 	// @PreAuthorize("hasAuthority('Customer')")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
 		Optional<Product> product = repo.findById(id);
@@ -44,12 +50,14 @@ public class ProductController {
 	}
 
 	@PutMapping("/product")
+	@ApiOperation(value = "Update specific product")
 	// @PreAuthorize("hasAuthority('Admin')")
 	public void updateProduct(@RequestBody Product newProduct) {
 		repo.save(newProduct);
 	}
 
 	@DeleteMapping("/product/{id}")
+	@ApiOperation(value = "Delete Product With Id")
 	// @PreAuthorize("hasAuthority('Admin')")
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
