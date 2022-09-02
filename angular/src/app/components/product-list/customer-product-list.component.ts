@@ -13,10 +13,14 @@ export class CustomerProductListComponent implements OnInit {
   products?: Product[];
   currentIndex = -1;
   title = "product list"
+  pageNum?: number
+
   constructor(private productService: ProductService, private cartService: CartService) { }
 
 
   ngOnInit(): void {
+    this.pageNum = 1
+
     this.retrieveProducts();
   }
 

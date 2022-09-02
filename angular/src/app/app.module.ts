@@ -21,6 +21,7 @@ import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -47,9 +48,10 @@ const oktaAuth = new OktaAuth({
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
-    FormsModule, 
+    FormsModule,
     HttpClientModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
