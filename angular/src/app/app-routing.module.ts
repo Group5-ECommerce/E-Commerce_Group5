@@ -7,23 +7,27 @@ import { AdminProductListComponent } from './components/admin/product-list/admin
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
-
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
-{ path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard]},
+
+{ path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] },
 { path: 'product', component: CustomerProductListComponent },
-{ path: 'product-list', component: AdminProductListComponent, canActivate: [OktaAuthGuard] },
-{ path: 'add-product', component: AddProductComponent, canActivate: [OktaAuthGuard] },
-{ path: 'edit-product/:id', component: EditProductComponent, canActivate: [OktaAuthGuard] },
-{ path: 'cart-list', component: CartListComponent },
-{ path: 'checkout', component: CheckoutComponent, canActivate: [OktaAuthGuard] },
-{ path: 'order-list', component: OrderListComponent },
+{ path: 'product-list', component: AdminProductListComponent, canActivate: [AdminGuard] },
+{ path: 'add-product', component: AddProductComponent, canActivate: [AdminGuard] },
+{ path: 'edit-product/:id', component: EditProductComponent, canActivate: [AdminGuard] },
+{ path: 'cart-list', component: CartListComponent},
+{ path: 'checkout', component: CheckoutComponent, canActivate: [CustomerGuard] },
+{ path: 'order-list', component: OrderListComponent, canActivate: [OktaAuthGuard] },
 { path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
+{path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard]},
+{path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard]},
 { path: '', redirectTo: "product", pathMatch: "full"},
 ];
 

@@ -1,5 +1,6 @@
 package com.hcl.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,35 +20,46 @@ import com.hcl.entity.Product;
 import com.hcl.repo.ProductRepository;
 import com.hcl.repo.StorageRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Api(tags= "Products")
 public class ProductController {
 	@Autowired
 	private ProductRepository repo;
+	
 	@PostMapping("/product")
+	@ApiOperation(value = "Add Product")
 	@PreAuthorize("hasAuthority('Admin')")
 	public void addProduct(@RequestBody Product product) {
 		repo.save(product);
 	}
 
 	@GetMapping("/product")
-	public List<Product> listAllProduct() {
+	@ApiOperation(value = "Show All Products")
+	public List<Product> listAllProduct(Principal principal) {
+		System.out.println(principal);
 		return repo.findAll();
 	}
 
 	@GetMapping("/product/{id}")
+	@ApiOperation(value = "Get Product With Id")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
 		Optional<Product> product = repo.findById(id);
 		return product;
 	}
 
 	@PutMapping("/product")
+	@ApiOperation(value = "Update specific product")
 	@PreAuthorize("hasAuthority('Admin')")
 	public void updateProduct(@RequestBody Product newProduct) {
 		repo.save(newProduct);
 	}
 
 	@DeleteMapping("/product/{id}")
+	@ApiOperation(value = "Delete Product With Id")
 	@PreAuthorize("hasAuthority('Admin')")
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);

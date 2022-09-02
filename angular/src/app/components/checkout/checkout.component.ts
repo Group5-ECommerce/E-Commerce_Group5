@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EMPTY } from 'rxjs';
-import { Address } from 'src/app/common/address/address';
-import { PaymentInfo } from 'src/app/common/paymentInfo/payment-info';
-import { Purchase } from 'src/app/common/purchase/purchase';
+import { Address } from 'src/app/models/address/address';
 import { CartItem } from 'src/app/models/cart-item.model';
-import { Product } from 'src/app/product/product';
+import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
+import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 
@@ -29,14 +28,12 @@ export class CheckoutComponent implements OnInit {
 
   submitOrder() {
 
-
-
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
     const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!)
-
+    this.cart = JSON.parse(cart!) 
+ 
     let purchase = new Purchase();
     purchase.payment = this.payment
     purchase.items = this.cart
@@ -45,11 +42,13 @@ export class CheckoutComponent implements OnInit {
     console.log(purchase)
 
 
-    let userid: number
-    userid = 4
+    let email: string
+    email = "customer@e-commerce.com"  // okta - email
 
 
-    this.service.confirmOrder(purchase, userid).subscribe(
+
+    this.service.confirmOrder(purchase, email).subscribe(
+
       {
         next: (res) => {
           console.log(res);

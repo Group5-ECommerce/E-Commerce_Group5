@@ -1,3 +1,9 @@
+body{
+  z-index:0;
+
+}
+
+
 /* Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/
 .dropbtn {
   background-color: #3498DB;
@@ -23,9 +29,8 @@
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
-  overflow: auto;
+  overflow: visible;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
   /* Thanks to https://stackoverflow.com/a/30467081 for this code to align the dropdown on the left of the right element.*/
   left: auto !important;
   right: 0 !important;
@@ -185,6 +190,6 @@ footer a {
 }
 
 .navbarlinks {
-  padding: 50px;
+  padding:0 50px;
   color: #cfcfcf
 }
