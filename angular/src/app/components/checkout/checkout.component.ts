@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EMPTY } from 'rxjs';
-import { Address } from 'src/app/common/address/address';
-import { PaymentInfo } from 'src/app/common/paymentInfo/payment-info';
-import { Purchase } from 'src/app/common/purchase/purchase';
+import { Address } from 'src/app/models/address/address';
 import { CartItem } from 'src/app/models/cart-item.model';
-import { Product } from 'src/app/product/product';
+import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
+import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 

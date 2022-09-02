@@ -122,5 +122,4 @@ public class CartController {
 		}
 		session.setAttribute("items", items);
 	}
-	*/
 }
