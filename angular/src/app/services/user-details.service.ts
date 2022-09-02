@@ -17,7 +17,6 @@ export class UserDetailsService {
   constructor(private _oktaStateService: OktaAuthStateService, private httpClient: HttpClient) {
     this._oktaStateService.authState$.subscribe(
       (s) => {
-        console.log(s.idToken!.claims.preferred_username);
         this.email = s.idToken!.claims.email!;
         let fullName = s.idToken?.claims.name!;
         let splitName = fullName.split(' ');

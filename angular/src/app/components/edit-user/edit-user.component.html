@@ -31,9 +31,9 @@
 </form>
 <div class="alert alert-success col-sm-3 mx-auto mt-3" role="alert" *ngIf="isSubmitted">
     <strong>Updated</strong>
-    <button class="close btn-sm justify-content-center float-end" (click)="closeSubmitted()">X</button>
+    <button class="close btn-sm float-end" (click)="closeSubmitted()">X</button>
 </div>
 <div class="alert alert-danger col-sm-4 mx-auto mt-3" role="alert" *ngIf="isError">
     <strong>Input required to update personal details.</strong>
-    <button class="close btn-sm justify-content-center float-end" (click)="closeError()">X</button>
+    <button class="close btn-sm float-end" (click)="closeError()">X</button>
 </div>
