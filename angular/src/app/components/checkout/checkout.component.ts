@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit {
 
 
     let email: string
-    email = "av902@gmail.com"  // okta - email
+    email = "customer@e-commerce.com"  // okta - email
 
 
 
