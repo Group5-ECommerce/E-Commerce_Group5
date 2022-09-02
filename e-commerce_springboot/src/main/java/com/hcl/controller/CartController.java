@@ -32,12 +32,13 @@ import com.hcl.repo.OrderRepository;
 import com.hcl.repo.ProductRepository;
 import com.hcl.service.SendEmail;
 import com.hcl.service.UserService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RestController
 @Api(tags= "Cart")
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 	@Autowired
 	private ProductRepository productRepo;
@@ -45,9 +46,8 @@ public class CartController {
 	@Autowired
 	UserService userService;
 
+
 	@PostMapping("/cart/{id}/{amt}")
-    @PreAuthorize("hasAuthority('Customer')")
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Creates new Cart")
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
@@ -58,14 +58,14 @@ public class CartController {
 		if(product.isPresent()) {
 			items.add(new cartItem(product.get(), amt));
 			session.setAttribute("items", items);
+			System.out.println(items);
 			return "";
 		}
 		else return "A product with id " + id + " does not exist.";
+		
 	}
 
 	@GetMapping("/cart")
-    @PreAuthorize("hasAuthority('Customer')")
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Show Cart")
 	public Object getCart(HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
@@ -76,9 +76,7 @@ public class CartController {
 	}
 
 	@PutMapping("/cart/{id}/{amt}")
-    @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Add item to cart")
-    // @PreAuthorize("hasAuthority('Customer')")
 	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -104,16 +102,12 @@ public class CartController {
 	}
 
 	@DeleteMapping("/cart")
-    @PreAuthorize("hasAuthority('Customer')")
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Deletes all items in cart")
 	public void emptyCart(HttpSession session) {
 		session.setAttribute("items", null);
 	}
 
 	@DeleteMapping("/cart/{id}")
-    @PreAuthorize("hasAuthority('Customer')")
-    // @PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Deletes item in cart by Id")
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
 		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
@@ -128,4 +122,5 @@ public class CartController {
 		}
 		session.setAttribute("items", items);
 	}
+	*/
 }

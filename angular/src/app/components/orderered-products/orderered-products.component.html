@@ -1,0 +1,29 @@
+<div class="container">
+  <h3 class="text-center">Order: <h5 class="d-inline">{{tracker}}</h5>
+  </h3>
+</div>
+
+<div class="container-fluid">
+  <div class="container">
+    <table class="table table-light">
+      <thead class="thead-light">
+        <tr>
+          <th>product name</th>
+          <th>product img</th>
+          <th>price</th>
+          <th>amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let oi of orderItems">
+          <td>{{oi.product?.productName}}</td>
+          <td><img class="float-left  m-2" src="{{oi.product?.productImage}}" alt="product image"
+              style=" width: 20;height: 20px;"></td>
+          <td>${{oi.product?.productPrice}}</td>
+          <td>{{oi.amt}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

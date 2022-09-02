@@ -23,16 +23,18 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public async signIn() : Promise<void> {
+  public async signIn(): Promise<void> {
     // This may be useful in the future: { originalUri: '/' }
-    await this._oktaAuth.signInWithRedirect().then(
-      _ =>
-      // this._router.navigate(['profile'])
-      this._router.navigateByUrl('profile')
+    await this._oktaAuth.signInWithRedirect().then(_ =>
+        this._router.navigateByUrl('profile')
     );
   }
 
   public async signOut(): Promise<void> {
     await this._oktaAuth.signOut();
+  }
+
+  toggleDropdown() {
+    document.getElementById("accountDropdown")?.classList.toggle("show");
   }
 }
