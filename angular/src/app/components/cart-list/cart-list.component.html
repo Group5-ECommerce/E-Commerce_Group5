@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let c of cartItems ">
+        <tr *ngFor="let c of cartItems! | paginate: { itemsPerPage: 5, currentPage: pageNum} ">
           <td>{{c.product.productId}}</td>
           <td>{{c.product.productName}}</td>
           <td>${{c.product.productPrice}}</td>
@@ -35,8 +35,12 @@
         </tr>
       </tbody>
     </table>
+
   </div>
-  <div class="checkoutbtn">
+  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="cartItems!.length>5">
+    <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
+  </div>
+  <div class="checkoutbtn mt-3 d-flex justify-content-center">
     <a class="btn btn-primary" role="button" routerLink="/checkout">Checkout</a>
   </div>
 

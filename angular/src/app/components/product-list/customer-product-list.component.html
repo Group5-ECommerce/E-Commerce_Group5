@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 container justify-content-center d-flex mt-3">
+      <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products!.length>5">
         <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
       </div>
     </div>

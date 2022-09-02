@@ -14,12 +14,13 @@ import { CartService } from 'src/app/services/cart.service';
 
 export class CartListComponent implements OnInit {
   cartItems?: CartItem[];
-  cartLength = 0;
   isProductAmountEditable = false
+  pageNum?: number
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
+    this.pageNum = 1
 
     //must be first for live crud update to list
     this.cartService.activateWatcher().subscribe((response) => {
@@ -27,7 +28,6 @@ export class CartListComponent implements OnInit {
     })
 
     this.cartService.viewItems();
-    this.cartLength = this.cartItems?.length ?? 0;
 
 
   }

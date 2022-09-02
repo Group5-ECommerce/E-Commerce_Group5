@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Api(tags= "Products")
+@Api(tags = "Products")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
@@ -58,10 +58,9 @@ public class OrderController {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private OrderRepository orderRepo;
-
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -95,10 +94,9 @@ public class OrderController {
 			// save stock changes after checkout
 			product.setProductStock(product.getProductStock() - amt);
 			productRepository.save(product);
-		}	
+		}
 
 		User u = userRepo.findByEmail(email).get();
-
 
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
