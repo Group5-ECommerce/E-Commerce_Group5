@@ -20,9 +20,11 @@
         <td>${{p.productPrice}}</td>
         <td>{{p.storageId}}</td>
         <td>
-          <button class="btn btn-warning" style="margin-right: 10px;"
+          <div class = "d-flex">
+          <button class="btn btn-secondary inline" style="margin-right: 10px;"
             [routerLink]="['/edit-product', p.productId]">Edit</button>
-          <button class="btn btn-warning" (click)="deleteProduct(p.productId)">Delete</button>
+          <button class="btn btn-danger inline" (click)="deleteProduct(p.productId)">Delete</button>
+          </div>
         </td>
       </tr>
     </tbody>
