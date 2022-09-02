@@ -16,6 +16,7 @@ export class EditUserComponent implements OnInit {
   username: String = "";
   userId: String = "";
   isSubmitted:boolean = false;
+  isError:boolean = false;
 
   user = {'fName':'', 'lName':'', 'email' : '', 'username': ''};
 
@@ -42,12 +43,20 @@ export class EditUserComponent implements OnInit {
     if (email) Object.assign(data.profile, {'email': email});
     if (username) Object.assign(data.profile, {'login': username});
 
-    this.userDetailsService.postUserDetails(data);
-    this.isSubmitted = true;
+    // If any of these inputs are not null.
+    if (fName || lName || email || username){
+      this.userDetailsService.postUserDetails(data);
+      this.isSubmitted = true;
+    }
+    else this.isError = true;
   }
 
-  closeAlert(){
+  closeSubmitted(){
     this.isSubmitted = false;
+  }
+
+  closeError(){
+    this.isError = false;
   }
 }
 

@@ -1,30 +1,39 @@
-<h1 class = "text-center">Update Personal Details</h1>
-<form id = "editUserForm"class="row gy-2 gx-3 justify-content-center text-center">
+<h1 class="text-center">Update Personal Details</h1>
+<form id="editUserForm" class="row gy-2 gx-3 justify-content-center text-center">
     <div class="row g-3 justify-content-center">
         <label for="fName" class="col-sm-1 col-form-label">First Name</label>
         <div class="col-auto">
-            <input [placeholder] ="user.fName" id = "fName" type="text" class="form-control" aria-label="First Name" name="first">
+            <input [placeholder]="user.fName" id="fName" type="text" class="form-control" aria-label="First Name"
+                name="first">
         </div>
+
         <label for="lName" class="col-sm-1 col-form-label">Last Name</label>
         <div class="col-auto">
-            <input [placeholder] ="user.lName" id = "lName" type="text" class="form-control" aria-label="Last Name" name="last">
+            <input [placeholder]="user.lName" id="lName" type="text" class="form-control" aria-label="Last Name"
+                name="last">
         </div>
     </div>
     <div class="row g-3 justify-content-center">
         <label for="email" class="col-sm-1 col-form-label">Email</label>
         <div class="col-sm-4">
-            <input [placeholder] ="user.email" id="email" type="text" class="form-control" aria-label="Email" name="email">
+            <input [placeholder]="user.email" id="email" type="text" class="form-control" aria-label="Email"
+                name="email">
         </div>
         <label for="username" class="col-sm-1 col-form-label">Username</label>
         <div class="col-sm-3">
-            <input [placeholder] ="user.username" id="username" type="text" class="form-control" aria-label="Username" name="username">
+            <input [placeholder]="user.username" id="username" type="text" class="form-control" aria-label="Username"
+                name="username">
         </div>
     </div>
     <div class="col-auto mt-3">
-        <button type="submit" (click) = "updateUserInfo($event)" class="btn btn-primary">Update Information</button>
+        <button type="submit" (click)="updateUserInfo($event)" class="btn btn-primary">Update Information</button>
     </div>
 </form>
 <div class="alert alert-success col-sm-3 mx-auto mt-3" role="alert" *ngIf="isSubmitted">
     <strong>Updated</strong>
-    <button class="close btn-sm justify-content-center float-end" (click)="closeAlert()">X</button>
-  </div>
+    <button class="close btn-sm justify-content-center float-end" (click)="closeSubmitted()">X</button>
+</div>
+<div class="alert alert-danger col-sm-4 mx-auto mt-3" role="alert" *ngIf="isError">
+    <strong>Input required to update personal details.</strong>
+    <button class="close btn-sm justify-content-center float-end" (click)="closeError()">X</button>
+</div>

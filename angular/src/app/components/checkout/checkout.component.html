@@ -15,64 +15,49 @@
   </div>
   <div class="container">
     <h4 class="mt-5">Billing Address</h4>
-    <form>
+    <form #checkOutForm = "ngForm">
       <div class="row">
         <div class="col-sm-5">
           <label for="firstName">First Name</label>
           <input [(ngModel)]="billingAddressId.firstName" input id="firstName" class="form-control" type="text"
-            name="firstName" required/>
-          <div class="invalid-feedback">
-            Please enter a valid street address
-          </div>
-
+            name="firstName" #firstName = "ngModel" required >
+          <span *ngIf = "firstName.touched && firstName.invalid" class = "errormessage" style = "color:red">Enter first name</span>
         </div>
         <div class="col-sm-5">
           <label for="lastName">Last Name</label>
           <input [(ngModel)]="billingAddressId.lastName" input id="lastName" class="form-control" type="text"
-            name="lastName" required>
-          <div class="invalid-feedback">
-            Please enter a valid street address
-          </div>
+            name="lastName" #lastName = "ngModel" required>
+            <span *ngIf = "lastName.touched && lastName.invalid" class = "errormessage" style = "color:red">Enter last name</span>
         </div>
         <div class="col-sm-5">
           <label for="StreetAddress">Street Address</label>
           <input [(ngModel)]="billingAddressId.streetAddress" input id="StreetAddress" class="form-control" type="text"
-            name="streetAddress" required>
-          <div class="invalid-feedback">
-            Please enter a valid street address
-          </div>
+            name="streetAddress" #streetAddress = "ngModel" required>
+            <span *ngIf = "streetAddress.touched && streetAddress.invalid" class = "errormessage" style = "color:red">Enter street address</span>
         </div>
         <div class="col-sm-3">
           <label for="city">City</label>
           <input [(ngModel)]="billingAddressId.city" input id="city" class="form-control" type="text" name="city"
-            required>
-          <div class="invalid-feedback">
-            Please enter a valid city name
-          </div>
+            required #city = "ngModel">
+            <span *ngIf = "city.touched && city.invalid" class = "errormessage" style = "color:red">Enter city</span>
         </div>
         <div class="col-sm-1">
           <label for="state">State</label>
           <input [(ngModel)]="billingAddressId.state" input id="state" class="form-control" type="text" placeholder="CA"
-            name="state" required>
-          <div class="invalid-feedback">
-            Please enter a valid state acronym
-          </div>
+            name="state" required #state = "ngModel">
+            <span *ngIf = "state.touched && state.invalid" class = "errormessage" style = "color:red">Enter state</span>
         </div>
         <div class="col-sm-4">
           <label for="zip">Zip</label>
           <input [(ngModel)]="billingAddressId.zip" input id="zip" class="form-control" type="text" placeholder="08824"
-            name="zip" required>
-          <div class="invalid-feedback">
-            Please enter a valid zip code
-          </div>
+            name="zip" required #zip = "ngModel">
+            <span *ngIf = "zip.touched && zip.invalid" class = "errormessage" style = "color:red">Enter zip code</span>
         </div>
         <div class="col-sm-3">
           <label for="zip">Country</label>
           <input [(ngModel)]="billingAddressId.country" input id="country" class="form-control" type="text"
-            placeholder="USA" name="country" required>
-          <div class="invalid-feedback">
-            Please enter a valid country acronym
-          </div>
+            placeholder="USA" name="country" required #country= "ngModel">
+            <span *ngIf = "country.touched && country.invalid" class = "errormessage" style = "color:red">Enter country</span>
         </div>
 
         <hr class="BlinkMacSystemFont mt-3">
@@ -89,58 +74,44 @@
           <div class="col-sm-5">
             <label for="firstName">First Name</label>
             <input [(ngModel)]="shippingAddressId.firstName" input id="firstName" class="form-control" type="text"
-              name="firstName" required>
-            <div class="invalid-feedback">
-              Please enter a valid street address
-            </div>
+              name="shippingfirstName" required #shippingfirstName= "ngModel">
+              <span *ngIf = "shippingfirstName.touched && shippingfirstName.invalid" class = "errormessage" style = "color:red">Enter first name</span>
           </div>
           <div class="col-sm-5">
             <label for="lastName">Last Name</label>
             <input [(ngModel)]="shippingAddressId.lastName" input id="lastName" class="form-control" type="text"
-              name="lastName" required>
-            <div class="invalid-feedback">
-              Please enter a valid street address
-            </div>
+              name="shippinglastName" required #shippinglastName = "ngModel">
+              <span *ngIf = "shippinglastName.touched && shippinglastName.invalid" class = "errormessage" style = "color:red">Enter last name</span>
           </div>
           <div class="col-sm-5">
             <label for="streetAddress">Street Address</label>
             <input [(ngModel)]="shippingAddressId.streetAddress" input id="streetAddress" class="form-control"
-              type="text" name="streetAddress" required>
-            <div class="invalid-feedback">
-              Please enter a valid street address
-            </div>
+              type="text" name="shippingstreetAddress" required #shippingstreetAddress = "ngModel">
+              <span *ngIf = "shippingstreetAddress.touched && shippingstreetAddress.invalid" class = "errormessage" style = "color:red">Enter street address</span>
           </div>
           <div class="col-sm-3">
             <label for="city">City</label>
-            <input [(ngModel)]="shippingAddressId.city" input id="city" class="form-control" type="text" name="city"
-              required>
-            <div class="invalid-feedback">
-              Please enter a valid city name
-            </div>
+            <input [(ngModel)]="shippingAddressId.city" input id="city" class="form-control" type="text" name="shippingcity"
+              required #shippingcity = "ngModel">
+              <span *ngIf = "shippingcity.touched && shippingcity.invalid" class = "errormessage" style = "color:red">Enter city </span>
           </div>
           <div class="col-sm-1">
             <label for="state">State</label>
             <input [(ngModel)]="shippingAddressId.state" input id="state" class="form-control" type="text"
-              placeholder="CA" name="state" required>
-            <div class="invalid-feedback">
-              Please enter a valid state acronym
-            </div>
+              placeholder="CA" name="shippingstate" required #shippingstate= "ngModel">
+            <span *ngIf = "shippingstate.touched && shippingstate.invalid" class = "errormessage" style = "color:red">Enter state</span>
           </div>
           <div class="col-sm-4">
             <label for="zip">Zip</label>
             <input [(ngModel)]="shippingAddressId.zip" input id="zip" class="form-control" type="text"
-              placeholder="08824" name="zip" required>
-            <div class="invalid-feedback">
-              Please enter a valid zip code
-            </div>
+              placeholder="08824" name="shippingzip" required #shippingzip = "ngModel">
+            <span *ngIf = "shippingzip.touched && shippingzip.invalid" class = "errormessage" style = "color:red">Enter zip code</span>
           </div>
           <div class="col-sm-3">
             <label for="zip">Country</label>
             <input [(ngModel)]="shippingAddressId.country" input id="zip" class="form-control" type="text"
-              placeholder="USA" name="country" required>
-            <div class="invalid-feedback">
-              Please enter a valid country acronym
-            </div>
+              placeholder="USA" name="shippingcountry" required #shippingcountry = "ngModel">
+              <span *ngIf = "shippingcountry.touched && shippingcountry.invalid" class = "errormessage" style = "color:red">Enter country</span>
           </div>
         </div>
 
@@ -151,41 +122,33 @@
           <div class="col-md-5">
             <label for="cardHolderFirstName">First Name</label>
             <input [(ngModel)]="payment.cardHolderFirstName" input id="cardHolderFirstName" type="text"
-              class="form-control" name="cardHolderFirstName">
-            <div class="invalid-feedback">
-              Please enter a valid first name
-            </div>
+              class="form-control" name="cardHolderFirstName" required #cardHolderFirstName = "ngModel">
+              <span *ngIf = "cardHolderFirstName.touched && cardHolderFirstName.invalid" class = "errormessage" style = "color:red">Enter credit card holder first name</span>
           </div>
 
           <div class="col-md-5">
             <label for="cardHolderLastName">Last Name</label>
             <input [(ngModel)]="payment.cardHolderLastName" input id="cardHolderLastName" type="text"
-              class="form-control" name="cardHolderLastName">
-            <div class="invalid-feedback">
-              Please enter a valid last name
-            </div>
+              class="form-control" name="cardHolderLastName" required #cardHolderLastName = "ngModel">
+              <span *ngIf = "cardHolderLastName.touched && cardHolderLastName.invalid" class = "errormessage" style = "color:red">Enter credit card holder last name</span>
           </div>
         </div>
 
         <div class="col-md-6">
           <label for="cardNumber">Card Number</label>
           <input [(ngModel)]="payment.cardNumber" input id="cardNumber" type="text" class="form-control"
-            name="cardNumber">
-          <div class="invalid-feedback">
-            Please enter a valid 16 digit credit card number
-          </div>
+            name="cardNumber" required #cardNumber= "ngModel">
+            <span *ngIf = "cardNumber.touched && cardNumber.invalid" class = "errormessage" style = "color:red">Enter a valid 16-digit credit card number</span>
 
           <div class="col-md-2">
             <label for="cvv">CVV</label>
-            <input [(ngModel)]="payment.cvv" type="text" class="form-control" name="cvv">
-            <div class="invalid-feedback">
-              Please enter a valid CVV code
-            </div>
+            <input [(ngModel)]="payment.cvv" type="text" class="form-control" name="cvv" required #cvv = "ngModel">
+              <span *ngIf = "cvv.touched && cvv.invalid" class = "errormessage" style = "color:red">Enter a valid CVV code</span>
           </div>
         </div>
       </div>
       <div class = "container text-center">
-        <button class="btn btn-primary btn-md mb-5" (click)="submitOrder()">Confirm Order</button>
+        <button [disabled] = "!checkOutForm.form.valid" class="btn btn-primary btn-md mb-5" (click)="submitOrder()">Confirm Order</button>
        </div>
     </form>
   </div>
@@ -195,186 +158,6 @@
     <strong>Order Submitted!</strong>
     <button class="close btn btn-sm mx-3" (click)="closeAlert()">X</button>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-    crossorigin="anonymous"></script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-<!-- <div class = "main-content-form">
-    <div class = "section-content section-content-p30">
-        <div class = "container-fluid">
-        <form [formGroup] = "checkoutFormGroup" (ngSubmit) = "onSubmit()">
-            <div formGroupName = "cardInformation" class = "form-area">
-                <h3>Credit Card Information</h3>
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>First Name</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "cardHolderFirstName" type = "text">
-                        </div>
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Last Name</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "cardHolderLastName" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Card Number</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "cardNumber" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div formGroupName = "shippingAddress" class = "form-area">
-                <h3>Shipping Address</h3>
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Street Address</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "streetAddress" type = "text">
-                        </div>
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>City</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "city" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>State</label>
-                    </div>
-                    <div class = "col-md-5">
-                        <div class = "input-space">
-                            <input formControlName = "state" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Zip Code</label>
-                    </div>
-                    <div class = "col-md-5">
-                        <div class = "input-space">
-                            <input formControlName = "zip" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Country</label>
-                    </div>
-                    <div class = "col-md-5">
-                        <div class = "input-space">
-                            <input formControlName = "country" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="input-space">
-                <label class="au-checkbox">
-                    <input type="checkbox" (change)="copyShippingAddressToBillingAddress($any($event))">
-                    <span class="au-checkmark"></span>Is your billing address the same as your shipping address?
-                </label>
-            </div>
-
-            <div formGroupName = "billingAddress" class = "form-area">
-                <h3>Billing Address</h3>
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Street Address</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "streetAddress" type = "text">
-                        </div>
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>City</label>
-                    </div>
-                    <div class = "col-md-9">
-                        <div class = "input-space">
-                            <input formControlName = "city" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>State</label>
-                    </div>
-                    <div class = "col-md-5">
-                        <div class = "input-space">
-                            <input formControlName = "state" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Zip Code</label>
-                    </div>
-                    <div class = "col-md-5">
-                        <div class = "input-space">
-                            <input formControlName = "zip" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-2">
-                        <label>Country</label>
-                    </div>
-                    <div class = "col-md-5">
-                        <div class = "input-space">
-                            <input formControlName = "country" type = "text">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class = "text-center">
-                <button type = "submit" class = "btn-btn-info">Confirm Order</button>
-            </div>
-        </form>
-        </div>
-    </div>
-</div>
- -->

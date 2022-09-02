@@ -95,10 +95,7 @@ public class OrderController {
 			// save stock changes after checkout
 			product.setProductStock(product.getProductStock() - amt);
 			productRepository.save(product);
-		}
-
-	
-		
+		}	
 
 		User u = userRepo.findByEmail(email).get();
 
