@@ -8,11 +8,11 @@ import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
