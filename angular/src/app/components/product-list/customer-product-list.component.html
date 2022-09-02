@@ -6,7 +6,7 @@
         *ngFor="let product of products! | paginate: { itemsPerPage: 5, currentPage: pageNum}; let i = index"
         [class.active]="i == currentIndex">
         <div class="card flex-row">
-          <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;;
+          <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;
           height: 100px;">
           <div class="card-body">
             <h4 class="card-title">{{product.productName}}</h4>
