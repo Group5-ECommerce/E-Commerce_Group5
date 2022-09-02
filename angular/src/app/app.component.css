@@ -8,7 +8,7 @@ body{
 .dropbtn {
   background-color: #3498DB;
   color: white;
-  padding: 16px;
+  padding: 10px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -74,7 +74,13 @@ p {
 }
 
 .toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
   display: flex;
+  align-items:baseline;
   background-color: #1976d2;
   color: white;
   font-weight: 600;
