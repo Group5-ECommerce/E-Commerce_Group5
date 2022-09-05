@@ -1,6 +1,6 @@
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
+<div class="toolbar navbar mb-4">
     <h1 class="mx-auto text-center">E-Commerce App</h1>
     <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
       <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
@@ -9,10 +9,8 @@
       <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
       <ul class="nav justify-content-end">
         <li *oktaHasAnyGroup="['Admin']" class="navbarlinks text-white"><a class="text-white" routerLink="/product-list">Admin Product List</a></li>
-        <li *oktaHasAnyGroup="['Admin']" class="navbarlinks"><a class="text-white" routerLink="/add-product">Add Product</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/product">Customer Product List</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/checkout">Checkout</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
       </ul>
       <div class="dropdown p-2 me-4">
@@ -20,14 +18,12 @@
         <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
         <div id="accountDropdown" class="dropdown-content">
           <a href="/edit-user">Edit Details</a>
-          <a href="/change-password">Change Password</a>
+          <a  class = "btn disabled" href="/change-password">Change Password</a>
           <a role="button" (click)="signOut()">Sign out</a>
         </div>
       </div>
     </ng-template>
 </div>
-
-<br><br><br><br>
 <!--<app-get-products></app-get-products>
 <app-product-list></app-product-list> -->
 <router-outlet></router-outlet>

@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
 
 export class AdminProductListComponent implements OnInit {
   products!: Product[];
-  
+  pageNum?: number
+
   constructor(private productService: ProductService, private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
-   }
+  }
 
   ngOnInit(): void {
     this.productService.getProductList().subscribe((response: any) => {

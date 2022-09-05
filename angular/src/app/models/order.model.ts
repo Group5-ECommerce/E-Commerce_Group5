@@ -1,4 +1,4 @@
-import { Address } from "../common/address/address"
+import { Address } from "./address/address"
 import { CartItem } from "./cart-item.model"
 
 export class Order {

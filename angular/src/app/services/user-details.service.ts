@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OktaAuthStateService } from '@okta/okta-angular';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { catchError } from 'rxjs';
 import { config } from 'src/config/app.config';
 
@@ -12,15 +12,17 @@ export class UserDetailsService {
   username: String;
   lastName: String;
   firstName: String;
+  email: String;
+
   constructor(private _oktaStateService: OktaAuthStateService, private httpClient: HttpClient) {
     this._oktaStateService.authState$.subscribe(
       (s) => {
-        console.log(s);
-        this.username = s.idToken!.claims.preferred_username!;
+        this.email = s.idToken!.claims.email!;
         let fullName = s.idToken?.claims.name!;
         let splitName = fullName.split(' ');
         this.firstName = splitName[0];
         this.lastName = splitName[1];
+        this.username = s.idToken!.claims.preferred_username!;
       }
     );
   }
@@ -37,11 +39,10 @@ export class UserDetailsService {
   }
   changePassword(data: any) {
     const url = config.apiBaseURL + "/api/v1/authn/credentials/change_password";
-//    /api/v1/authn
-
-  /*
+    return this.httpClient.post(config.apiBaseURL + "/api/v1/authn", data).subscribe();
+    
     return this.httpClient.post(url, data).pipe(catchError(async (error) => {console.log(error); return false;}))
-      .subscribe((response) => { console.log(response); return true; }); */
+      .subscribe((response) => { console.log(response); return true; });
   }
 
 }

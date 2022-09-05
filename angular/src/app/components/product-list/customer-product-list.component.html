@@ -1,19 +1,27 @@
 <div class="container">
-  <div class="row d-flex flex-column justify-content-center">
+  <div class="row d-flex flex-column justify-content-center container">
     <h3 class="text-center">Product List</h3>
-    <div class="card-columns col-lg-6  mt-2 mx-auto " *ngFor="let product of products; let i = index"
-      [class.active]="i == currentIndex">
-      <div class="card flex-row">
-        <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;;
+    <div class="container">
+      <div class="card-columns col-lg-6  mt-2 mx-auto px-0"
+        *ngFor="let product of products! | paginate: { itemsPerPage: 5, currentPage: pageNum}; let i = index"
+        [class.active]="i == currentIndex">
+        <div class="card flex-row">
+          <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;
           height: 100px;">
-        <div class="card-body">
-          <h4 class="card-title">{{product.productName}}</h4>
-          <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
-          <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
-          <button #refEl class="d-inline-block mx-3" type="button" class="btn btn-primary"
-            (click)="saveToCart(refEl, product)">Add To Cart</button>
+          <div class="card-body">
+            <h4 class="card-title">{{product.productName}}</h4>
+            <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
+            <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
+            <button #refEl class="d-inline-block mx-3" type="button" class="btn btn-primary "
+              (click)="saveToCart(refEl, product)">Add To Cart</button>
+          </div>
         </div>
       </div>
+      <div class="col-lg-6 container justify-content-center d-flex mt-3">
+        <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
+      </div>
     </div>
+
+
   </div>
 </div>

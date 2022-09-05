@@ -18,11 +18,12 @@ import { EditProductComponent } from './components/admin/edit-product/edit-produ
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -30,7 +31,7 @@ const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
   redirectUri: window.location.origin + '/login/callback',
-  scopes:["openid", "profile", "groups", "okta.users.manage.self"]
+  scopes:["openid", "profile", "email", "groups", "okta.users.manage.self"]
 });
 
 @NgModule({
@@ -52,9 +53,10 @@ const oktaAuth = new OktaAuth({
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
-    FormsModule, 
+    FormsModule,
     HttpClientModule,
-    FormsModule, ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

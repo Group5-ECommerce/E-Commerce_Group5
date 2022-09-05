@@ -25,6 +25,7 @@ import com.hcl.entity.Product;
 import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
+import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
 import com.hcl.repo.ProductRepository;
 import com.hcl.repo.UserRepository;
@@ -57,14 +58,17 @@ public class OrderController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private OrderRepository orderRepo;
+
 
 	@Autowired
 	private ProductRepository productRepository;
 
-	@PostMapping("/checkout/{userId}")
-	@PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
+	@PostMapping("/checkout/{email}")
 	@ApiOperation(value = "Checkout for Order")
-	public Purchase checkout(@RequestBody Purchase p, @PathVariable Integer userId) {
+	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email) {
 		List<cartItem> items = p.getItems();
 		if (items == null)
 			System.out.println("null");
@@ -91,8 +95,10 @@ public class OrderController {
 			// save stock changes after checkout
 			product.setProductStock(product.getProductStock() - amt);
 			productRepository.save(product);
-		}
-		User u = userRepo.findById(userId).get();
+		}	
+
+		User u = userRepo.findByEmail(email).get();
+
 
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
@@ -108,7 +114,7 @@ public class OrderController {
 		order.setShippingAddress(p.getPayment().getShippingAddressId());
 		String number = generateTrackingNumber();
 		order.setTrackingNumber(number);
-		orderService.save(order);
+		orderRepo.save(order);
 
 		PaymentInfo payment = new PaymentInfo();
 
@@ -135,14 +141,14 @@ public class OrderController {
 	}
 
 	@GetMapping("/order")
-  @ApiOperation(value = "Gets All Orders")
-	@PreAuthorize("hasAuthority('Admin')")
+	@ApiOperation(value = "Gets All Orders")
+	@PreAuthorize("hasAuthority('Customer')")
 	public List<Order> getAllOrders() {
 		return orderService.findAll();
 	}
 
 	@GetMapping("/myOrders")
-  @PreAuthorize("hasAuthority('Customer')")
+	@PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Gets all Orders by Username")
 	public List<Order> getMyOrders(Principal principal) {
 		return orderService.findByUsername(principal.getName());
@@ -150,7 +156,7 @@ public class OrderController {
 
 	@GetMapping("/trackOrder/{trackingNumber}")
 	@ApiOperation(value = "Find Order by Tracking Number")
-	@PreAuthorize("hasAuthority('Admin')")
+	@PreAuthorize("hasAuthority('Customer')")
 	public List<OrderItem> trackOrder(@PathVariable String trackingNumber) {
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
