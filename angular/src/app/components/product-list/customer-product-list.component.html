@@ -1,25 +1,32 @@
 <div class="container">
+
   <div class="row d-flex flex-column justify-content-center container">
+    <div class="input-group mb-4 ">
+      <div class="form-outline">
+        <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product" />
+      </div>
+      <button type="button" class="btn btn-primary" (click)="showResults()">
+        Search
+      </button>
+    </div>
     <h3 class="text-center">Product List</h3>
     <div class="container">
-      <div class="card-columns col-lg-6  mt-2 mx-auto px-0"
-        *ngFor="let product of products! | paginate: { itemsPerPage: 5, currentPage: pageNum}; let i = index"
-        [class.active]="i == currentIndex">
+      <div class="card-columns col-lg-6  mt-2 mx-auto px-0" *ngFor="let product of (displayedProducts | async) ">
         <div class="card flex-row">
-          <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;
+          <img class="float-left  m-2" src="{{product?.productImage}}" alt="product image" style=" width: 100px;
           height: 100px;">
           <div class="card-body">
-            <h4 class="card-title">{{product.productName}}</h4>
-            <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
-            <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
+            <h4 class="card-title">{{product?.productName}}</h4>
+            <h5 class="d-inline-block mx-3">Price: ${{product?.productPrice}}</h5>
+            <h5 class="d-inline-block mx-3">Remaining: {{product?.productStock}}</h5>
             <button #refEl class="d-inline-block mx-3" type="button" class="btn btn-primary "
               (click)="saveToCart(refEl, product)">Add To Cart</button>
           </div>
         </div>
       </div>
-      <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products!.length>5">
+      <!-- <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products!.length>5">
         <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
-      </div>
+      </div> -->
     </div>
 
 

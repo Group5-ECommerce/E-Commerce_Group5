@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { filter, from, map, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-customer-product-list',
@@ -10,10 +11,12 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class CustomerProductListComponent implements OnInit {
 
-  products?: Product[];
+  products?: Observable<Product[]>;
+  displayedProducts?: Observable<Product[]>;
   currentIndex = -1;
   title = "product list"
   pageNum?: number
+  query?: string
 
   constructor(private productService: ProductService, private cartService: CartService) { }
 
@@ -22,6 +25,10 @@ export class CustomerProductListComponent implements OnInit {
     this.pageNum = 1
 
     this.retrieveProducts();
+    console.log(this.products)
+  }
+  ngOnDestroy(): void {
+
   }
 
   saveToCart(el: HTMLElement, product: Product): void {
@@ -46,10 +53,30 @@ export class CustomerProductListComponent implements OnInit {
   retrieveProducts(): void {
     this.productService.getProductList().subscribe({
       next: (data) => {
-        this.products = data;
-        console.log(data);
+        this.products = of(data);
+        this.displayedProducts = this.products;
+        console.log(data)
       },
       error: (e) => console.log(e)
     })
   }
+
+  showResults() {
+    if (this.query) {
+      this.displayedProducts = this.products?.pipe(
+        map((prods: any[]) => {
+          return prods.filter((p: Product) => {
+            if (p.productName) {
+              console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
+              return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
+            }
+            return false
+          })
+        })
+      )
+
+    }
+  }
+
+
 }
