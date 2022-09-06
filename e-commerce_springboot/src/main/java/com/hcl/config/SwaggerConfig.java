@@ -46,8 +46,6 @@ public class SwaggerConfig extends WebSecurityConfigurerAdapter {
                 .paths(PathSelectors.any())
                 .apis(RequestHandlerSelectors.basePackage("com.hcl"))
                 .build()
-                .securitySchemes(Arrays.asList(apiKey()))
-                .securityContexts(Arrays.asList(securityContext()))
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .useDefaultResponseMessages(false)
