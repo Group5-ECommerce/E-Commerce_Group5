@@ -16,7 +16,7 @@
       <tr *ngFor="let o of orders | paginate: { itemsPerPage: 5, currentPage: pageNum}">
         <td>{{o.user!.userId}}</td>
         <td>{{o.orderId}}</td>
-        <td>{{o.orderTime}}</td>
+        <td>{{o.orderTime | date:"medium"}}</td>
         <td>{{o.orderStatus}}</td>
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
