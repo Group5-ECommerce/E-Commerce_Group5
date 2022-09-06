@@ -29,7 +29,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Order(1)
 @Profile({"!prod && swagger"})
-@CrossOrigin(origins = "http://localhost:4200")
 public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
 
