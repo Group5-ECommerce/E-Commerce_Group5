@@ -24,7 +24,7 @@ export class EditProductComponent implements OnInit {
       this.product = response;
     })
 
-    this.useExistingImg = false
+    this.useExistingImg = true;
   }
 
   // async updateProduct() {
