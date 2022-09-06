@@ -11,8 +11,8 @@ import { filter, from, map, Observable, of, tap } from 'rxjs';
 })
 export class CustomerProductListComponent implements OnInit {
 
-  products?: Observable<Product[]>;
-  displayedProducts?: Observable<Product[]>;
+  products?: Product[];
+  displayedProducts?: Product[];
   currentIndex = -1;
   title = "product list"
   pageNum?: number
@@ -53,7 +53,7 @@ export class CustomerProductListComponent implements OnInit {
   retrieveProducts(): void {
     this.productService.getProductList().subscribe({
       next: (data) => {
-        this.products = of(data);
+        this.products = (data);
         this.displayedProducts = this.products;
         console.log(data)
       },
@@ -61,22 +61,36 @@ export class CustomerProductListComponent implements OnInit {
     })
   }
 
-  showResults() {
-    if (this.query) {
-      this.displayedProducts = this.products?.pipe(
-        map((prods: any[]) => {
-          return prods.filter((p: Product) => {
-            if (p.productName) {
-              console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
-              return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
-            }
-            return false
-          })
-        })
-      )
+  // showResults() {
+  //   // if (this.query) {
+  //   //   this.displayedProducts = this.products?.pipe(
+  //   //     map((prods: any[]) => {
+  //   //       return prods.filter((p: Product) => {
+  //   //         if (p.productName) {
+  //   //           console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
+  //   //           return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
+  //   //         }
+  //   //         return false
+  //   //       })
+  //   //     })
+  //   //   )
 
-    }
-  }
+  //   // }
+  //   if (this.query) {
+  //     this.displayedProducts = this.products?.filter(p => {
+  //       // console.log("query ", this.query)
+  //       if (p.productName) {
+  //         return p.productName.toLowerCase() == this.query?.toLowerCase()
+  //           || p.productName.toLowerCase().indexOf(this.query!.toLowerCase()) !== -1
+  //       }
+  //       return false
+  //     })
+  //   }
+  // }
+
+  // tester(event: any) {
+  //   console.log((event.target.value).toLocalLowerCase())
+  // }
 
 
 }
