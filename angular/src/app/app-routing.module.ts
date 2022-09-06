@@ -13,6 +13,7 @@ import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
+import { OrderTrackComponent } from './order-track/order-track.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
 {path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard]},
 {path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard]},
+{path: 'order-track', component: OrderTrackComponent, canActivate: [OktaAuthGuard]},
 { path: '', redirectTo: "product", pathMatch: "full"},
 ];
 
