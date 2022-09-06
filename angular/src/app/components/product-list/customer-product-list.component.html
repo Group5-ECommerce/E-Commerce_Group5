@@ -3,11 +3,12 @@
   <div class="row d-flex flex-column justify-content-center container">
     <div class="input-group mb-4 ">
       <div class="form-outline">
-        <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product" />
+        <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product"
+          (keyup.enter)="showResults()" autocomplete="off" />
       </div>
-      <!-- <button type="button" class="btn btn-primary" >
+      <button type="button" class="btn btn-primary" (click)="showResults()">
         Search
-      </button> -->
+      </button>
     </div>
     <!-- <div class="search-hero">
       <input class="form-control" type="text" name="search" [(ngModel)]="query" autocomplete="on"
@@ -16,7 +17,7 @@
     <h3 class="text-center">Product List</h3>
     <div class="container">
       <div class="card-columns col-lg-6  mt-2 mx-auto px-0"
-        *ngFor="let product of (displayedProducts | filter:query )! | paginate: { itemsPerPage: 5, currentPage: pageNum }">
+        *ngFor="let product of displayedProducts! | paginate: { itemsPerPage: 5, currentPage: pageNum }">
         <div class="card flex-row">
           <img class="float-left  m-2" src="{{product?.productImage}}" alt="product image" style=" width: 100px;
           height: 100px;">

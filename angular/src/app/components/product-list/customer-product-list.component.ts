@@ -61,32 +61,34 @@ export class CustomerProductListComponent implements OnInit {
     })
   }
 
-  // showResults() {
-  //   // if (this.query) {
-  //   //   this.displayedProducts = this.products?.pipe(
-  //   //     map((prods: any[]) => {
-  //   //       return prods.filter((p: Product) => {
-  //   //         if (p.productName) {
-  //   //           console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
-  //   //           return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
-  //   //         }
-  //   //         return false
-  //   //       })
-  //   //     })
-  //   //   )
+  showResults() {
+    // if (this.query) {
+    //   this.displayedProducts = this.products?.pipe(
+    //     map((prods: any[]) => {
+    //       return prods.filter((p: Product) => {
+    //         if (p.productName) {
+    //           console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
+    //           return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
+    //         }
+    //         return false
+    //       })
+    //     })
+    //   )
 
-  //   // }
-  //   if (this.query) {
-  //     this.displayedProducts = this.products?.filter(p => {
-  //       // console.log("query ", this.query)
-  //       if (p.productName) {
-  //         return p.productName.toLowerCase() == this.query?.toLowerCase()
-  //           || p.productName.toLowerCase().indexOf(this.query!.toLowerCase()) !== -1
-  //       }
-  //       return false
-  //     })
-  //   }
-  // }
+    // }
+    if (this.query) {
+      this.displayedProducts = this.products?.filter(p => {
+        // console.log("query ", this.query)
+        if (p.productName) {
+          return p.productName.toLowerCase() == this.query?.toLowerCase()
+            || p.productName.toLowerCase().indexOf(this.query!.toLowerCase()) !== -1
+        }
+        return false
+      })
+    } else {
+      this.displayedProducts = this.products
+    }
+  }
 
   // tester(event: any) {
   //   console.log((event.target.value).toLocalLowerCase())
