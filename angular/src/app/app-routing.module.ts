@@ -28,7 +28,7 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
 {path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard]},
 {path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard]},
-{ path: '', redirectTo: "product", pathMatch: "full"},
+{ path: '', redirectTo: "product-list", pathMatch: "full"},
 ];
 
 @NgModule({
