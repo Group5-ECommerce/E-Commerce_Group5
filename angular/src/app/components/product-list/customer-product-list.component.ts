@@ -17,6 +17,7 @@ export class CustomerProductListComponent implements OnInit {
   title = "product list"
   pageNum?: number
   query?: string
+  queryResults?: number
 
   constructor(private productService: ProductService, private cartService: CartService) { }
 
@@ -25,7 +26,6 @@ export class CustomerProductListComponent implements OnInit {
     this.pageNum = 1
 
     this.retrieveProducts();
-    console.log(this.products)
   }
   ngOnDestroy(): void {
 
@@ -55,7 +55,7 @@ export class CustomerProductListComponent implements OnInit {
       next: (data) => {
         this.products = (data);
         this.displayedProducts = this.products;
-        console.log(data)
+        this.queryResults = this.displayedProducts.length;
       },
       error: (e) => console.log(e)
     })
@@ -85,8 +85,10 @@ export class CustomerProductListComponent implements OnInit {
         }
         return false
       })
+      this.queryResults = this.displayedProducts?.length;
     } else {
       this.displayedProducts = this.products
+      this.queryResults = this.displayedProducts?.length
     }
   }
 
