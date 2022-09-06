@@ -25,6 +25,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
+@EnableSwagger2
 @Order(1)
 @Profile({"!prod && swagger"})
 public class SwaggerConfig extends WebSecurityConfigurerAdapter {
@@ -43,10 +44,8 @@ public class SwaggerConfig extends WebSecurityConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.ntapan"))
+                .apis(RequestHandlerSelectors.basePackage("com.hcl"))
                 .build()
-                .securitySchemes(Arrays.asList(apiKey()))
-                .securityContexts(Arrays.asList(securityContext()))
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .useDefaultResponseMessages(false)
