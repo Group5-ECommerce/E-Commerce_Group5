@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Api(tags= "Products")
+@Api(tags= "Order")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;

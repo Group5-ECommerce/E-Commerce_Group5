@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.entity.Role;
 import com.hcl.service.RoleService;
 
+import io.swagger.annotations.Api;
+
 @RestController
+@Api(tags= "Role")
 public class RoleController 
 {
 	@Autowired

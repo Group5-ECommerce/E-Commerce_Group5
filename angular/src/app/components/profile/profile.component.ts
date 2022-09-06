@@ -13,7 +13,7 @@ import { AuthState } from '@okta/okta-auth-js';
     </h1>
     </div>
     <div *oktaHasAnyGroup="['Admin']">
-      <h2>Welcome admin</h2>
+      <h2>Welcome Administrator</h2>
     </div>
     <div *oktaHasAnyGroup="['Customer']">
       <h2>Welcome Customer</h2>

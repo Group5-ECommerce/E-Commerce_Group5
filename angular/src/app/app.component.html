@@ -14,7 +14,7 @@
         <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
       </ul>
       <div class="dropdown p-2 me-4">
-        <button (click)="toggleDropdown()" class="dropbtn">User</button>
+        <button (click)="toggleDropdown()" class="dropbtn" #userBtn>User</button>
         <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
         <div id="accountDropdown" class="dropdown-content">
           <a href="/edit-user">Edit Details</a>

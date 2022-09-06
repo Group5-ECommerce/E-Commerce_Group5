@@ -48,7 +48,7 @@ public class CartController {
 
 
 	@PostMapping("/cart/{id}/{amt}")
-	@ApiOperation(value = "Creates new Cart")
+	//@ApiOperation(value = "Creates new Cart")
 	public String addItemToCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -66,7 +66,7 @@ public class CartController {
 	}
 
 	@GetMapping("/cart")
-	@ApiOperation(value = "Show Cart")
+	// @ApiOperation(value = "Show Cart")
 	public Object getCart(HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -76,7 +76,7 @@ public class CartController {
 	}
 
 	@PutMapping("/cart/{id}/{amt}")
-	@ApiOperation(value = "Add item to cart")
+	// @ApiOperation(value = "Add item to cart")
 	public String updateItemInCart(@PathVariable Integer id, @PathVariable Integer amt, HttpSession session) {
 		List<cartItem> items = (ArrayList<cartItem>) session.getAttribute("items");
 		if (items == null)
@@ -102,13 +102,13 @@ public class CartController {
 	}
 
 	@DeleteMapping("/cart")
-	@ApiOperation(value = "Deletes all items in cart")
+	// @ApiOperation(value = "Deletes all items in cart")
 	public void emptyCart(HttpSession session) {
 		session.setAttribute("items", null);
 	}
 
 	@DeleteMapping("/cart/{id}")
-	@ApiOperation(value = "Deletes item in cart by Id")
+	// @ApiOperation(value = "Deletes item in cart by Id")
 	public void removeItemFromCart(@PathVariable Integer id, HttpSession session) {
 		List<cartItem> items = (List<cartItem>) session.getAttribute("items");
 		if (items == null)

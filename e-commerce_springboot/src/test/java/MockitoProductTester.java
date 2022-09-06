@@ -1,8 +1,6 @@
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,37 +27,32 @@ import com.hcl.service.OrderService;
 import com.hcl.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
-public class MockitoTester 
+public class MockitoProductTester 
 {
 	@Mock
-	UserService service;
-	
-	@Mock
-	UserRepository repo;
+	ProductRepository repo;
 	
 	@BeforeEach
 	public void init()
 	{
 		MockitoAnnotations.openMocks(this);
 	}
-	
+
 	@Test
-	public void testAddUser()
+	public void addProduct()
 	{
-		User user = new User();
-		service.addUser(user, 0);
-		verify(service, times(1)).addUser(user, 0);
-		System.out.println(service.getAllUsers());
+		Product added = new Product();
+		repo.save(added);
+		verify(repo, times(1)).save(added);
 	}
 	
 	@Test
-	public void testDeleteUser()
+	public void deleteProduct()
 	{
-	
-		User deleted = new User();
-		service.saveUser(deleted);
-		verify(service, times(1)).saveUser(deleted);
-		service.deleteUser(0);
-		verify(service, times(1)).deleteUser(deleted.getUserId());
+		Product deleted = new Product();
+		repo.save(deleted);
+		verify(repo, times(1)).save(deleted);
+		repo.deleteById(deleted.getProductId());
+		verify(repo, times(1)).deleteById(deleted.getProductId());
 	}
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, OktaAuth } from '@okta/okta-auth-js';
@@ -12,6 +12,10 @@ import { filter, map, Observable } from 'rxjs';
 
 export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
+  isVisible: boolean = false;
+
+  @ViewChild('userBtn') userButton: ElementRef;
+
   public isAuthenticated$!: Observable<boolean>;
 
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
@@ -21,20 +25,28 @@ export class AppComponent implements OnInit {
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
+    window.onclick = (e) => {
+
+      if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
+    };
   }
 
   public async signIn(): Promise<void> {
     // This may be useful in the future: { originalUri: '/' }
-    await this._oktaAuth.signInWithRedirect().then(_ =>
-        this._router.navigateByUrl('profile')
+    await this._oktaAuth.signInWithRedirect().then(_ => {
+        this._router.navigate(['/product']);
+      }
     );
-  }
+}
 
   public async signOut(): Promise<void> {
     await this._oktaAuth.signOut();
   }
 
   toggleDropdown() {
+    this.isVisible = !this.isVisible;
     document.getElementById("accountDropdown")?.classList.toggle("show");
   }
+
+
 }

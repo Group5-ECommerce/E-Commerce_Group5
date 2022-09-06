@@ -17,8 +17,11 @@ import com.hcl.repo.UserRepository;
 import com.hcl.service.AddressService;
 import com.hcl.service.UserService;
 
+import io.swagger.annotations.Api;
+
 
 @RestController
+@Api(tags= "Address")
 public class AddressController 
 {
 	@Autowired
