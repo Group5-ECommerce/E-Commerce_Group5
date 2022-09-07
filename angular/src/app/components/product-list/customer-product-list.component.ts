@@ -92,6 +92,11 @@ export class CustomerProductListComponent implements OnInit {
     }
   }
 
+  resetResults() {
+    this.displayedProducts = this.products
+    this.queryResults = this.displayedProducts?.length
+  }
+
   // tester(event: any) {
   //   console.log((event.target.value).toLocalLowerCase())
   // }
