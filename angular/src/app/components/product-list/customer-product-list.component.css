@@ -1,3 +1,41 @@
 .productlisttitle{
     padding-top: 10px;
 }
+.center-block {
+  display: flex;  /* Instead of display:block */
+  margin:auto;
+  align-items: center;
+}
+/* .card{
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 200px;
+  height: 200px;
+  transition: all linear 200ms;
+}
+.card:hover{
+  transform: scale(1.0);
+  transition: all linear 200ms;
+  z-index: 1;
+  box-shadow: 1px 1px 10px rgba(0,0,0,.3);
+  cursor: pointer;
+} */
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: fill;
+}
+
+.fixed {
+  position: fixed !important;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  background: red;
+}
