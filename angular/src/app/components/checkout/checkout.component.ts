@@ -32,8 +32,8 @@ export class CheckoutComponent implements OnInit {
     this.payment.shippingAddressId = this.shippingAddressId
 
     const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!) 
- 
+    this.cart = JSON.parse(cart!)
+
     let purchase = new Purchase();
     purchase.payment = this.payment
     purchase.items = this.cart
@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit {
 
 
     let email: string
-    email = "customer@e-commerce.com"  // okta - email
+    email = "sds@sds"  // okta - email
 
 
 

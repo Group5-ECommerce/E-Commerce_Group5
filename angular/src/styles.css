@@ -19,3 +19,10 @@
   border-radius: 20px !important;
   border: transparent !important;
 } */
+
+.alert.error-message {
+  margin-bottom: 1px;
+  height: 25%;
+  line-height:30px;
+  padding:0px 15px;
+}

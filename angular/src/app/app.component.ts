@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
 
   public isAuthenticated$!: Observable<boolean>;
 
+
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
 
   public ngOnInit(): void {

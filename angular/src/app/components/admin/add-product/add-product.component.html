@@ -1,38 +1,68 @@
 <div class="container-fluid">
   <div class="card" style="width: 50%; margin: 10px auto;">
+
     <div class="card-header">
       Add New Product
     </div>
-    <div class="card-body">
-      <div class="form-group">
-        <label for="my-input">Name</label>
-        <input [(ngModel)]="product.productName" input id="my-input" class="form-control" type="text" name="">
-      </div>
-      <div class="form-group">
-        <label for="my-input">Stock</label>
-        <input [(ngModel)]="product.productStock" id="my-input" class="form-control" type="text" name="">
-      </div>
-      <div class="form-group">
-        <label for="my-input">Image</label>
-        <input type="file" class="file-input" id="my-input" class="form-control" (change)="getFile($event)">
-      </div>
-      <div class="form-group">
-        <label for="my-input">Price</label>
-        <input [(ngModel)]="product.productPrice" id="my-input" class="form-control" type="text" name="">
-      </div>
-      <div class="form-group">
-        <label for="my-input">Storage Id</label>
-        <input [(ngModel)]="product.storageId" id="my-input" class="form-control" type="text" name="">
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" (click)="saveProduct()">Save</button>
-      </div>
-      <div class="card-footer" *ngIf="showAlert">
-        <div class="alert alert-success" role="alert">
-          <button class="close" (click)="closeAlert()">&times;</button>
-          <strong>Successfully saved</strong>
+    <form #addProductForm="ngForm">
+      <div class="card-body">
+        <div class="form-group mb-2">
+          <label for="my-input">Name</label>
+          <input [(ngModel)]="product.productName" input id="my-input" class="form-control" type="text" name="name"
+            #name="ngModel" required minlength="3" pattern="^[a-zA-Z0-9_-\s]*">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="alert alert-danger error-message alert-dismissible fade show" role="alert">Invalid
+            Name. Use alphabets and Min length 3.
+          </div>
+
+        </div>
+        <div class="form-group mb-2">
+          <label for="my-input">Stock</label>
+          <input [(ngModel)]="product.productStock" id="my-input" class="form-control" type="number" name="stock"
+            #stock="ngModel" required min="1">
+          <div *ngIf="stock.invalid && (stock.dirty || stock.touched)"
+            class="alert alert-danger error-message alert-dismissible fade show" role="alert">Invalid
+            Stock. Positive integer >= 1.
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <label for="my-input">Image</label>
+          <input #fileInput type="file" class="file-input" id="my-input" class="form-control" required
+            (change)="fileUpload($event)">
+          <div *ngIf="!fileUploaded && addProductForm?.form?.valid"
+            class="alert alert-danger error-message alert-dismissible fade show" role="alert">
+            Please upload image file
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <label for="my-input">Price</label>
+          <input [(ngModel)]="product.productPrice" id="my-input" class="form-control" type="number" name="price"
+            required #price="ngModel" pattern="^[1-9]+(?:\.[0-9]{1,2})?$">
+          <div *ngIf="price.invalid && (price.dirty || price.touched)"
+            class="alert alert-danger error-message alert-dismissible fade show" role="alert">Invalid
+            Price. Ex: 23.99
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <label for="my-input">Storage Id</label>
+          <input [(ngModel)]="product.storageId" id="my-input" class="form-control" type="number" name="storage"
+            required #storage="ngModel" min="1">
+          <div *ngIf="storage.invalid && (storage.dirty || storage.touched)"
+            class="alert alert-danger error-message alert-dismissible fade show" role="alert">Invalid
+            Storage Id. Must be >= 1.
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" (click)="saveProduct()"
+            [disabled]="!fileUploaded || !addProductForm.form.valid">Save</button>
+        </div>
+        <div class="card-footer" *ngIf="showAlert">
+          <div class="alert alert-success" role="alert">
+            <button class="close" (click)="closeAlert()">&times;</button>
+            <strong>Successfully saved</strong>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
     <button class="btn btn-secondary" [routerLink]="['/product-list']">Return to Product List</button>
   </div>

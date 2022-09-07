@@ -20,12 +20,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -34,14 +31,14 @@ import lombok.ToString;
 @Table(name = "orders") // Table name
 public class Order {
 	@Column(name = "orderId")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private int orderId;
 
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	@ToString.Exclude
-	@JsonIgnore
+//	@ToString.Exclude
+//	@JsonIgnore
 	private User user;
 
 	@Column(name = "trackingNumber")
