@@ -31,7 +31,11 @@ const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
   redirectUri: window.location.origin + '/login/callback',
-  scopes:["openid", "profile", "email", "groups", "okta.users.manage.self"]
+  scopes: ["openid", "profile", "email", "groups", "okta.users.manage.self"],
+  tokenManager: {
+    storage: 'sessionStorage',
+    autoRenew: true
+  }
 });
 
 @NgModule({
