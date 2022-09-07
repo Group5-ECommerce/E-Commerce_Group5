@@ -1,11 +1,20 @@
-
 <!-- Toolbar -->
-<div class="toolbar navbar mb-4">
-    <h1 class="mx-auto text-center">E-Commerce App</h1>
-    <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
-      <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
-    </ng-container>
-    <ng-template #signedIn>
+<nav class="navbar navbar-dark bg-primary sticky-top" role="banner">
+  <h1 class="mx-auto text-center">E-Commerce App</h1>
+  <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
+    <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
+  </ng-container>
+  <ng-template #signedIn>
+    <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
+    <ul class="nav justify-content-end">
+      <li *oktaHasAnyGroup="['Admin']" class="navbarlinks text-white"><a class="text-white"
+          routerLink="/product-list">Admin Product List</a></li>
+      <li class="navbarlinks"><a class="text-white" routerLink="/product">Customer Product List</a></li>
+      <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
+      <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
+    </ul>
+    <div class="dropdown p-2 me-4">
+      <button (click)="toggleDropdown()" class="dropbtn" #userBtn>User</button>
       <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
       <ul class="nav justify-content-end">
         <li *oktaHasAnyGroup="['Admin']" class="navbarlinks text-white"><a class="text-white" routerLink="/product-list">Admin Product List</a></li>
@@ -22,8 +31,11 @@
           <a role="button" (click)="signOut()">Sign out</a>
         </div>
       </div>
-    </ng-template>
-</div>
+    </div>
+  </ng-template>
+</nav>
+
+<br><br><br><br>
 <!--<app-get-products></app-get-products>
 <app-product-list></app-product-list> -->
 <router-outlet></router-outlet>

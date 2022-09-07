@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
 
   public isAuthenticated$!: Observable<boolean>;
 
+
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
 
   public ngOnInit(): void {
@@ -26,8 +27,7 @@ export class AppComponent implements OnInit {
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
     window.onclick = (e) => {
-
-      if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
+       if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
     };
   }
 

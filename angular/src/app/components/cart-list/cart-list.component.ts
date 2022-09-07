@@ -14,12 +14,13 @@ import { CartService } from 'src/app/services/cart.service';
 
 export class CartListComponent implements OnInit {
   cartItems?: CartItem[];
-  cartLength = 0;
   isProductAmountEditable = false
+  pageNum?: number
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
+    this.pageNum = 1
 
     //must be first for live crud update to list
     this.cartService.activateWatcher().subscribe((response) => {
@@ -27,29 +28,32 @@ export class CartListComponent implements OnInit {
     })
 
     this.cartService.viewItems();
-    this.cartLength = this.cartItems?.length ?? 0;
 
 
+  }
+
+  saveAmount() {
+    this.cartService.updateCart(this.cartItems!);
   }
 
   removeItem(product: Product) {
     this.cartService.removeProduct(product);
   }
 
-  onEditProductAmount(val: boolean) {
-    this.isProductAmountEditable = val;
-  }
+  // onEditProductAmount(val: boolean) {
+  //   this.isProductAmountEditable = val;
+  // }
 
-  onSaveProductAmount(item: CartItem) {
-    let amt = Number(item.amt)
-    if (Number.isInteger(amt) && amt > 0) {
-      this.cartService.updateCart(this.cartItems!);
-    } else {
-      item.amt = 1
-      this.cartService.updateCart(this.cartItems!);
-    }
+  // onSaveProductAmount(item: CartItem) {
+  //   let amt = Number(item.amt)
+  //   if (Number.isInteger(amt) && amt > 0) {
+  //     this.cartService.updateCart(this.cartItems!);
+  //   } else {
+  //     item.amt = 1
+  //     this.cartService.updateCart(this.cartItems!);
+  //   }
 
-    this.isProductAmountEditable = false;
-  }
+  //   this.isProductAmountEditable = false;
+  // }
 
 }

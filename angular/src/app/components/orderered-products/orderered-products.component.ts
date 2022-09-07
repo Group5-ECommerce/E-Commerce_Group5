@@ -14,8 +14,10 @@ export class OrdereredProductsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
   tracker!: string
   orderItems!: OrderItem[]
+  pageNum?: number
 
   ngOnInit(): void {
+    this.pageNum = 1
     this.tracker = this.route.snapshot.params.tracker
     this.viewProducts()
   }
