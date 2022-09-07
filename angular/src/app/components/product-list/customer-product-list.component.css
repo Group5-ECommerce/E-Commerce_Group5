@@ -32,10 +32,3 @@
     object-fit: fill;
 }
 
-.fixed {
-  position: fixed !important;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  background: red;
-}
