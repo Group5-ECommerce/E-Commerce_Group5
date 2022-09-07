@@ -7,17 +7,17 @@
           <th>Name</th>
           <th>Price</th>
           <th>Image</th>
-          <th>Amount</th>
+          <th class = "ps-5">Amount</th>
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="align-middle">
         <tr *ngFor="let c of cartItems! | paginate: { itemsPerPage: 5, currentPage: pageNum} ">
           <td>{{c.product.productId}}</td>
           <td>{{c.product.productName}}</td>
           <td>${{c.product.productPrice}}</td>
-          <td><img class="float-left  m-2" src="{{c.product.productImage}}" alt="product image" style=" width: 20;;
-                    height: 20px;"></td>
+          <td><img class="float-left  m-2" src="{{c.product.productImage}}" alt="product image" style=" width: 50;
+                    height: 50px;"></td>
 
           <!-- <td (dblclick)="onEditProductAmount(true)" class="col-sm-2">
             <div *ngIf="isProductAmountEditable" class="d-flex">
@@ -29,7 +29,7 @@
               {{c.amt}}
             </div>
           </td> -->
-          <td>
+          <td class>
             <button (click)="c.amt!=1? c.amt=c.amt-1:1; saveAmount()" class="btn amt-btn"><i
                 class="bi bi-caret-down-fill"></i></button>
             <span class="item-amount text-center px-3 py-2 border mx-2 rounded" aria-disabled="true">{{c.amt}}</span>

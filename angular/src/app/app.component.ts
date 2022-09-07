@@ -27,8 +27,7 @@ export class AppComponent implements OnInit {
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
     window.onclick = (e) => {
-
-      if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
+       if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
     };
   }
 
