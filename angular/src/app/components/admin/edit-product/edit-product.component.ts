@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from '../../../services/product.service';
@@ -14,7 +15,15 @@ export class EditProductComponent implements OnInit {
   id!: number;
   product = new Product();
   showAlert = false;
-  file: File | undefined
+  fileUploaded = false;
+  file?: File;
+  //only init right before AfterViewInit
+  @ViewChild('fileInput')
+  fileUploadElem: ElementRef;
+  //for form reset
+  @ViewChild('editProductForm')
+  form: NgForm
+
   useExistingImg?: boolean
 
   ngOnInit() {
@@ -26,32 +35,31 @@ export class EditProductComponent implements OnInit {
 
     this.useExistingImg = true;
   }
+  //on change
+  fileUpload(event: any) {
+    if (event.target.files.length > 0) {
+      this.fileUploaded = true;
+      this.file = event.target.files[0];
+    } else {
+      this.fileUploaded = false; //validation reset
+    }
+  }
 
-  // async updateProduct() {
-  //   await this.uploadImgToCloud().catch((err) => console.log(err))
-
-  //   //still allows this part execution after err
-  //   this.productService.updateProduct(this.product).subscribe((response: any) => {
-  //     console.log(response);
-  //     this.product = new Product();
-  //     this.showAlert = true;
-  //   })
-  // }
-  updateProduct() {
+  updateProduct(checkboxEl: any) {
     this.uploadImgToCloud().then(
       (result) => {
         this.productService.updateProduct(this.product).subscribe((response: any) => {
-          this.product = new Product();
+          // this.product = new Product();
           this.showAlert = true;
+          this.form.resetForm(this.form.value);
+          this.fileUploaded = false;
+          this.useExistingImg = true;
+          checkboxEl.checked = true;
         })
       },
       (error) => { console.log(error) }
     )
 
-  }
-
-  setFile(event: any) {
-    this.file = event.target.files[0];
   }
 
   uploadImgToCloud() {

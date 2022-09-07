@@ -2,17 +2,16 @@
 
   <div class="row d-flex flex-column justify-content-center container">
 
-    <div class="col d-flex justify-content-center">
-      <div class="input-group">
-        <div class=" form-outline">
-          <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product"
-            (keyup.enter)="showResults()" autocomplete="off" />
-        </div>
-        <button type="button" class="btn btn-primary" (click)="showResults()">
-          Search
-        </button>
+    <div class="input-group align-contents-center">
+      <div class=" form-outline">
+        <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product"
+          (keyup.enter)="showResults()" autocomplete="off" />
       </div>
+      <button type="button" class="btn btn-primary" (click)="showResults()">
+        Search
+      </button>
     </div>
+
 
 
     <h3 class="text-center">Product List</h3>
@@ -36,9 +35,9 @@
       </div>
     </div>
 
-    <div class="container d-flex text-center col-md-6">
+    <div>
       <ng-template #noResults>
-        No Results Found.
+        <h5 class="text-center my-5">No Results Found.</h5>
       </ng-template>
     </div>
 

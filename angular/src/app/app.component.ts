@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
   public isAuthenticated$!: Observable<boolean>;
 
+
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
 
   public ngOnInit(): void {
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
   public async signIn(): Promise<void> {
     // This may be useful in the future: { originalUri: '/' }
     await this._oktaAuth.signInWithRedirect().then(_ =>
-        this._router.navigateByUrl('profile')
+      this._router.navigateByUrl('profile')
     );
   }
 

@@ -32,24 +32,28 @@ export class CartListComponent implements OnInit {
 
   }
 
+  saveAmount() {
+    this.cartService.updateCart(this.cartItems!);
+  }
+
   removeItem(product: Product) {
     this.cartService.removeProduct(product);
   }
 
-  onEditProductAmount(val: boolean) {
-    this.isProductAmountEditable = val;
-  }
+  // onEditProductAmount(val: boolean) {
+  //   this.isProductAmountEditable = val;
+  // }
 
-  onSaveProductAmount(item: CartItem) {
-    let amt = Number(item.amt)
-    if (Number.isInteger(amt) && amt > 0) {
-      this.cartService.updateCart(this.cartItems!);
-    } else {
-      item.amt = 1
-      this.cartService.updateCart(this.cartItems!);
-    }
+  // onSaveProductAmount(item: CartItem) {
+  //   let amt = Number(item.amt)
+  //   if (Number.isInteger(amt) && amt > 0) {
+  //     this.cartService.updateCart(this.cartItems!);
+  //   } else {
+  //     item.amt = 1
+  //     this.cartService.updateCart(this.cartItems!);
+  //   }
 
-    this.isProductAmountEditable = false;
-  }
+  //   this.isProductAmountEditable = false;
+  // }
 
 }
