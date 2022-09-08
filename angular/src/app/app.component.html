@@ -2,22 +2,28 @@
 <nav class="navbar navbar-dark bg-primary sticky-top" role="banner">
   <h1 class="mx-auto text-center">E-Commerce App</h1>
   <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
-    <ul class="nav justify-content-end">
+    <ul class="nav justify-content-end vertical-align-center">
       <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
       <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
       <li class="navbarlinks"><a class="text-white" routerLink="/order-track">Track Orders</a></li>
-      <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
     </ul>
+    <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
   </ng-container>
   <ng-template #signedIn>
     <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
     <ul class="nav justify-content-end">
-      <li *ngIf = "(this.isAdmin$ | async) === true" class="navbarlinks text-white"><a class="text-white"
-          routerLink="/product-list">Admin Product List</a></li>
-      <li class="navbarlinks"><a class="text-white" routerLink="/product">Customer Product List</a></li>
-      <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
-      <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
-      <li class="navbarlinks"><a class="text-white" routerLink="/order-track">Track Orders</a></li>
+      <!-- If they are an admin, display the admin links. Otherwise, display the customer links.-->
+      <ng-container *ngIf="(isAdmin$ | async) === true; else customerNav">
+        <li class="navbarlinks"><a class="text-white" routerLink="/product-list">Edit Catalogue</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
+      </ng-container>
+      <ng-template #customerNav>
+        <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/order-list">My Orders</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/order-track">Track Orders</a></li>
+      </ng-template>
     </ul>
     <div class="dropdown p-2 me-4">
       <button (click)="toggleDropdown()" class="dropbtn" #userBtn>{{name$ | async}}</button>
