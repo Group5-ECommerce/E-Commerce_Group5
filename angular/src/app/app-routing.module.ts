@@ -13,7 +13,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { OrderTrackComponent } from './order-track/order-track.component';
+import { OrderTrackComponent } from './components/order-track/order-track.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },

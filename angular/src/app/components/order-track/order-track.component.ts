@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {OrderService} from '../../services/order.service'
 
 @Component({
   selector: 'app-order-track',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderTrackComponent implements OnInit {
 
-  constructor() { }
+  trackingNumber?:string;
+
+  constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
+
+  }
+
+  trackOrder(){
+    this.orderService.getOrderItemsByTracking(this.trackingNumber!);
   }
 
 }

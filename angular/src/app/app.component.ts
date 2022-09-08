@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, OktaAuth } from '@okta/okta-auth-js';
-import { filter, map, Observable } from 'rxjs';
+import { filter, from, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
   @ViewChild('userBtn') userButton: ElementRef;
 
   public isAuthenticated$!: Observable<boolean>;
+  public isAdmin$: Observable<boolean>;
+
   name$!: Observable<String>;
 
 
@@ -27,6 +29,14 @@ export class AppComponent implements OnInit {
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
+
+    this.isAdmin$ = from(this._oktaAuth.tokenManager.get("idToken").then(
+      token => {
+        console.log(token);
+        if (token.claims.groups.includes("Admin")) return true;
+        else return false;
+      }    
+    ));
 
     this.name$ = this._oktaStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),

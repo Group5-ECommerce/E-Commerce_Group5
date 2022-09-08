@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="card" style="width: 50%; margin: 10px auto;">
+    <div class="card-header">
+      Order Tracking
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="my-input">Enter Your Unique Tracking Number </label>
+        <input [(ngModel)]="trackingNumber" id="my-input" class="form-control" type="text" name=""><br>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" [routerLink]="['../ordered-products', trackingNumber]">Submit</button>
+        <p> </p><button class="btn btn-secondary">Reset</button>
+      </div>
+      <br>
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Your order in on your way!</strong>
+      </div>
