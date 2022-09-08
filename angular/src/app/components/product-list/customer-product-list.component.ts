@@ -17,7 +17,6 @@ export class CustomerProductListComponent implements OnInit {
   title = "product list"
   pageNum?: number
   query?: string
-  queryResults?: number
 
   constructor(private productService: ProductService, private cartService: CartService) { }
 
@@ -55,7 +54,6 @@ export class CustomerProductListComponent implements OnInit {
       next: (data) => {
         this.products = (data);
         this.displayedProducts = this.products;
-        this.queryResults = this.displayedProducts.length;
       },
       error: (e) => console.log(e)
     })
@@ -85,16 +83,13 @@ export class CustomerProductListComponent implements OnInit {
         }
         return false
       })
-      this.queryResults = this.displayedProducts?.length;
     } else {
       this.displayedProducts = this.products
-      this.queryResults = this.displayedProducts?.length
     }
   }
 
   resetResults() {
     this.displayedProducts = this.products
-    this.queryResults = this.displayedProducts?.length
   }
 
   // tester(event: any) {
