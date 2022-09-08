@@ -21,15 +21,15 @@ export class UserDetailsService {
   }
   
   updateUserDetails(){
-    this._oktaAuth.tokenManager.getTokens().then(
-      (s) => {
-        this.email = s.idToken!.claims.email!;
-        let fullName = s.idToken?.claims.name!;
+    this._oktaAuth.tokenManager.get("idToken").then(
+      (id) => {
+        this.email = id.claims.email!;
+        let fullName = id.claims.name!;
         let splitName = fullName.split(' ');
         this.firstName = splitName[0];
         this.lastName = splitName[1];
-        this.username = s.idToken!.claims.preferred_username!;
-        this.id = s.idToken!.claims.sub;
+        this.username = id.claims.preferred_username!;
+        this.id = id.claims.sub;
       }
     );
   }

@@ -7,6 +7,13 @@ body{
 /* Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/
 .dropbtn {
   background-color: #3498DB;
+
+  /* Clips the text with an ellipsis if it is too long.*/
+  max-width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   color: white;
   padding: 10px;
   font-size: 16px;
