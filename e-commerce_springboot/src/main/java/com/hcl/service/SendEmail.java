@@ -11,7 +11,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.hcl.config.Secret_empty;
 import com.hcl.entity.Order;
 
 public class SendEmail {
@@ -69,13 +68,14 @@ public class SendEmail {
 			// with something like https://freemarker.apache.org/
 			AtomicReference<String> messageContent = new AtomicReference<String>(
 					"<h1>Hello " + username + ", thank you for ordering on our E-Commerce website!</h1>"
-							+ "\n<h2>Order Details</h2><table><tr><th></th><th></th><th></th><th></th></tr>");
+							+ "\n<h2>Order Details</h2><table border='1' style='border-collapse:collapse; max-width:800px;'>"
+							+ "<tr><th style='width: 10%;'>Image</th><th>Product</th><th>Price</th><th>Quantity</th></tr>");
 			// AtomicReference allows us to adjust the string in the forEach/lambda scope.
 			// We could do a for loop, but this permits use of Java8 features.
 			order.getItems().stream().forEach(i -> {
 				messageContent.set(messageContent + String.format(
 						"<tr><td><img width=\"200\" height=\"200\" src=\"%s\" alt=\"Product Image\" /></td>"
-								+ "<td>%s</td><td>$%.2f</td><td>%d</td></tr>",
+								+ "<td style = \"text-align:center\">%s</td><td style = \"text-align:center\">$%.2f</td><td style = \"text-align:center\">%d</td></tr>",
 						i.getProduct().getProductImage(), i.getProduct().getProductName(),
 						i.getProduct().getProductPrice(), i.getAmt()));
 			});
@@ -91,8 +91,8 @@ public class SendEmail {
 	}
 
 	private static Session setUpAndGetSession() {
-		final String username = Secret_empty.username;
-		final String password = Secret_empty.password;
+		final String username = "ed52bb704178d8";
+		final String password = "49d68afff407d4";
 
 		// Paste host address from the SMTP settings tab in your Mailtrap Inbox
 		String host = "smtp.mailtrap.io";

@@ -1,18 +1,52 @@
 <div class="container">
-  <div class="row d-flex flex-column justify-content-center">
-    <h1 class = "text-center">Product List</h1>
-    <div class="card-columns col-lg-6  mt-2 mx-auto " *ngFor="let product of products; let i = index"
-      [class.active]="i == currentIndex">
-      <div class="card flex-row">
-        <img class="float-left  m-2" src="{{product.productImage}}" alt="product image" style=" width: 100px;;
-          height: 100px;">
-        <div class="card-body">
-          <h4 class="card-title">{{product.productName}}</h4>
-          <h5 class="d-inline-block mx-3">Price: ${{product.productPrice}}</h5>
-          <h5 class="d-inline-block mx-3">Remaining: {{product.productStock}}</h5>
-          <button #refEl class="d-inline-block mx-3" type="button" class="btn btn-primary" (click) = "saveToCart(refEl, product)">Add To Cart</button>
-        </div>
+
+  <div class="row d-flex justify-content-center container">
+
+    <div class="input-group justify-content-center mb-5">
+      <div>
+        <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product"
+          (keyup.enter)="showResults()" autocomplete="off" />
+      </div>
+      <div class="btn-group ">
+        <button type="button" class="btn btn-primary" (click)="showResults()">
+          Search
+        </button>
+        <button class="btn btn-secondary " (click)="resetResults()">Reset</button>
       </div>
     </div>
-  </div>
-</div>
+
+
+
+    <ng-container>
+      <h3 class="text-center">Product List</h3>
+    </ng-container>
+
+    <div class="container h-50 w-75 mt-2" *ngIf="queryResults!=0; else noResults">
+      <div class="row row-cols-sm-4 g-3 mb-2 justify-content-start">
+        <div class="col"
+          *ngFor="let product of displayedProducts! | paginate: { itemsPerPage: 8, currentPage: pageNum }">
+          <div class="card">
+            <img class="card-img-top" src="{{product?.productImage}}" alt="product img">
+            <div class="card-body">
+              <h4 class="card-title text-center">{{product?.productName}}</h4>
+              <h5 class="mx-3 text-center">Price: ${{product?.productPrice}}</h5>
+              <h5 class=" mx-3 text-center">Remaining: {{product?.productStock}}</h5>
+              <div class="d-flex container justify-content-center">
+                <button #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
+                  Cart</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products!.length>8">
+        <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
+      </div>
+    </div>
+
+    <div>
+      <ng-template #noResults>
+        <h5 class="text-center my-5">No Results Found.</h5>
+      </ng-template>
+    </div>

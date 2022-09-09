@@ -18,9 +18,9 @@ export class AdminGuard implements CanActivate {
            // This makes the function wait to return until the service's request comes back as true or false.
            const isAdmin = await firstValueFrom(this.oktaSvc.hasAnyGroups("Admin"));
 
-           return isAdmin;
+           if (isAdmin) return true;
        }
-       this._oktaAuth.signInWithRedirect({'originalUri': state.url});
+       this.router.navigateByUrl("product");
        return false;
     }
 
@@ -37,7 +37,6 @@ export class CustomerGuard implements CanActivate {
          const auth = await this._oktaAuth.isAuthenticated();
          if (auth == true) {
             let isCustomer = await firstValueFrom(this.oktaSvc.hasAnyGroups("Customer"));
-
             return isCustomer;
         }
         this._oktaAuth.signInWithRedirect({'originalUri': state.url});

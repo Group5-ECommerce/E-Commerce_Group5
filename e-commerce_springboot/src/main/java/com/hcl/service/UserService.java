@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.entity.Role;
 import com.hcl.entity.User;
+import com.hcl.repo.OrderRepository;
 import com.hcl.repo.UserRepository;
 
 @Service
@@ -50,7 +51,7 @@ public class UserService {
 	public void addUser(User user, int roleNum) {
 		Role role = new Role();
 		//roleNum is 0 if null, so it is incremented by 1. RoleID of 1 corresponds to ROLE_CUSTOMER.
-		role.setRoleId(roleNum + 1);
+		role.setRoleId(roleNum);
 		user.getRoles().add(role);
 		user.setPassword(encoder.encode(user.getPassword()));
 		repo.save(user);

@@ -1,0 +1,10 @@
+.checkoutbtn{
+    display: flex;
+}
+
+.item-amount{
+  background-color: white;
+}
+.amt-btn{
+  border: none;
+}

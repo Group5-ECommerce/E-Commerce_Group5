@@ -9,15 +9,22 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './components/profile/profile.component';
-
-import {config} from "../config/app.config";
+import { config } from "../config/app.config";
 import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
-import { ProductService } from './services/product/product.service';
+import { ProductService } from './services/product.service';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { CartListComponent } from './components/cart-list/cart-list.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FilterPipe } from './pipes/filter.pipe';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -25,6 +32,7 @@ const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
   redirectUri: window.location.origin + '/login/callback',
+  scopes: ["openid", "profile", "email", "groups", "okta.users.manage.self"]
 });
 
 @NgModule({
@@ -35,17 +43,26 @@ const oktaAuth = new OktaAuth({
     CustomerProductListComponent,
     AddProductComponent,
     EditProductComponent,
+    EditUserComponent,
+    ChangePasswordComponent,
+    CartListComponent,
+    CheckoutComponent,
+    OrderListComponent,
+    OrdereredProductsComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
+    FormsModule,
     HttpClientModule,
-    FormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  CustomerGuard, AdminGuard
+    CustomerGuard, AdminGuard
   ],
   bootstrap: [AppComponent]
 })
