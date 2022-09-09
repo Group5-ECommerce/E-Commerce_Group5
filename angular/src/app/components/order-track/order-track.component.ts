@@ -17,7 +17,7 @@ export class OrderTrackComponent implements OnInit {
   }
 
   trackOrder(){
-    this.orderService.getOrderItemsByTracking(this.trackingNumber!);
+    this.orderService.getOrderByTracking(this.trackingNumber!);
   }
 
 }

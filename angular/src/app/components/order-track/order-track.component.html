@@ -5,11 +5,12 @@
     </div>
     <div class="card-body">
       <div class="form-group">
-        <label for="my-input">Enter Your Unique Tracking Number </label>
-        <input [(ngModel)]="trackingNumber" id="my-input" class="form-control" type="text" name=""><br>
+        <label for="my-input">Enter Your Unique 25-digit Tracking Number </label>
+        <input [(ngModel)]="trackingNumber" id="my-input" class="form-control" type="text" name=""
+        required minlength="25" #numberInput><br>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" [routerLink]="['../ordered-products', trackingNumber]">Submit</button>
+        <button class="btn btn-primary" (click) = "trackOrder()" disabled = "numberInput.valid">Submit</button>
         <p> </p><button class="btn btn-secondary">Reset</button>
       </div>
       <br>

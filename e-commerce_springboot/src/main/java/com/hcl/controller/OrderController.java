@@ -152,13 +152,24 @@ public class OrderController {
 		return orderService.findByUsername(principal.getName());
 	}
 
-	@GetMapping("/trackOrder/{trackingNumber}")
+	@GetMapping("/orderItems/{trackingNumber}")
 	@ApiOperation(value = "Find Order by Tracking Number")
 	@PreAuthorize("hasAuthority('Customer')")
-	public List<OrderItem> trackOrder(@PathVariable String trackingNumber) {
+	public List<OrderItem> getOrderItemsByTrackingNumber(@PathVariable String trackingNumber) {
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
 			return order.get().getItems();
+		}
+		return null;
+	}
+	
+	@GetMapping("/order/{trackingNumber}")
+	@ApiOperation(value = "Find Order by Tracking Number")
+	@PreAuthorize("hasAuthority('Customer') or hasAuthority('Admin')")
+	public Order trackOrder(@PathVariable String trackingNumber) {
+		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
+		if (order.isPresent()) {
+			return order.get();
 		}
 		return null;
 	}
