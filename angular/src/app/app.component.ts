@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    console.log("running init");
     this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
       filter((s: AuthState) => !!s),
       map((s: any) => s.isAuthenticated ?? false)

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OrderService} from '../../services/order.service'
 
+
 @Component({
   selector: 'app-order-track',
   templateUrl: './order-track.component.html',
@@ -8,16 +9,20 @@ import {OrderService} from '../../services/order.service'
 })
 export class OrderTrackComponent implements OnInit {
 
-  trackingNumber?:string;
+  input = new inputTracking();
 
   constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
-
   }
 
   trackOrder(){
-    this.orderService.getOrderByTracking(this.trackingNumber!);
+    this.orderService.getOrderByTracking(this.input.trackingNumber!);
   }
 
+}
+
+class inputTracking 
+{
+    trackingNumber : string;
 }
