@@ -5,7 +5,6 @@
     <ul class="nav justify-content-end vertical-align-center">
       <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
       <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
-      <li class="navbarlinks"><a class="text-white" routerLink="/order-track">Track Orders</a></li>
     </ul>
     <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
   </ng-container>
@@ -16,13 +15,13 @@
       <ng-container *ngIf="(isAdmin$ | async) === true; else customerNav">
         <li class="navbarlinks"><a class="text-white" routerLink="/product-list">Edit Catalogue</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/order-list">Orders</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/order-track">Track Orders</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
       </ng-container>
       <ng-template #customerNav>
         <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
         <li class="navbarlinks"><a class="text-white" routerLink="/order-list">My Orders</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/order-track">Track Orders</a></li>
       </ng-template>
     </ul>
     <div class="dropdown p-2 me-4">

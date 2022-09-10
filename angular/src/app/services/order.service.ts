@@ -22,8 +22,7 @@ export class OrderService {
     return this.http.get<OrderItem[]>(this.url + `orderItems/${tracker}`)
   }
 
-  //will only get products, not order id (investigate why??)
   getOrderByTracking(tracker?: string) {
-    return this.http.get<OrderItem[]>(this.url + `order/${tracker}`)
+    return this.http.get<OrderItem[]>(this.url + `order/${tracker}`);
   }
 }

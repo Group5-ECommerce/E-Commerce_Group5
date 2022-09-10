@@ -157,6 +157,7 @@ public class OrderController {
 	@ApiOperation(value = "Find Order by Tracking Number")
 	@PreAuthorize("hasAuthority('Customer')")
 	public List<OrderItem> getOrderItemsByTrackingNumber(@PathVariable String trackingNumber) {
+		System.out.println(trackingNumber);
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
 			return order.get().getItems();
@@ -168,6 +169,7 @@ public class OrderController {
 	@ApiOperation(value = "Find Order by Tracking Number")
 	@PreAuthorize("hasAuthority('Customer') or hasAuthority('Admin')")
 	public Order trackOrder(@PathVariable String trackingNumber) {
+		System.out.println(trackingNumber);
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
 			return order.get();

@@ -9,7 +9,7 @@ import {OrderService} from '../../services/order.service'
 })
 export class OrderTrackComponent implements OnInit {
 
-  input = new inputTracking();
+  input = new trackingInput();
 
   constructor(private orderService: OrderService) { }
 
@@ -17,12 +17,14 @@ export class OrderTrackComponent implements OnInit {
   }
 
   trackOrder(){
-    this.orderService.getOrderByTracking(this.input.trackingNumber!);
+    this.orderService.getOrderByTracking(this.input.trackingNumber).subscribe(order => {
+      console.log(order);
+    });
   }
 
 }
 
-class inputTracking 
+class trackingInput 
 {
     trackingNumber : string;
 }

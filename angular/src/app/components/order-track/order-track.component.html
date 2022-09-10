@@ -7,11 +7,11 @@
       <form name="trackingForm">
 
         <label for="trackingNumber">Tracking Number</label>
-        <input [ngModel]="input.trackingNumber" input id="trackingNumber" class="form-control" type="text" #trackingNumber="ngModel"
-        minlength="30" maxlength="30" name="trackingNumber" placeholder="Tracking Number" required>
+        <input [(ngModel)]="input.trackingNumber" input id="trackingNumber" class="form-control" type="text" #trackingNumber="ngModel"
+        minlength="36" maxlength="36" name="trackingNumber" placeholder="Tracking Number" required>
 
         <span *ngIf="trackingNumber.touched && trackingNumber.invalid" class="errormessage" style="color:red">Please
-          enter a 30 digit tracking number</span>
+          enter a 36 digit tracking number</span>
           <br>
           <button class="btn btn-primary" (click)="trackOrder()" [disabled]="!trackingNumber.valid">Submit</button>
 
