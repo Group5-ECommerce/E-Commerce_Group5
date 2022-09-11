@@ -41,7 +41,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   submitOrder() {
-
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
