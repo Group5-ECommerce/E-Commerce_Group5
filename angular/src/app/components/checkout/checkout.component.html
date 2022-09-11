@@ -153,8 +153,9 @@
         </div>
       </div>
       <div class="container text-center">
-        <button [disabled]="!checkOutForm.form.valid" class="btn btn-primary btn-md mb-5"
-          (click)="submitOrder()" routerLink="/product">Confirm Order</button>
+        <button [disabled]="!checkOutForm.form.valid || isSubmitted" class="btn btn-primary btn-md mb-5 mx-5"
+          (click)="submitOrder()">Confirm Order</button>
+          <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted" routerLink="/my-orders">View My Orders</button>
       </div>
     </form>
   </div>

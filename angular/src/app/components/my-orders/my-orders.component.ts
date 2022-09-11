@@ -27,6 +27,7 @@ export class MyOrdersComponent implements OnInit {
     {
       console.log(response)
       this.orders = response;
+      this.orders = this.orders.reverse();
     })
   }
 
