@@ -22,17 +22,17 @@ import com.hcl.entity.Order;
 import com.hcl.entity.OrderItem;
 import com.hcl.entity.PaymentInfo;
 import com.hcl.entity.Product;
-import com.hcl.entity.User;
+//import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
 import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
 import com.hcl.repo.ProductRepository;
-import com.hcl.repo.UserRepository;
+//import com.hcl.repo.UserRepository;
 import com.hcl.service.AddressService;
 import com.hcl.service.OrderService;
 import com.hcl.service.SendEmail;
-import com.hcl.service.UserService;
+//import com.hcl.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,8 +44,8 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-	@Autowired
-	UserService userService;
+//	@Autowired
+//	UserService userService;
 
 	@Autowired
 	private AddressRepository addressRepo;
@@ -56,8 +56,8 @@ public class OrderController {
 	@Autowired
 	private AddressService addressService;
 
-	@Autowired
-	private UserRepository userRepo;
+//	@Autowired
+//	private UserRepository userRepo;
 
 	@Autowired
 	private OrderRepository orderRepo;
@@ -65,9 +65,10 @@ public class OrderController {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@PostMapping("/checkout/{email}")
+	@PostMapping("/checkout/{email}/{name}")
 	@ApiOperation(value = "Checkout for Order")
-	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email) {
+	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name, Principal principal) {
+		String oktaId = principal.getName();
 		List<cartItem> items = p.getItems();
 		if (items == null)
 			System.out.println("null");
@@ -96,19 +97,19 @@ public class OrderController {
 			productRepository.save(product);
 		}
 
-		User u = userRepo.findByEmail(email).get();
+		//User u = userRepo.findByOktaId(oktaId).get();
 
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
 
-		addressService.addAddress(u, s);
-		addressService.addAddress(u, b);
+		addressService.addAddress(oktaId, s);
+		addressService.addAddress(oktaId, b);
 
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 		order.setItems(orderItems);
 		order.setTotalPrice(totalPrice);
-		order.setUser(u);
+		order.setOktaId(oktaId);
 		order.setShippingAddress(p.getPayment().getShippingAddressId());
 		String number = generateTrackingNumber();
 		order.setTrackingNumber(number);
@@ -127,7 +128,7 @@ public class OrderController {
 
 		// Creates an order based on the list of products and amounts.
 
-		SendEmail.sendOrderConfirmation(u.getEmail(), u.getUsername(), order);
+	    SendEmail.sendOrderConfirmation(email,name,order);
 
 		String message = p.getMessage();
 		return new Purchase(payment, items, message);
@@ -149,7 +150,8 @@ public class OrderController {
 	@PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Gets all Orders by Username")
 	public List<Order> getMyOrders(Principal principal) {
-		return orderService.findByUsername(principal.getName());
+		return orderService.findByOktaId(principal.getName());
+		
 	}
 
 	@GetMapping("/trackOrder/{trackingNumber}")

@@ -6,6 +6,7 @@ export class Order {
   items: CartItem[]
   orderId?: number
   user?: User
+  oktaId: string
   trackingNumber?: string
   totalPrice?: number
   shippingAddress?: Address

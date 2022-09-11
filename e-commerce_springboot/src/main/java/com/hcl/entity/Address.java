@@ -25,9 +25,13 @@ public class Address {
 	@Column(name = "addressId")
 	private Integer addressId;
     
-    @ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+//    @ManyToOne
+//	@JoinColumn(name = "user_id")
+//	private User user;
+	
+	@Column(name = "oktaId")
+	private String oktaId;
+	
     @Column(name = "firstName")
     private String firstName;
     @Column(name = "lastName")
