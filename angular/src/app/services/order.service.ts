@@ -23,6 +23,6 @@ export class OrderService {
   }
 
   getOrderByTracking(tracker?: string) {
-    return this.http.get<OrderItem[]>(this.url + `order/${tracker}`);
+    return this.http.get<Order>(this.url + `order/${tracker}`);
   }
 }

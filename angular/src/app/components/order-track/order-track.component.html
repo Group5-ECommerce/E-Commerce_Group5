@@ -7,13 +7,14 @@
       <form name="trackingForm">
 
         <label for="trackingNumber">Tracking Number</label>
-        <input [(ngModel)]="input.trackingNumber" input id="trackingNumber" class="form-control" type="text" #trackingNumber="ngModel"
-        minlength="36" maxlength="36" name="trackingNumber" placeholder="Tracking Number" required>
+        <input [(ngModel)]="input.trackingNumber" input id="trackingNumber" class="form-control" type="text"
+          #trackingNumber="ngModel" minlength="36" maxlength="36" name="trackingNumber" placeholder="Tracking Number"
+          required>
 
         <span *ngIf="trackingNumber.touched && trackingNumber.invalid" class="errormessage" style="color:red">Please
           enter a 36 digit tracking number</span>
-          <br>
-          <button class="btn btn-primary" (click)="trackOrder()" [disabled]="!trackingNumber.valid">Submit</button>
+        <br>
+        <button class="btn btn-primary" (click)="trackOrder()" [disabled]="!trackingNumber.valid">Submit</button>
 
       </form>
       <div>
@@ -21,7 +22,9 @@
         <button class="btn btn-secondary">Reset</button>
       </div>
       <br>
-      <div class="alert">
+      <div class="invisible alert" id = "status">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>Your order in on your way!</strong>
+        <strong id = "statusText">Your order in on your way!</strong>
       </div>
+      <app-orderered-products class="invisible" id="trackingOrderItems" [tracker]='input.trackingNumber'
+        [orderItems]="orderItems"></app-orderered-products>
