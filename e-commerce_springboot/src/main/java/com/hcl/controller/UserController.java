@@ -1,53 +1,54 @@
-package com.hcl.controller;
+//package com.hcl.controller;
+//
+//import java.security.Principal;
+//import java.util.List;
+//import java.util.Optional;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.DeleteMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import com.hcl.entity.User;
+//import com.hcl.service.UserService;
+//
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
+//@RestController
+//@CrossOrigin(origins = "http://localhost:4200")
+//@Api(tags= "Users")
+//public class UserController {
+//	@Autowired
+//	private UserService service;
+//
+//	
+//	@GetMapping("/")
+//	@ApiOperation(value = "Home Screen")
+//	public String getDefaultPage() {
+//		return "This is the default page.";
+//	}
+//	
+//	@GetMapping("/customer")
+//    @PreAuthorize("hasAuthority('Customer')")
+//	@ApiOperation(value = "User Is Customer")
+//	public String userPage() {
+//		return "Welcome to the ROLE_CUSTOMER page.";
+//	}
+//	
+//	@GetMapping("/admin")
+//    @PreAuthorize("hasAuthority('Admin')")
+//	@ApiOperation(value = "User Is Admin")
+//	public String adminPage() {
+//		return "Welcome to the ROLE_ADMIN page.";
+//	} 
 
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.hcl.entity.User;
-import com.hcl.service.UserService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-@RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@Api(tags= "Users")
-public class UserController {
-	@Autowired
-	private UserService service;
-
-	
-	@GetMapping("/")
-	@ApiOperation(value = "Home Screen")
-	public String getDefaultPage() {
-		return "This is the default page.";
-	}
-	
-	@GetMapping("/customer")
-    @PreAuthorize("hasAuthority('Customer')")
-	@ApiOperation(value = "User Is Customer")
-	public String userPage() {
-		return "Welcome to the ROLE_CUSTOMER page.";
-	}
-	
-	@GetMapping("/admin")
-    @PreAuthorize("hasAuthority('Admin')")
-	@ApiOperation(value = "User Is Admin")
-	public String adminPage() {
-		return "Welcome to the ROLE_ADMIN page.";
-	}
 	/*
 	@PostMapping("/user/{role}")
 	public void addUser(@RequestBody User user, @PathVariable(required=false) Integer role) {
@@ -129,4 +130,4 @@ public class UserController {
 		service.deleteUser(id);
 	}
 	*/
-}
+

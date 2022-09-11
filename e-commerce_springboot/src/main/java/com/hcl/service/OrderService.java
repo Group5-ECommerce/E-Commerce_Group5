@@ -7,22 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.entity.Order;
-import com.hcl.entity.User;
+//import com.hcl.entity.User;
 import com.hcl.repo.OrderRepository;
-import com.hcl.service.UserService;
+//import com.hcl.service.UserService;
 
 @Service
 public class OrderService{
-	@Autowired
-	UserService userService;
-	
+
 	@Autowired
 	OrderRepository orderRepo;
-	public List<Order> findByUsername(String username){
-		Optional<User> user = userService.getUserByUsername(username);
-		
-		return orderRepo.findAllByUser(user.get());
-	}
+
 	public List<Order> findAll() {
 		return orderRepo.findAll();
 	}
@@ -35,6 +29,10 @@ public class OrderService{
 
 	public Optional<Order> findByTrackingNumber(String trackingNumber) {
 		return orderRepo.findByTrackingNumber(trackingNumber);
+	}
+	public List<Order> findByOktaId(String oktaId) 
+	{
+		return orderRepo.findByOktaId(oktaId);
 	}
 
 }

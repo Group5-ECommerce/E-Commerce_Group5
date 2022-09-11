@@ -168,7 +168,7 @@
       </div>
       <div class="container text-center">
         <button [disabled]="!checkOutForm.form.valid" class="btn btn-primary btn-md mb-5"
-          (click)="submitOrder()">Confirm Order</button>
+          (click)="submitOrder()" routerLink="/product">Confirm Order</button>
       </div>
     </form>
   </div>
