@@ -25,4 +25,9 @@ export class OrderService {
   getOrderByTracking(tracker?: string) {
     return this.http.get<Order>(this.url + `order/${tracker}`);
   }
+
+  getMyOrders(): Observable<any>
+  {
+    return this.http.get<Order[]>(this.url + 'myOrders');
+  }
 }

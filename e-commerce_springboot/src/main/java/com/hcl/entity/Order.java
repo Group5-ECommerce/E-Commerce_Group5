@@ -35,11 +35,14 @@ public class Order {
 	@Id
 	private int orderId;
 
-	@ManyToOne
-	@JoinColumn(name = "userId")
+//	@ManyToOne
+//	@JoinColumn(name = "userId")
 //	@ToString.Exclude
 //	@JsonIgnore
-	private User user;
+	//private User user;
+	
+	@Column(name = "oktaId")
+	private String oktaId;
 
 	@Column(name = "trackingNumber")
 	private String trackingNumber = UUID.randomUUID().toString();

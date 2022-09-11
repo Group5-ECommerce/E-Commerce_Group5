@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { OKTA_AUTH } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 import { EMPTY } from 'rxjs';
 import { Address } from 'src/app/models/address/address';
 import { CartItem } from 'src/app/models/cart-item.model';
@@ -22,17 +24,34 @@ export class CheckoutComponent implements OnInit {
   shippingAddressId = new Address()
   cart: CartItem[]
   isSubmitted = false
+  email: string
+  name: string
 
-  constructor(private service: CheckoutService, private cartService: CartService) { }
-  ngOnInit(): void { }
+  constructor(private service: CheckoutService, private cartService: CartService,  @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  async ngOnInit(): Promise<void>
+   {
+  //   this._oktaAuth.tokenManager.get("idToken").then(
+  //     (s) => {
+  //       this.email = s.claims.email!;
+  //  })
+    const idToken = await this._oktaAuth.tokenManager.get('idToken');
+    this.email = idToken.claims.email!
+    this.name = idToken.claims.name!
+    
+  }
 
   submitOrder() {
-
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
     const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!)
+    this.cart = JSON.parse(cart!);
+
+    if (!this.cart || this.cart.length === 0) {
+      console.log("Error: you're cart is empty.")
+      console.log(this.cart);
+      return;
+    }
 
     let purchase = new Purchase();
     purchase.payment = this.payment
@@ -40,15 +59,14 @@ export class CheckoutComponent implements OnInit {
     purchase.message = "Payment Succeeded!"
 
     console.log(purchase)
+    console.log(this.email)
+    console.log(this.name)
 
 
-    let email: string
-    email = "sds@sds"  // okta - email
+    // let email: string
+    // email = "sds@sds"  // okta - emai
 
-
-
-    this.service.confirmOrder(purchase, email).subscribe(
-
+    this.service.confirmOrder(purchase, this.email, this.name).subscribe(
       {
         next: (res) => {
           console.log(res);

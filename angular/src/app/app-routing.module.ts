@@ -14,10 +14,11 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { OrderTrackComponent } from './components/order-track/order-track.component';
+import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
-
+{path: 'my-orders', component: MyOrdersComponent, canActivate: [CustomerGuard] },
 { path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] },
 { path: 'product', component: CustomerProductListComponent },
 { path: 'product-list', component: AdminProductListComponent, canActivate: [AdminGuard] },

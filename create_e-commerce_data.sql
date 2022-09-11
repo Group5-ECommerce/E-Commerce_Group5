@@ -1,4 +1,4 @@
-INSERT INTO role
+/*INSERT INTO role
 (`roleType`, `roleId`) VALUES
 ('ROLE_CUSTOMER', 1);
 INSERT INTO role
@@ -27,7 +27,7 @@ INSERT INTO user_roles
 (`userId`, `roleId`) VALUES (4, 3);
 INSERT INTO user_roles
 (`userId`, `roleId`) VALUES (5, 4);
-
+*/
 Insert into product (productId,productImage,productName,productPrice,productStock,storageId)
 Values
 (1,"https://res.cloudinary.com/gaurav-cloudinary/image/upload/v1662499764/yhxjpckahasrtdzoli9q.jpg","Laptop",379.99,10,1),

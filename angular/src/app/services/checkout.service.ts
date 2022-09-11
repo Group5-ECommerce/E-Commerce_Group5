@@ -11,8 +11,8 @@ export class CheckoutService {
 
   constructor(private HttpClient: HttpClient) { }
   
-  confirmOrder(data: any, email: any): Observable<any>
+  confirmOrder(data: any, email: any, name: any): Observable<any>
   {
-    return this.HttpClient.post<Purchase>(`${this.checkOutUrl}/${email}`,data);
+    return this.HttpClient.post<Purchase>(`${this.checkOutUrl}/${email}/${name}`,data);
   }
 }
