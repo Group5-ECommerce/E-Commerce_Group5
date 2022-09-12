@@ -14,12 +14,12 @@
         <span *ngIf="trackingNumber.touched && trackingNumber.invalid" class="errormessage" style="color:red">Please
           enter a 36 digit tracking number</span>
         <br>
-        <button class="btn btn-primary" (click)="trackOrder()" [disabled]="!trackingNumber.valid">Submit</button>
+        <button class="btn btn-primary" (click)="trackOrder()" [disabled]="!trackingNumber.valid || canSubmit">Submit</button>
 
       </form>
       <div>
         <br>
-        <button class="btn btn-secondary">Reset</button>
+        <button class="btn btn-secondary" (click) = "resetNumber()" [disabled]="trackingNumber.value.length == 0">Reset</button>
       </div>
       <br>
       <div class="invisible alert" id = "status">

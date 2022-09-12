@@ -25,7 +25,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="orderItems.length>5">
+  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="orderItems && orderItems.length>5">
     <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
   </div>
 

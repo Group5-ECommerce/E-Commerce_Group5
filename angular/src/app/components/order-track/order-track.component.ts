@@ -14,6 +14,7 @@ export class OrderTrackComponent implements OnInit {
   input = new trackingInput();
   @ViewChild(OrdereredProductsComponent) orderedProducts: OrdereredProductsComponent;
   orderItems: OrderItem[];
+  canSubmit: boolean = false;
 
   constructor(private orderService: OrderService) { }
 
@@ -23,34 +24,58 @@ export class OrderTrackComponent implements OnInit {
   trackOrder() {
     this.orderService.getOrderByTracking(this.input.trackingNumber).subscribe({
       next: order => {
+
+        this.canSubmit = false;
+        const statusEl = document.getElementById("status")!;
+        if (!order) {
+          console.log("empty order");
+          const statusText = document.getElementById("statusText")!.textContent = "Order not found- try a different tracking number.";
+          statusEl.style.backgroundColor = "DarkGrey";
+          statusEl.classList.remove("invisible");
+          return;
+        }
+
         document.getElementById("trackingOrderItems")?.classList.toggle("invisible");
+
         this.orderItems = order.items;
         const status = order.orderStatus;
-        const statusEl = document.getElementById("status")!;
-        statusEl.classList.toggle("invisible");
         document.getElementById("")
+
         const statusText = document.getElementById("statusText")!.textContent = order.orderStatus!;
-        switch (status){
+        switch (status) {
           case "Processing":
-            statusEl.classList.remove("alert");
-            statusEl.classList.add("alert-primary");
+            statusEl.style.backgroundColor = "#e2e3e5";
+            statusEl.style.color = "#383d41"
+            break;
+          case "Fulfilling":
+            statusEl.style.backgroundColor = "#e2e3e5";
+            statusEl.style.color = "#383d41"
             break;
           case "Shipped":
-            statusEl.classList.add("alert-info");
+            statusEl.style.backgroundColor = "#fff3cd";
+            statusEl.style.color = "#856404"
             break;
           case "Delivered":
-            statusEl.classList.add("alert-success");
+            statusEl.style.backgroundColor = "#d4edda";
+            statusEl.style.color = "#155724"
             break;
           case "Cancelled":
-            statusEl.classList.add("alert-danger");
+            statusEl.style.backgroundColor = "#f8d7da";
+            statusEl.style.color = "#721c24"
             break;
           default:
-            statusEl.classList.add("alert-warning");
+            statusEl.style.backgroundColor = "#fefefe";
+            statusEl.style.color = "#818182";
             break;
         }
+        statusEl.classList.remove("invisible");
       },
       error: e => console.log(e)
     });
+  }
+
+  resetNumber(){
+    this.input.trackingNumber = "";
   }
 
 }

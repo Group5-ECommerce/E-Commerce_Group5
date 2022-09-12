@@ -22,7 +22,6 @@ export class OrdereredProductsComponent implements OnInit {
     this.viewProducts()
   }
   viewProducts() {
-    console.log("bro");
     this.orderService.getOrderItemsByTracking(this.tracker).subscribe((response) => {
       console.log(response)
       this.orderItems = response;
