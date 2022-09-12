@@ -20,8 +20,8 @@
       </ng-container>
       <ng-template #customerNav>
         <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
-        <li class="navbarlinks"><a class="text-white" routerLink="/order-list">My Orders</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart {{getCartLength()}}</a></li>
+        <li class="navbarlinks"><a class="text-white" routerLink="/my-orders">My Orders</a></li>
       </ng-template>
     </ul>
     <div class="dropdown p-2 me-4">

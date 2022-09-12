@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, OktaAuth } from '@okta/okta-auth-js';
 import { filter, from, map, Observable } from 'rxjs';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
   name$!: Observable<String>;
 
 
-  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private cartService:CartService) { }
 
   public ngOnInit(): void {
 
@@ -64,5 +65,8 @@ export class AppComponent implements OnInit {
     document.getElementById("accountDropdown")?.classList.toggle("show");
   }
 
+  getCartLength(): number {
+    return this.cartService.length;
+  }
 
 }
