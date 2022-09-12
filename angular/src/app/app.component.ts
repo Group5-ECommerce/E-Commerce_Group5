@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   name$!: Observable<String>;
 
-
+  // Test commit on organization. 
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private cartService:CartService) { }
 
   public ngOnInit(): void {
