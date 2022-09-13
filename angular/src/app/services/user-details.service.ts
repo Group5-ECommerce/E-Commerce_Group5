@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { Inject, Injectable } from '@angular/core';
+import { OKTA_AUTH } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 import { catchError } from 'rxjs';
 import { config } from 'src/config/app.config';
 
@@ -13,16 +14,22 @@ export class UserDetailsService {
   lastName: String;
   firstName: String;
   email: String;
+  id: String;
 
-  constructor(private _oktaStateService: OktaAuthStateService, private httpClient: HttpClient) {
-    this._oktaStateService.authState$.subscribe(
-      (s) => {
-        this.email = s.idToken!.claims.email!;
-        let fullName = s.idToken?.claims.name!;
+  constructor(private httpClient: HttpClient, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) {
+    this.updateUserDetails();
+  }
+  
+  updateUserDetails(){
+    this._oktaAuth.tokenManager.get("idToken").then(
+      (id) => {
+        this.email = id.claims.email!;
+        let fullName = id.claims.name!;
         let splitName = fullName.split(' ');
         this.firstName = splitName[0];
         this.lastName = splitName[1];
-        this.username = s.idToken!.claims.preferred_username!;
+        this.username = id.claims.preferred_username!;
+        this.id = id.claims.sub;
       }
     );
   }
@@ -35,13 +42,17 @@ export class UserDetailsService {
       }
       return false;
     }))
-      .subscribe((response) => { console.log(response); return true; });
+      .subscribe((response: any) => {
+        this._oktaAuth.tokenManager.renew('idToken').then( token => this.updateUserDetails());
+        return true;
+      }
+      );
   }
   changePassword(data: any) {
     const url = config.apiBaseURL + "/api/v1/authn/credentials/change_password";
     return this.httpClient.post(config.apiBaseURL + "/api/v1/authn", data).subscribe();
-    
-    return this.httpClient.post(url, data).pipe(catchError(async (error) => {console.log(error); return false;}))
+
+    return this.httpClient.post(url, data).pipe(catchError(async (error) => { console.log(error); return false; }))
       .subscribe((response) => { console.log(response); return true; });
   }
 

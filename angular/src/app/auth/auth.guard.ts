@@ -36,10 +36,18 @@ export class CustomerGuard implements CanActivate {
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
          const auth = await this._oktaAuth.isAuthenticated();
          if (auth == true) {
-            let isCustomer = await firstValueFrom(this.oktaSvc.hasAnyGroups("Customer"));
+            const isCustomer = await firstValueFrom(this.oktaSvc.hasAnyGroups("Customer"));
+            const isAdmin = await firstValueFrom(this.oktaSvc.hasAnyGroups("Admin"));
+
+            // If they are an admin, don't allow them! This restricts checkout.
+            if (isAdmin) {
+                // Redirects to the edit catalogue page
+                this.router.navigateByUrl('product-list');
+                return false;
+            }
             return isCustomer;
         }
-        this._oktaAuth.signInWithRedirect({'originalUri': state.url});
+        this._oktaAuth.signInWithRedirect({originalUri: state.url});
         return false;
     }
 
