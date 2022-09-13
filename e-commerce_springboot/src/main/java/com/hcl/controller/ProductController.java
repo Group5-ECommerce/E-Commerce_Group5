@@ -37,8 +37,7 @@ public class ProductController {
 
 	@GetMapping("/product")
 	@ApiOperation(value = "Show All Products")
-	public List<Product> listAllProduct(Principal principal) {
-		System.out.println("This is the Okta userId: " + principal.getName());
+	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 

@@ -41,7 +41,7 @@ export class OrderTrackComponent implements OnInit {
 
         this.orderItems = order.items;
         const status = order.orderStatus;
-        document.getElementById("")
+        this.orderedProducts.tracker = this.input.trackingNumber;
 
         const statusText = document.getElementById("statusText")!.textContent = order.orderStatus!;
         switch (status) {

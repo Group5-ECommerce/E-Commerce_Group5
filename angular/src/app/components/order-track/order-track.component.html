@@ -16,20 +16,16 @@
         <br>
         <button class="btn btn-primary" (click)="trackOrder()"
           [disabled]="!trackingNumber.valid || canSubmit">Submit</button>
-
-      </form>
-      <div>
-        <br>
-        <button class="btn btn-secondary" (click)="reset()"
+        <button class="btn btn-secondary float-end" (click)="reset()"
           [disabled]="trackingNumber?.value?.length == 0">Reset</button>
-      </div>
+      </form>
       <br>
       <div class="invisible alert text-center" id="status">
         <strong id="statusText"></strong>
       </div>
       <div id="orderInfo" class="invisible mt-2">
 
-        <app-orderered-products [tracker]='input.trackingNumber' [orderItems]="orderItems"></app-orderered-products>
+        <app-orderered-products [orderItems]="orderItems"></app-orderered-products>
 
         <table class="table table-light">
           <thead class="thead-light">
