@@ -32,7 +32,8 @@
               <h5 class="mx-3 text-center">Price: ${{product?.productPrice}}</h5>
               <h5 class=" mx-3 text-center">Remaining: {{product?.productStock}}</h5>
               <div class="d-flex container justify-content-center">
-                <button #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
+                <button *ngIf="product.productStock<=0" #refEl type="button" class="btn btn-secondary " (click)="saveToCart(refEl, product)" disabled>Out of Stock</button>
+				<button *ngIf="product.productStock>0" #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
                   Cart</button>
               </div>
 
