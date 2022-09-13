@@ -17,8 +17,20 @@ import { Product } from "../models/product.model";
 
 export class CartService {
   private watcher = new Subject();
-  length:number =  0;
-  constructor(private http: HttpClient) { }
+  length:number = this.cartLength();
+
+  cartLength(){
+    const cart = localStorage.getItem("cart");
+    let cartLength = 0;
+    if (cart){
+      const cartJSON = JSON.parse(cart);
+      cartLength = cartJSON.length;
+    }
+
+    return cartLength;
+  }
+
+  constructor(private http: HttpClient) {}
 
   activateWatcher(): Observable<any> {
     return this.watcher.asObservable();
