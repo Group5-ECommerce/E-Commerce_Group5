@@ -17,7 +17,7 @@ import { Product } from "../models/product.model";
 
 export class CartService {
   private watcher = new Subject();
-  length:number = JSON.parse(localStorage.getItem('cart')!).length ?? 0;
+  length:number =  0;
   constructor(private http: HttpClient) { }
 
   activateWatcher(): Observable<any> {

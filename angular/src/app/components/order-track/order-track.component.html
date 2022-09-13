@@ -14,17 +14,45 @@
         <span *ngIf="trackingNumber.touched && trackingNumber.invalid" class="errormessage" style="color:red">Please
           enter a 36 digit tracking number</span>
         <br>
-        <button class="btn btn-primary" (click)="trackOrder()" [disabled]="!trackingNumber.valid || canSubmit">Submit</button>
+        <button class="btn btn-primary" (click)="trackOrder()"
+          [disabled]="!trackingNumber.valid || canSubmit">Submit</button>
 
       </form>
       <div>
         <br>
-        <button class="btn btn-secondary" (click) = "resetNumber()" [disabled]="trackingNumber.value.length == 0">Reset</button>
+        <button class="btn btn-secondary" (click)="reset()"
+          [disabled]="trackingNumber?.value?.length == 0">Reset</button>
       </div>
       <br>
-      <div class="invisible alert" id = "status">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong id = "statusText">Your order in on your way!</strong>
+      <div class="invisible alert text-center" id="status">
+        <strong id="statusText"></strong>
       </div>
-      <app-orderered-products class="invisible" id="trackingOrderItems" [tracker]='input.trackingNumber'
-        [orderItems]="orderItems"></app-orderered-products>
+      <div id="orderInfo" class="invisible mt-2">
+
+        <app-orderered-products [tracker]='input.trackingNumber' [orderItems]="orderItems"></app-orderered-products>
+
+        <table class="table table-light">
+          <thead class="thead-light">
+            <tr>
+              <th>Okta id</th>
+              <th>Order id</th>
+              <th>Date</th>
+              <th>Total bill</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{order?.oktaId}}</td>
+              <td>{{order?.orderId}}</td>
+              <td>{{order?.orderTime | date:"medium"}}</td>
+              <td>${{order?.totalPrice}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="text-center text-decoration-underline">Shipping Address</h2>
+        <h4>{{order?.shippingAddress?.firstName}} {{order?.shippingAddress?.lastName}}</h4>
+        <h4>{{order?.shippingAddress?.streetAddress}}, {{order?.shippingAddress?.city}}
+          {{order?.shippingAddress?.state}}, {{order?.shippingAddress?.zip}}
+        </h4>
+      </div>

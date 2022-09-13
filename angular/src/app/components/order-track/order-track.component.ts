@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderItem } from 'src/app/models/order-item.model';
+import { Order } from 'src/app/models/order.model';
 import { OrderService } from '../../services/order.service'
 import { OrdereredProductsComponent } from '../orderered-products/orderered-products.component';
 
@@ -15,6 +16,7 @@ export class OrderTrackComponent implements OnInit {
   @ViewChild(OrdereredProductsComponent) orderedProducts: OrdereredProductsComponent;
   orderItems: OrderItem[];
   canSubmit: boolean = false;
+  order?: Order;
 
   constructor(private orderService: OrderService) { }
 
@@ -24,18 +26,18 @@ export class OrderTrackComponent implements OnInit {
   trackOrder() {
     this.orderService.getOrderByTracking(this.input.trackingNumber).subscribe({
       next: order => {
-
         this.canSubmit = false;
         const statusEl = document.getElementById("status")!;
         if (!order) {
           console.log("empty order");
           const statusText = document.getElementById("statusText")!.textContent = "Order not found- try a different tracking number.";
-          statusEl.style.backgroundColor = "DarkGrey";
+          statusEl.style.backgroundColor = "#e1cc8a";
+          statusEl.style.color = "#4e3c08";
           statusEl.classList.remove("invisible");
           return;
         }
-
-        document.getElementById("trackingOrderItems")?.classList.toggle("invisible");
+        this.order = order;
+        document.getElementById("orderInfo")?.classList.remove("invisible");
 
         this.orderItems = order.items;
         const status = order.orderStatus;
@@ -44,12 +46,12 @@ export class OrderTrackComponent implements OnInit {
         const statusText = document.getElementById("statusText")!.textContent = order.orderStatus!;
         switch (status) {
           case "Processing":
-            statusEl.style.backgroundColor = "#e2e3e5";
+            statusEl.style.backgroundColor = "LightBlue";
             statusEl.style.color = "#383d41"
             break;
           case "Fulfilling":
-            statusEl.style.backgroundColor = "#e2e3e5";
-            statusEl.style.color = "#383d41"
+            statusEl.style.backgroundColor = "#0a58ca";
+            statusEl.style.color = "#fff"
             break;
           case "Shipped":
             statusEl.style.backgroundColor = "#fff3cd";
@@ -74,10 +76,11 @@ export class OrderTrackComponent implements OnInit {
     });
   }
 
-  resetNumber(){
+  reset() {
     this.input.trackingNumber = "";
+    document.getElementById("orderInfo")?.classList.add("invisible");
+    document.getElementById("status")?.classList.add("invisible");
   }
-
 }
 
 class trackingInput {

@@ -4,7 +4,7 @@
   <ng-container *ngIf="(isAuthenticated$ | async) === false; else signedIn">
     <ul class="nav justify-content-end vertical-align-center">
       <li class="navbarlinks"><a class="text-white" routerLink="/product">Products</a></li>
-      <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart</a></li>
+      <li class="navbarlinks"><a class="text-white" routerLink="/cart-list">Cart {{getCartLength()}}</a></li>
     </ul>
     <button class="p-2 me-2" (click)="signIn()"> Sign in </button>
   </ng-container>
