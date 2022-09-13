@@ -1,5 +1,5 @@
 import { STRING_TYPE } from '@angular/compiler';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -27,6 +27,7 @@ export class CheckoutComponent implements OnInit {
   cart: CartItem[]
   isSubmitted = false
   isConfirmed = false
+  @ViewChild(StripeCheckoutComponent) strikeCheckout: StripeCheckoutComponent;
   email: string
   name: string
 
@@ -65,16 +66,16 @@ export class CheckoutComponent implements OnInit {
     // let email: string
     // email = "sds@sds"  // okta - email
 
-    // this.service.confirmOrder(purchase, this.email, this.name).subscribe(
+    this.service.confirmOrder(purchase, this.email, this.name).subscribe(
 
-    //   {
-    //     next: (res) => {
-    //       console.log(res);
-    //       this.isSubmitted = true;
-    //       this.cartService.clearCart();
-    //     }
-    //   }
-    // )
+      {
+        next: (res) => {
+          console.log(res);
+          this.isSubmitted = true;
+          this.cartService.clearCart();
+        }
+      }
+    )
 
     let totalPrice: number
     totalPrice = 0;
@@ -85,8 +86,7 @@ export class CheckoutComponent implements OnInit {
 
     console.log(totalPrice);
 
-    let component = new StripeCheckoutComponent();
-    component.checkout(totalPrice);
+    this.strikeCheckout.checkout(totalPrice);
     this.isConfirmed = true;
   }
   closeAlert() {
