@@ -19,12 +19,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hcl.entity.Product;
-import com.hcl.entity.User;
+//import com.hcl.entity.User;
 import com.hcl.repo.OrderRepository;
 import com.hcl.repo.ProductRepository;
-import com.hcl.repo.UserRepository;
+//import com.hcl.repo.UserRepository;
 import com.hcl.service.OrderService;
-import com.hcl.service.UserService;
+//import com.hcl.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 public class MockitoProductTester 

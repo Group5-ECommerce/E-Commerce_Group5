@@ -1,3 +1,4 @@
+import { STRING_TYPE } from '@angular/compiler';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OKTA_AUTH } from '@okta/okta-angular';
@@ -9,6 +10,7 @@ import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
 import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { StripeCheckoutComponent } from '../stripe-checkout/stripe-checkout.component';
 
 @Component({
   selector: 'app-checkout',
@@ -24,10 +26,12 @@ export class CheckoutComponent implements OnInit {
   shippingAddressId = new Address()
   cart: CartItem[]
   isSubmitted = false
+  isConfirmed = false
   email: string
   name: string
 
-  constructor(private service: CheckoutService, private cartService: CartService,  @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+
+  constructor(private service: CheckoutService, private cartService: CartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
   async ngOnInit(): Promise<void>
    {
   //   this._oktaAuth.tokenManager.get("idToken").then(
@@ -56,24 +60,41 @@ export class CheckoutComponent implements OnInit {
     console.log(this.email)
     console.log(this.name)
 
+    this.isSubmitted = true;
 
     // let email: string
-    // email = "sds@sds"  // okta - emai
+    // email = "sds@sds"  // okta - email
 
-    this.service.confirmOrder(purchase, this.email, this.name).subscribe(
+    // this.service.confirmOrder(purchase, this.email, this.name).subscribe(
 
-      {
-        next: (res) => {
-          console.log(res);
-          this.isSubmitted = true;
-          this.cartService.clearCart();
-        }
-      }
-    )
+    //   {
+    //     next: (res) => {
+    //       console.log(res);
+    //       this.isSubmitted = true;
+    //       this.cartService.clearCart();
+    //     }
+    //   }
+    // )
+
+    let totalPrice: number
+    totalPrice = 0;
+    for(const c of this.cart)
+    {
+        totalPrice = totalPrice + (c.product.productPrice * c.amt);
+    }
+
+    console.log(totalPrice);
+
+    let component = new StripeCheckoutComponent();
+    component.checkout(totalPrice);
+    this.isConfirmed = true;
   }
   closeAlert() {
     this.isSubmitted = false;
   }
+
+
+
 
   // constructor(private service: CheckoutService) { }
 
