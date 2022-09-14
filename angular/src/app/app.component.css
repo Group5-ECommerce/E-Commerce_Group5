@@ -6,7 +6,7 @@ body{
 
 /* Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/
 .dropbtn {
-  background-color: #3498DB;
+  background-color: rgb(125, 186, 230);
   color: white;
   padding: 10px;
   font-size: 16px;
@@ -16,7 +16,7 @@ body{
 
 .dropbtn:hover,
 .dropbtn:focus {
-  background-color: #2980B9;
+  background-color: #4fa1d8;
 }
 
 .dropdown {
@@ -27,7 +27,7 @@ body{
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #61a9f2;
   min-width: 160px;
   overflow: visible;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -37,7 +37,7 @@ body{
 }
 
 .dropdown-content a {
-  color: black;
+  color: white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -228,4 +228,10 @@ a {
 .hoverbtn:hover{
   color:orange;
   transition: 0.4s;
+}
+
+#cartbutton{
+  vertical-align: top;
+  padding-right: 15px;
+  padding-left:10px;
 }
