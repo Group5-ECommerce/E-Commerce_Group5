@@ -1,3 +1,33 @@
+/*INSERT INTO role
+(`roleType`, `roleId`) VALUES
+('ROLE_CUSTOMER', 1);
+INSERT INTO role
+(`roleType`, `roleId`) VALUES
+('ROLE_ADMIN', 2);
+INSERT INTO role
+(`roleType`, `roleId`) VALUES
+('ROLE_DB_OPERATOR', 3);
+INSERT INTO role
+(`roleType`, `roleId`) VALUES
+('ROLE_GUEST', 4);
+
+INSERT INTO `user` (`userId`,`email`,`password`,`username`) VALUES (1,'admin@e-commerce.com','$2a$10$DKoxF/Nv8HXFPPc0bYdKYejxIhBftx7YZEAS6MDksa4ANYgVz8bYO','admin');
+INSERT INTO `user` (`userId`,`email`,`password`,`username`) VALUES (2,'customer@e-commerce.com','$2a$10$Qqau.TBQf186FgZU4eA2zeqe1m97nX026nQSezskUa9hZdUCDTNCe','customer');
+INSERT INTO `user` (`userId`,`email`,`password`,`username`) VALUES (3,'christian@gmail.com','$2a$10$JiXDvGr7aqPVEfT4/fsIju.xo.2QYZkZVmiFyOl.bCiQOEQNQLJge','christian');
+INSERT INTO `user` (`userId`,`email`,`password`,`username`) VALUES (4,'dbadmin@e-commerce.com','$2a$10$l88h38Otm4uDQiiMHGmuBevCbTLB18fcFURnSp.Xy/jj.GryqMTR2','dbadmin');
+INSERT INTO `user` (`userId`,`email`,`password`,`username`) VALUES (5,'guest@gmail.com','$2a$10$0tL/SxolmHlv2qFpgzZaHeobvpgI/URfEOc1w3QqzgWf7U50wMviq','guest');
+
+INSERT INTO user_roles
+(`userId`, `roleId`) VALUES (1, 2);
+INSERT INTO user_roles
+(`userId`, `roleId`) VALUES (2, 1);
+INSERT INTO user_roles
+(`userId`, `roleId`) VALUES (3, 1);
+INSERT INTO user_roles
+(`userId`, `roleId`) VALUES (4, 3);
+INSERT INTO user_roles
+(`userId`, `roleId`) VALUES (5, 4);
+*/
 Insert into product (productId,productImage,productName,productPrice,productStock,storageId)
 Values
 (1,"https://res.cloudinary.com/gaurav-cloudinary/image/upload/v1662499764/yhxjpckahasrtdzoli9q.jpg","Laptop",379.99,10,1),

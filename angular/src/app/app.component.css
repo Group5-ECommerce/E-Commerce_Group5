@@ -1,12 +1,13 @@
-body{
-  z-index:0;
-
-}
-
-
 /* Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/
 .dropbtn {
-  background-color: rgb(125, 186, 230);
+  background-color: #3498DB;
+
+  /* Clips the text with an ellipsis if it is too long.*/
+  max-width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   color: white;
   padding: 10px;
   font-size: 16px;
@@ -202,6 +203,7 @@ footer a {
 .navbar-btn{
   padding:0 20px;
   border: hidden;
+  background-color: transparent;
 }
 
 a {

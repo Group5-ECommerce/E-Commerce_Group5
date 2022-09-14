@@ -17,8 +17,20 @@ import { Product } from "../models/product.model";
 
 export class CartService {
   private watcher = new Subject();
+  length:number = this.cartLength();
 
-  constructor(private http: HttpClient) { }
+  cartLength(){
+    const cart = localStorage.getItem("cart");
+    let cartLength = 0;
+    if (cart){
+      const cartJSON = JSON.parse(cart);
+      cartLength = cartJSON.length;
+    }
+
+    return cartLength;
+  }
+
+  constructor(private http: HttpClient) {}
 
   activateWatcher(): Observable<any> {
     return this.watcher.asObservable();
@@ -40,7 +52,10 @@ export class CartService {
         //cartItem.amt += 1;
         cartJSON[index].amt += 1;
       }
-      else cartJSON.push(cartItem);
+      else {
+        cartJSON.push(cartItem);
+        this.length+=1;
+      }
       this.watcher.next(cartJSON)
 
       const cartString = JSON.stringify(cartJSON);
@@ -48,7 +63,8 @@ export class CartService {
     }
     else {
       const startCart = [cartItem];
-      this.watcher.next(startCart)
+      this.watcher.next(startCart);
+      this.length+=1;
 
       localStorage.setItem('cart', JSON.stringify(startCart));
     }
@@ -68,6 +84,8 @@ export class CartService {
       cartJSON = cartJSON.filter((item: { product: Product, amt: number }) => item.product.productId !== data.productId);
       this.watcher.next(cartJSON)
 
+      this.length-=1;
+
       const cartString = JSON.stringify(cartJSON);
       localStorage.setItem("cart", cartString);
     } else {
@@ -77,8 +95,9 @@ export class CartService {
   }
 
   clearCart() {
-    localStorage.removeItem('cart')
-    console.log("cart cleared!")
+    localStorage.removeItem('cart');
+    console.log("cart cleared!");
+    this.length=0;
   }
 
   // updateProductAmount(amount:number){

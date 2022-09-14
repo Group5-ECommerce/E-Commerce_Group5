@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Product } from 'src/app/models/product.model';
@@ -12,8 +12,8 @@ import { OrderService } from 'src/app/services/order.service';
 export class OrdereredProductsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
-  tracker!: string
-  orderItems!: OrderItem[]
+  @Input() tracker!: string
+  @Input() orderItems!: OrderItem[]
   pageNum?: number
 
   ngOnInit(): void {

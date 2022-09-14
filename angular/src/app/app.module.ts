@@ -25,7 +25,9 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './pipes/filter.pipe';
+import { OrderTrackComponent } from './components/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
+import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -33,7 +35,11 @@ const oktaAuth = new OktaAuth({
   issuer: config.issuer,
   clientId: config.clientId,
   redirectUri: window.location.origin + '/login/callback',
-  scopes: ["openid", "profile", "email", "groups", "okta.users.manage.self"]
+  scopes: ["openid", "profile", "email", "groups", "okta.users.manage.self"],
+  tokenManager: {
+    storage: 'sessionStorage',
+    autoRenew: true
+  }
 });
 
 @NgModule({
@@ -50,8 +56,10 @@ const oktaAuth = new OktaAuth({
     CheckoutComponent,
     OrderListComponent,
     OrdereredProductsComponent,
+    OrderTrackComponent,
     FilterPipe,
-    MyOrdersComponent
+    MyOrdersComponent,
+    StripeCheckoutComponent
   ],
   imports: [
     BrowserModule,
