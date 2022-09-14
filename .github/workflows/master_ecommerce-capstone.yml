@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}e-commerce_springboot/target/*.jar'
+          path: '${{ github.workspace }}/e-commerce_springboot/target/*.jar'
 
   deploy:
     runs-on: windows-latest
