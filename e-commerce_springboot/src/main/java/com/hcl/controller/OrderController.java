@@ -119,10 +119,6 @@ public class OrderController {
 
 		payment.setBillingAddressId(p.getPayment().getBillingAddressId());
 		payment.setShippingAddressId(p.getPayment().getShippingAddressId());
-		payment.setCardHolderFirstName(p.getPayment().getCardHolderFirstName());
-		payment.setCardHolderLastName(p.getPayment().getCardHolderLastName());
-		payment.setCardNumber(p.getPayment().getCardNumber());
-		payment.setCvv(p.getPayment().getCvv());
 		payment.setOrder(order);
 		paymentRepo.save(payment);
 
