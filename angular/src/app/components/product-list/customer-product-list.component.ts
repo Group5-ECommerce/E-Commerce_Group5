@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { filter, from, map, Observable, of, tap } from 'rxjs';
+import { Cart2Service } from 'src/app/services/cart2.service';
 
 @Component({
   selector: 'app-customer-product-list',
@@ -19,7 +20,7 @@ export class CustomerProductListComponent implements OnInit {
   query?: string
   queryResults?: number
 
-  constructor(private productService: ProductService, private cartService: CartService) { }
+  constructor(private productService: ProductService, private cartService: CartService, private cart2Service: Cart2Service) { }
 
 
   ngOnInit(): void {
@@ -46,6 +47,10 @@ export class CustomerProductListComponent implements OnInit {
       el.classList.add("btn-primary");
     }
 
+  }
+
+  saveToIndexedDb(product: Product) {
+    this.cart2Service.addProduct(product)
   }
 
 

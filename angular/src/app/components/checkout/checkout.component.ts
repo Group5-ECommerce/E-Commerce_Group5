@@ -8,6 +8,7 @@ import { CartItem } from 'src/app/models/cart-item.model';
 import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
 import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
+import { Cart2Service } from 'src/app/services/cart2.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
@@ -27,31 +28,50 @@ export class CheckoutComponent implements OnInit {
   email: string
   name: string
 
-  constructor(private service: CheckoutService, private cartService: CartService,  @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
-  async ngOnInit(): Promise<void>
-   {
-  //   this._oktaAuth.tokenManager.get("idToken").then(
-  //     (s) => {
-  //       this.email = s.claims.email!;
-  //  })
+  constructor(private service: CheckoutService, private cartService: Cart2Service, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  async ngOnInit(): Promise<void> {
+    //   this._oktaAuth.tokenManager.get("idToken").then(
+    //     (s) => {
+    //       this.email = s.claims.email!;
+    //  })
     const idToken = await this._oktaAuth.tokenManager.get('idToken');
     this.email = idToken.claims.email!
     this.name = idToken.claims.name!
-    
+
   }
 
-  submitOrder() {
+  async submitOrder() {
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
-    const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!);
+    // const cart = localStorage.getItem('cart');
+    // this.cart = JSON.parse(cart!);
 
-    if (!this.cart || this.cart.length === 0) {
-      console.log("Error: you're cart is empty.")
-      console.log(this.cart);
+    // if (!this.cart || this.cart.length === 0) {
+    //   console.log("Error: you're cart is empty.")
+    //   console.log(this.cart);
+    //   return;
+    // }
+    let cart = await this.cartService.getUserCart();
+    if (cart.length == 0) { //will always be array
+      console.log("error loading cart")
       return;
     }
+
+    this.cart = cart.map((item) => {
+      return {
+        amt: item.amt,
+        product: {
+          productid: item.productId,
+          productName: item.productName,
+          productImage: item.productImage,
+          productPrice: item.productPrice,
+          productStock: item.productStock,
+          storageId: item.storageId
+        }
+      }
+    })
+    console.log(this.cart)
 
     let purchase = new Purchase();
     purchase.payment = this.payment

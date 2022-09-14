@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 import { Observable, Subject } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
 import { Product } from "../models/product.model";
@@ -18,7 +20,10 @@ import { Product } from "../models/product.model";
 export class CartService {
   private watcher = new Subject();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+  }
+
 
   activateWatcher(): Observable<any> {
     return this.watcher.asObservable();

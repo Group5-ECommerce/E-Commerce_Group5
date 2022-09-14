@@ -67,10 +67,10 @@ public class SendEmail {
 
 			// Rather than doing this forEach statement, we should look into using templates
 			// with something like https://freemarker.apache.org/
-			AtomicReference<String> messageContent = new AtomicReference<String>(
-					"<h1> Hello " + name + " ! Thank you for ordering on our E-Commerce website!</h1>"
-							+ "\n<h2>Order Details</h2><table border='1' style='border-collapse:collapse; max-width:800px;'>"
-							+ "<tr><th style='width: 10%;'>Image</th><th>Product</th><th>Price</th><th>Quantity</th></tr>");
+			AtomicReference<String> messageContent = new AtomicReference<String>("<h1> Hello " + name
+					+ " ! Thank you for ordering on our E-Commerce website!</h1>"
+					+ "\n<h2>Order Details</h2><table border='1' style='border-collapse:collapse; max-width:800px;'>"
+					+ "<tr><th style='width: 10%;'>Image</th><th>Product</th><th>Price</th><th>Quantity</th></tr>");
 			// AtomicReference allows us to adjust the string in the forEach/lambda scope.
 			// We could do a for loop, but this permits use of Java8 features.
 			order.getItems().stream().forEach(i -> {
