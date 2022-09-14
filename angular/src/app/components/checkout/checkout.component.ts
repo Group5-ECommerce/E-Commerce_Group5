@@ -50,7 +50,13 @@ export class CheckoutComponent implements OnInit {
     this.payment.shippingAddressId = this.shippingAddressId
 
     const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!)
+    this.cart = JSON.parse(cart!);
+
+    if (!this.cart || this.cart.length === 0) {
+      console.log("Error: you're cart is empty.")
+      console.log(this.cart);
+      return;
+    }
 
     let purchase = new Purchase();
     purchase.payment = this.payment
@@ -67,7 +73,6 @@ export class CheckoutComponent implements OnInit {
     // email = "sds@sds"  // okta - email
 
     this.service.confirmOrder(purchase, this.email, this.name).subscribe(
-
       {
         next: (res) => {
           console.log(res);
