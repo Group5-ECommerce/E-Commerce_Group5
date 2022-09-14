@@ -32,7 +32,8 @@
               <h5 class="mx-3 text-center">Price: ${{product?.productPrice}}</h5>
               <h5 class=" mx-3 text-center">Remaining: {{product?.productStock}}</h5>
               <div class="d-flex container justify-content-center">
-                <button #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
+                <button *ngIf="product.productStock<=0" type="button" class="btn btn-secondary" disabled>Out of Stock</button>
+				<button *ngIf="product.productStock>0" #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
                   Cart</button>
               </div>
 
@@ -40,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products!.length>8">
+      <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products && products!.length>8">
         <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
       </div>
     </div>
