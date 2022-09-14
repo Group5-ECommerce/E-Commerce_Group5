@@ -29,4 +29,5 @@ public class Cart implements Serializable {
 	private int productStock;
 	private float productPrice;
 	private int storageId;
+	private int amt;
 }

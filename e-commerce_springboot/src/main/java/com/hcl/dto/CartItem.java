@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class CartItem {
 
 	private String userId;
+	private int amt;
 	private int productId;
 	private String productName;
 	private String productImage;

@@ -63,6 +63,7 @@ export class Cart2Service {
 
   async getUserCart() {
     let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray();
+    console.log(items)
     this.watcher.next(items)
     return items;
   }
@@ -99,6 +100,33 @@ export class Cart2Service {
 
   clearCart() {
     this.db.table(this.tableName).clear();
+  }
+
+  fillCartWithProducts(cartItems: any) {
+    console.log("cartItems inside fillcartwithproducts", cartItems)
+    this.db.transaction('rw', this.db.table(this.tableName), () => {
+      cartItems.forEach((product: any) => {
+        let item = {
+          userId: product.oktaId,
+          amt: product.amt,
+          productId: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+          productImage: product.productImage,
+          productStock: product.productStock,
+          storageId: product.storageId
+        }
+        this.db.table(this.tableName).put(
+          item
+        )
+      })
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+
+
   }
 
 }

@@ -32,11 +32,15 @@ export class AppComponent implements OnInit {
     window.onclick = (e) => {
       if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
     };
+
+    this.http.get(this.cartUrl).subscribe(res => this.cartService.fillCartWithProducts(res))
+
   }
 
   public async signIn(): Promise<void> {
     // This may be useful in the future: { originalUri: '/' }
     await this._oktaAuth.signInWithRedirect().then(_ => {
+
       this._router.navigate(['/product']);
     }
     );
@@ -44,13 +48,14 @@ export class AppComponent implements OnInit {
 
   public async signOut(): Promise<void> {
     //one case is if user never manually signs out, not sure if the cart will get saved
-    let cartItems = await this.cartService.getUserCart;
+    let cartItems = await this.cartService.getUserCart();
 
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+    // const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
 
-    this.http.put(this.cartUrl, cartItems, { headers: headers }).subscribe(); //void
+    this.http.put(this.cartUrl, cartItems).subscribe(); //void
 
     //clear cart after
+    this.cartService.clearCart();
 
     await this._oktaAuth.signOut();
   }

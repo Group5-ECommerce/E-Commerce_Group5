@@ -149,12 +149,15 @@ public class CartController {
 	@GetMapping("/cart")
 	public List<Cart> getCart(Principal principal) {
 		String oktaId = principal.getName();
-		return cartRepository.findByOktaId(oktaId);
+		System.out.println("on sign in oktaId: " + oktaId);
+		List<Cart> items = cartRepository.findByOktaId(oktaId);
+		System.out.println(items);
+		return items;
 	}
 
 	@PutMapping("/cart")
 	public void updateCart(@RequestBody List<CartItem> userCart, Principal principal) {
-		System.out.println(userCart);
+//		System.out.println(userCart);
 		String oktaId = principal.getName();
 		// delete existing
 		cartRepository.deleteAllByOktaId(oktaId); // entries
@@ -170,6 +173,7 @@ public class CartController {
 			cartItem.setProductPrice(item.getProductPrice());
 			cartItem.setProductStock(item.getProductStock());
 			cartItem.setStorageId(item.getStorageId());
+			cartItem.setAmt(item.getAmt());
 			cartRepository.save(cartItem);
 		});
 	}
