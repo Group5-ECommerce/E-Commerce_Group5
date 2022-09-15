@@ -22,6 +22,12 @@ export class CustomerProductListComponent implements OnInit {
   title = "product list"
   pageNum?: number
   selectedCategory?: string[];
+  filteredCategory? = ''
+
+  public ChangeCategory($event: any)
+  {
+    this.filteredCategory = ($event.target as HTMLSelectElement).value;
+  }
 
   constructor(private productService: ProductService, private cartService: CartService) { }
 
@@ -30,6 +36,8 @@ export class CustomerProductListComponent implements OnInit {
     this.pageNum = 1
 
     this.retrieveProducts();
+
+    this.products?.filter(p => p.category === this.filteredCategory)
   }
 
   saveToCart(el: HTMLElement, product: Product): void {
@@ -49,16 +57,14 @@ export class CustomerProductListComponent implements OnInit {
 
   }
 
-
-
   retrieveProducts(): void {
+    console.log(this.filteredCategory);
     this.productService.getProductList().subscribe({
       next: (data) => {
-        this.products = data;
-        this.selectedCategory = [...new Set(this.products.map(p => p.category))]
-        console.log(this.selectedCategory);
-      },
-      error: (e) => console.log(e)
-    })
+      this.products = data;
+      this.selectedCategory = [...new Set(this.products.map(p => p.category))]
+     },
+    error: (e) => console.log(e)
+   })
   }
 }
