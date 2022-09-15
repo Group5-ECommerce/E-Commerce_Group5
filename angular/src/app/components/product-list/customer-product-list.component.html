@@ -2,6 +2,13 @@
 
   <div class="row d-flex justify-content-center container">
 
+    <div class="col-md-4">
+      <select class = "form-select" (change)="ChangeCategory($event)">
+        <option value = "">All Products</option>
+        <option *ngFor ="let category of selectedCategory!">{{category}}</option>
+      </select>
+    </div>
+
     <div class="input-group justify-content-center mb-5">
       <div>
         <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product"

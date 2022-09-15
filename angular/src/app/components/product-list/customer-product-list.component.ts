@@ -29,6 +29,11 @@ export class CustomerProductListComponent implements OnInit {
   public ChangeCategory($event: any)
   {
     this.filteredCategory = ($event.target as HTMLSelectElement).value;
+
+    if(this.filteredCategory != '')
+      this.displayedProducts = this.products?.filter(p => p.category === this.filteredCategory)
+    else
+      this.displayedProducts = this.products;
   }
   query?: string
   queryResults?: number
@@ -40,8 +45,6 @@ export class CustomerProductListComponent implements OnInit {
     this.pageNum = 1
 
     this.retrieveProducts();
-
-    this.products?.filter(p => p.category === this.filteredCategory)
   }
   ngOnDestroy(): void {
 
@@ -71,6 +74,7 @@ export class CustomerProductListComponent implements OnInit {
         this.products = (data);
         this.displayedProducts = this.products;
         this.queryResults = this.displayedProducts.length;
+        this.selectedCategory = [...new Set(this.products.map(p => p.category))]
       },
       error: (e) => console.log(e)
     })
