@@ -4,11 +4,18 @@ import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { filter, from, map, Observable, of, tap } from 'rxjs';
 
+interface ProductCategory {
+  code: string;
+  description: string;
+}
+
+
 @Component({
   selector: 'app-customer-product-list',
   templateUrl: './customer-product-list.component.html',
   styleUrls: ['./customer-product-list.component.css']
 })
+
 export class CustomerProductListComponent implements OnInit {
 
   products?: Product[];
@@ -16,6 +23,12 @@ export class CustomerProductListComponent implements OnInit {
   currentIndex = -1;
   title = "product list"
   pageNum?: number
+  selectedCategory?: string[];
+  filteredCategory?= ''
+
+  public ChangeCategory($event: any) {
+    this.filteredCategory = ($event.target as HTMLSelectElement).value;
+  }
   query?: string
   queryResults?: number
 
@@ -48,14 +61,14 @@ export class CustomerProductListComponent implements OnInit {
 
   }
 
-
-
   retrieveProducts(): void {
+    console.log(this.filteredCategory);
     this.productService.getProductList().subscribe({
       next: (data) => {
         this.products = (data);
         this.displayedProducts = this.products;
         this.queryResults = this.displayedProducts.length;
+        this.selectedCategory = [...new Set(this.products.map(p => p.category))]
       },
       error: (e) => console.log(e)
     })
@@ -90,10 +103,16 @@ export class CustomerProductListComponent implements OnInit {
       this.displayedProducts = this.products
       this.queryResults = this.displayedProducts?.length
     }
+    if (this.filteredCategory != '')
+      this.displayedProducts = this.displayedProducts?.filter(p => p.category === this.filteredCategory)
   }
 
   resetResults() {
     this.displayedProducts = this.products
+    // Resets category dropdown to "All products"
+    document.getElementById("categoryDropdown")!.getElementsByTagName('option')[0].selected = true;
+    this.filteredCategory = "";
+
     this.queryResults = this.displayedProducts?.length
   }
 
