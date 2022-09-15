@@ -9,7 +9,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
 
-  private url = "http://localhost:8080/"
+  private url = "http://localhost:8000/"
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +19,15 @@ export class OrderService {
   }
   //will only get products, not order id (investigate why??)
   getOrderItemsByTracking(tracker?: string) {
-    return this.http.get<OrderItem[]>(this.url + `trackOrder/${tracker}`)
+    return this.http.get<OrderItem[]>(this.url + `orderItems/${tracker}`)
+  }
+
+  getOrderByTracking(tracker?: string) {
+    return this.http.get<Order>(this.url + `order/${tracker}`);
+  }
+
+  getMyOrders(): Observable<any>
+  {
+    return this.http.get<Order[]>(this.url + 'myOrders');
   }
 }

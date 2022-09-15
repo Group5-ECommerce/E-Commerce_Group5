@@ -13,10 +13,12 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { OrderTrackComponent } from './components/order-track/order-track.component';
+import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
-
+{path: 'my-orders', component: MyOrdersComponent, canActivate: [CustomerGuard] },
 { path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] },
 { path: 'product', component: CustomerProductListComponent },
 { path: 'product-list', component: AdminProductListComponent, canActivate: [AdminGuard] },
@@ -28,7 +30,8 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
 {path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard]},
 {path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard]},
-{ path: '', redirectTo: "product", pathMatch: "full"},
+{path: 'order-track', component: OrderTrackComponent},
+{ path: '', redirectTo: "product-list", pathMatch: "full"},
 ];
 
 @NgModule({

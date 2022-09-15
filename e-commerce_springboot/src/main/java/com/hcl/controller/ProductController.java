@@ -13,23 +13,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.entity.Product;
 import com.hcl.repo.ProductRepository;
-import com.hcl.repo.StorageRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@Api(tags= "Products")
+@Api(tags = "Products")
 public class ProductController {
 	@Autowired
 	private ProductRepository repo;
-	
+
 	@PostMapping("/product")
 	@ApiOperation(value = "Add Product")
 	@PreAuthorize("hasAuthority('Admin')")
@@ -39,8 +37,7 @@ public class ProductController {
 
 	@GetMapping("/product")
 	@ApiOperation(value = "Show All Products")
-	public List<Product> listAllProduct(Principal principal) {
-		System.out.println(principal);
+	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 

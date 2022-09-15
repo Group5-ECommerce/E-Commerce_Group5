@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
-import { filter, Observable } from 'rxjs';
+import { filter, from, map, Observable, of, tap } from 'rxjs';
 
 interface ProductCategory {
   code:string;
   description:string;
 }
+
 
 @Component({
   selector: 'app-customer-product-list',
@@ -18,6 +19,7 @@ interface ProductCategory {
 export class CustomerProductListComponent implements OnInit {
 
   products?: Product[];
+  displayedProducts?: Product[];
   currentIndex = -1;
   title = "product list"
   pageNum?: number
@@ -28,6 +30,8 @@ export class CustomerProductListComponent implements OnInit {
   {
     this.filteredCategory = ($event.target as HTMLSelectElement).value;
   }
+  query?: string
+  queryResults?: number
 
   constructor(private productService: ProductService, private cartService: CartService) { }
 
@@ -38,6 +42,9 @@ export class CustomerProductListComponent implements OnInit {
     this.retrieveProducts();
 
     this.products?.filter(p => p.category === this.filteredCategory)
+  }
+  ngOnDestroy(): void {
+
   }
 
   saveToCart(el: HTMLElement, product: Product): void {
@@ -61,10 +68,53 @@ export class CustomerProductListComponent implements OnInit {
     console.log(this.filteredCategory);
     this.productService.getProductList().subscribe({
       next: (data) => {
-      this.products = data;
-      this.selectedCategory = [...new Set(this.products.map(p => p.category))]
-     },
-    error: (e) => console.log(e)
-   })
+        this.products = (data);
+        this.displayedProducts = this.products;
+        this.queryResults = this.displayedProducts.length;
+      },
+      error: (e) => console.log(e)
+    })
   }
+
+  showResults() {
+    // if (this.query) {
+    //   this.displayedProducts = this.products?.pipe(
+    //     map((prods: any[]) => {
+    //       return prods.filter((p: Product) => {
+    //         if (p.productName) {
+    //           console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
+    //           return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
+    //         }
+    //         return false
+    //       })
+    //     })
+    //   )
+
+    // }
+    if (this.query) {
+      this.displayedProducts = this.products?.filter(p => {
+        // console.log("query ", this.query)
+        if (p.productName) {
+          return p.productName.toLowerCase() == this.query?.toLowerCase()
+            || p.productName.toLowerCase().indexOf(this.query!.toLowerCase()) !== -1
+        }
+        return false
+      })
+      this.queryResults = this.displayedProducts?.length;
+    } else {
+      this.displayedProducts = this.products
+      this.queryResults = this.displayedProducts?.length
+    }
+  }
+
+  resetResults() {
+    this.displayedProducts = this.products
+    this.queryResults = this.displayedProducts?.length
+  }
+
+  // tester(event: any) {
+  //   console.log((event.target.value).toLocalLowerCase())
+  // }
+
+
 }

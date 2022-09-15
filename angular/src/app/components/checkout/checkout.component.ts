@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { STRING_TYPE } from '@angular/compiler';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { OKTA_AUTH } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 import { EMPTY } from 'rxjs';
 import { Address } from 'src/app/models/address/address';
 import { CartItem } from 'src/app/models/cart-item.model';
@@ -7,6 +10,7 @@ import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
 import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { StripeCheckoutComponent } from '../stripe-checkout/stripe-checkout.component';
 
 @Component({
   selector: 'app-checkout',
@@ -22,33 +26,53 @@ export class CheckoutComponent implements OnInit {
   shippingAddressId = new Address()
   cart: CartItem[]
   isSubmitted = false
+  isConfirmed = false
+  @ViewChild(StripeCheckoutComponent) strikeCheckout: StripeCheckoutComponent;
+  email: string
+  name: string
 
-  constructor(private service: CheckoutService, private cartService: CartService) { }
-  ngOnInit(): void { }
+
+  constructor(private service: CheckoutService, private cartService: CartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  async ngOnInit(): Promise<void>
+   {
+  //   this._oktaAuth.tokenManager.get("idToken").then(
+  //     (s) => {
+  //       this.email = s.claims.email!;
+  //  })
+    const idToken = await this._oktaAuth.tokenManager.get('idToken');
+    this.email = idToken.claims.email!
+    this.name = idToken.claims.name!
+    
+  }
 
   submitOrder() {
-
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
     const cart = localStorage.getItem('cart');
-    this.cart = JSON.parse(cart!) 
- 
+    this.cart = JSON.parse(cart!);
+
+    if (!this.cart || this.cart.length === 0) {
+      console.log("Error: you're cart is empty.")
+      console.log(this.cart);
+      return;
+    }
+
     let purchase = new Purchase();
     purchase.payment = this.payment
     purchase.items = this.cart
     purchase.message = "Payment Succeeded!"
 
     console.log(purchase)
+    console.log(this.email)
+    console.log(this.name)
 
+    this.isSubmitted = true;
 
-    let email: string
-    email = "customer@e-commerce.com"  // okta - email
+    // let email: string
+    // email = "sds@sds"  // okta - email
 
-
-
-    this.service.confirmOrder(purchase, email).subscribe(
-
+    this.service.confirmOrder(purchase, this.email, this.name).subscribe(
       {
         next: (res) => {
           console.log(res);
@@ -57,10 +81,25 @@ export class CheckoutComponent implements OnInit {
         }
       }
     )
+
+    let totalPrice: number
+    totalPrice = 0;
+    for(const c of this.cart)
+    {
+        totalPrice = totalPrice + (c.product.productPrice * c.amt);
+    }
+
+    console.log(totalPrice);
+
+    this.strikeCheckout.checkout(totalPrice);
+    this.isConfirmed = true;
   }
   closeAlert() {
     this.isSubmitted = false;
   }
+
+
+
 
   // constructor(private service: CheckoutService) { }
 
@@ -103,8 +142,8 @@ export class CheckoutComponent implements OnInit {
 
   // onSubmit()
   // {
-  //   // await fetch("http://localhost:8080/cart/1/2", {method: "post"});
-  //   // await fetch("http://localhost:8080/cart").then(res => res.text().then(json => console.log(json)));
+  //   // await fetch("http://localhost:8000/cart/1/2", {method: "post"});
+  //   // await fetch("http://localhost:8000/cart").then(res => res.text().then(json => console.log(json)));
 
   //   let payment = new PaymentInfo ();
   //   payment.cardHolderFirstName = this.checkoutFormGroup.get(['cardInformation'])?.value.cardHolderFirstName

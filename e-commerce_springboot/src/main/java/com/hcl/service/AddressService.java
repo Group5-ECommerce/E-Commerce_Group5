@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.entity.Address;
-import com.hcl.entity.User;
+//import com.hcl.entity.User;
 import com.hcl.repo.AddressRepository;
-import com.hcl.repo.UserRepository;
+//import com.hcl.repo.UserRepository;
 
 @Service
 public class AddressService {
@@ -20,9 +20,9 @@ public class AddressService {
 	
 	
 	
-	public void addAddress(User u, Address a) 
+	public void addAddress(String oktaId , Address a) 
 	{
-		a.setUser(u);
+		a.setOktaId(oktaId);
 		repo.save(a);
 	}
 

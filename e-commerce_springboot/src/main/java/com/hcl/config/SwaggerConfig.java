@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -28,7 +29,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Order(1)
 @Profile({"!prod && swagger"})
-public class SwaggerConfig extends WebSecurityConfigurerAdapter {
+public class SwaggerConfig extends WebMvcConfigurerAdapter {
+
 
 	private static final String[] AUTH_WHITE_LIST = {
             "/v3/api-docs/**",
@@ -63,16 +65,5 @@ public class SwaggerConfig extends WebSecurityConfigurerAdapter {
     
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
     }
 }

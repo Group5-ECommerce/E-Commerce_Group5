@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../model/product';
+import { Product } from '../models/product.model';
 
-const baseUrl = "http://localhost:8080/cart";
+const baseUrl = "http://localhost:8000/cart";
 @Injectable({
   providedIn: 'root'
 })
