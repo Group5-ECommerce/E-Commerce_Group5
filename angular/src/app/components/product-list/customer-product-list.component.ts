@@ -2,18 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { filter, Observable } from 'rxjs';
+
+interface ProductCategory {
+  code:string;
+  description:string;
+}
 
 @Component({
   selector: 'app-customer-product-list',
   templateUrl: './customer-product-list.component.html',
   styleUrls: ['./customer-product-list.component.css']
 })
+
 export class CustomerProductListComponent implements OnInit {
 
   products?: Product[];
   currentIndex = -1;
   title = "product list"
   pageNum?: number
+  selectedCategory?: string[];
 
   constructor(private productService: ProductService, private cartService: CartService) { }
 
@@ -47,7 +55,8 @@ export class CustomerProductListComponent implements OnInit {
     this.productService.getProductList().subscribe({
       next: (data) => {
         this.products = data;
-        console.log(data);
+        this.selectedCategory = this.products.map(p => p.category)
+        console.log(this.selectedCategory);
       },
       error: (e) => console.log(e)
     })
