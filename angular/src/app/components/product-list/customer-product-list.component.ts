@@ -55,7 +55,7 @@ export class CustomerProductListComponent implements OnInit {
     this.productService.getProductList().subscribe({
       next: (data) => {
         this.products = data;
-        this.selectedCategory = this.products.map(p => p.category)
+        this.selectedCategory = [...new Set(this.products.map(p => p.category))]
         console.log(this.selectedCategory);
       },
       error: (e) => console.log(e)
