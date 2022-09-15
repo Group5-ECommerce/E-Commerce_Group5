@@ -9,7 +9,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
 
-  private url = "http://localhost:8080/"
+  private url = "http://localhost:8000/"
 
   constructor(private http: HttpClient) { }
 
