@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { filter, from, map, Observable, of, tap } from 'rxjs';
+import { Cart2Service } from 'src/app/services/cart2.service';
 
 interface ProductCategory {
   code: string;
@@ -32,7 +33,7 @@ export class CustomerProductListComponent implements OnInit {
   query?: string
   queryResults?: number
 
-  constructor(private productService: ProductService, private cartService: CartService) { }
+  constructor(private productService: ProductService, private cartService: CartService, private cart2Service: Cart2Service) { }
 
 
   ngOnInit(): void {
@@ -47,13 +48,15 @@ export class CustomerProductListComponent implements OnInit {
   saveToCart(el: HTMLElement, product: Product): void {
     // If it is a primary button, meaning it should "Add To Cart"
     if (el.classList.contains("btn-primary")) {
-      this.cartService.addProduct(product);
+      // this.cartService.addProduct(product);
+      this.cart2Service.addProduct(product)
       el.classList.remove("btn-primary");
       el.classList.add("btn-danger");
       el.textContent = "Remove From Cart";
     }
     else {
-      this.cartService.removeProduct(product);
+      // this.cartService.removeProduct(product);
+      this.cart2Service.deleteProduct(product)
       el.textContent = "Add to Cart";
       el.classList.remove("btn-danger");
       el.classList.add("btn-primary");
@@ -75,20 +78,6 @@ export class CustomerProductListComponent implements OnInit {
   }
 
   showResults() {
-    // if (this.query) {
-    //   this.displayedProducts = this.products?.pipe(
-    //     map((prods: any[]) => {
-    //       return prods.filter((p: Product) => {
-    //         if (p.productName) {
-    //           console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
-    //           return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
-    //         }
-    //         return false
-    //       })
-    //     })
-    //   )
-
-    // }
     if (this.query) {
       this.displayedProducts = this.products?.filter(p => {
         // console.log("query ", this.query)
