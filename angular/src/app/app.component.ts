@@ -32,8 +32,17 @@ export class AppComponent implements OnInit {
     window.onclick = (e) => {
       if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
     };
+    //works but duplicates on refresh and also persists when sign out in db
+    this._oktaStateService.authState$.pipe(
+      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+      map((authState) => authState.idToken?.claims.sub)
+    ).subscribe(id => {
+      this.http.get(this.cartUrl).subscribe(items => {
+        this.cartService.fillCartWithProducts(items)
+      })
+      console.log(id);
+    });
 
-    this.http.get(this.cartUrl).subscribe(res => this.cartService.fillCartWithProducts(res))
 
   }
 
@@ -42,8 +51,13 @@ export class AppComponent implements OnInit {
     await this._oktaAuth.signInWithRedirect().then(_ => {
 
       this._router.navigate(['/product']);
+
     }
     );
+  }
+
+  public uploadCart() {
+    this.http.get(this.cartUrl).subscribe(items => this.cartService.fillCartWithProducts(items))
   }
 
   public async signOut(): Promise<void> {
@@ -55,7 +69,7 @@ export class AppComponent implements OnInit {
     this.http.put(this.cartUrl, cartItems).subscribe(); //void
 
     //clear cart after
-    this.cartService.clearCart();
+    await this.cartService.clearCart();
 
     await this._oktaAuth.signOut();
   }

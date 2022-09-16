@@ -7,11 +7,14 @@
   <ng-template #signedIn>
     <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
     <ul class="nav justify-content-end">
-      <li *oktaHasAnyGroup="['Admin']" class="navbarlinks"><button class = "btn btn-default navbar-btn"><a class="hoverbtn"
-          routerLink="/product-list">Admin Product List</a></button></li>
-      <li class="navbarlinks"><button class = "btn btn-default navbar-btn hoverbtn"><a class="hoverbtn" routerLink="/product">Customer Product List</a></button></li>
-      <li class="navbarlinks"><button class = "btn btn-default navbar-btn"><a class="hoverbtn" routerLink="/cart-list">Cart</a></button></li>
-      <li class="navbarlinks"><button class = "btn btn-default navbar-btn"><a class="hoverbtn" routerLink="/order-list">Orders</a></button></li>
+      <li *oktaHasAnyGroup="['Admin']" class="navbarlinks"><button class="btn btn-default navbar-btn"><a
+            class="hoverbtn" routerLink="/product-list">Admin Product List</a></button></li>
+      <li class="navbarlinks"><button class="btn btn-default navbar-btn hoverbtn"><a class="hoverbtn"
+            routerLink="/product">Customer Product List</a></button></li>
+      <li class="navbarlinks"><button class="btn btn-default navbar-btn"><a class="hoverbtn"
+            routerLink="/cart-list">Cart</a></button></li>
+      <li class="navbarlinks"><button class="btn btn-default navbar-btn"><a class="hoverbtn"
+            routerLink="/order-list">Orders</a></button></li>
     </ul>
     <div class="dropdown p-2 me-4">
       <button (click)="toggleDropdown()" class="dropbtn" #userBtn>User</button>

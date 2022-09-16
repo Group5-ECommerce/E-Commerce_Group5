@@ -149,7 +149,7 @@ public class CartController {
 	@GetMapping("/cart")
 	public List<Cart> getCart(Principal principal) {
 		String oktaId = principal.getName();
-		System.out.println("on sign in oktaId: " + oktaId);
+		System.out.println("on sign in oktaId: "+oktaId);
 		List<Cart> items = cartRepository.findByOktaId(oktaId);
 		System.out.println(items);
 		return items;

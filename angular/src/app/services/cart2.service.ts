@@ -55,7 +55,7 @@ export class Cart2Service {
       this.watcher.next(existingItem)
 
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
     }).catch((err) => {
       console.log(err)
     })
@@ -99,12 +99,12 @@ export class Cart2Service {
   }
 
   clearCart() {
-    this.db.table(this.tableName).clear();
+    return this.db.table(this.tableName).clear();
   }
 
-  fillCartWithProducts(cartItems: any) {
+  fillCartWithProducts(cartItems: any): Promise<boolean> {
     console.log("cartItems inside fillcartwithproducts", cartItems)
-    this.db.transaction('rw', this.db.table(this.tableName), () => {
+    return this.db.transaction('rw', this.db.table(this.tableName), () => {
       cartItems.forEach((product: any) => {
         let item = {
           userId: product.oktaId,
@@ -119,11 +119,15 @@ export class Cart2Service {
         this.db.table(this.tableName).put(
           item
         )
+
       })
     }).then((res) => {
       console.log(res)
+      return true;
+
     }).catch((err) => {
       console.log(err)
+      return false
     })
 
 
