@@ -27,6 +27,7 @@
     "bootstrap": "^5.2.0",
     "ngx-pagination": "^6.0.2",
     "rxjs": "~7.5.0",
+    "stripe": "^10.10.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

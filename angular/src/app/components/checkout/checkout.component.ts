@@ -10,7 +10,7 @@ import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
 import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import { StripeCheckoutComponent } from '../stripe-checkout/stripe-checkout.component';
+import { StripeComponent } from '../stripe/stripe.component';
 
 @Component({
   selector: 'app-checkout',
@@ -27,7 +27,7 @@ export class CheckoutComponent implements OnInit {
   cart: CartItem[]
   isSubmitted = false
   isConfirmed = false
-  @ViewChild(StripeCheckoutComponent) strikeCheckout: StripeCheckoutComponent;
+  @ViewChild(StripeComponent) strikeCheckout: StripeComponent;
   email: string
   name: string
 
@@ -91,7 +91,7 @@ export class CheckoutComponent implements OnInit {
 
     console.log(totalPrice);
 
-    this.strikeCheckout.checkout(totalPrice);
+    // this.strikeCheckout.checkout(totalPrice);
     this.isConfirmed = true;
   }
   closeAlert() {

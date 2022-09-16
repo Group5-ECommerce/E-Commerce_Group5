@@ -27,7 +27,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './pipes/filter.pipe';
 import { OrderTrackComponent } from './components/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
-import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
+import { StripeComponent } from './components/stripe/stripe.component';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -59,7 +59,7 @@ const oktaAuth = new OktaAuth({
     OrderTrackComponent,
     FilterPipe,
     MyOrdersComponent,
-    StripeCheckoutComponent
+    StripeComponent
   ],
   imports: [
     BrowserModule,
