@@ -27,7 +27,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './pipes/filter.pipe';
 import { OrderTrackComponent } from './components/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
-import { CartList2Component } from './components/cart-list2/cart-list2.component';
+import { IndexCartComponent } from './components/index-cart/index-cart.component';
 import { IndexedDatabase } from './indexeddb';
 import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
 
@@ -62,7 +62,7 @@ const oktaAuth = new OktaAuth({
     FilterPipe,
     MyOrdersComponent,
     StripeCheckoutComponent,
-    CartList2Component
+    IndexCartComponent
   ],
   imports: [
     BrowserModule,

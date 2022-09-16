@@ -7,12 +7,13 @@ import { Product } from '../models/product.model';
 @Injectable({
   providedIn: 'root'
 })
-export class Cart2Service {
+export class IndexCartService {
   tableName = "userCart"
   oktaId?: string;
   watcher = new Subject()
   sortingColName = "";
   sortBtnClicks!: number;
+  length: number = 0;
 
   constructor(private db: IndexedDatabase, private _oktaStateService: OktaAuthStateService) {
     this._oktaStateService.authState$.subscribe(
@@ -47,6 +48,7 @@ export class Cart2Service {
           productStock: product.productStock,
           storageId: product.storageId
         }
+        this.length += 1;
         this.db.table(this.tableName).put(
           item
         )
@@ -76,6 +78,7 @@ export class Cart2Service {
 
     }).then(async (res) => {
       console.log(res)
+      this.length -=1;
       // let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
       // console.log(items)
       // this.watcher.next(items)
@@ -114,6 +117,7 @@ export class Cart2Service {
     }).then(async (res) => {
       console.log(res)
       let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
+      this.length -=1;
       // console.log(items)
       this.watcher.next(items)
     }).catch((err) => {
@@ -140,6 +144,7 @@ export class Cart2Service {
             productStock: product.productStock,
             storageId: product.storageId
           };
+          this.length = cartItems.length;
           this.db.table(this.tableName).put(
             item
           );

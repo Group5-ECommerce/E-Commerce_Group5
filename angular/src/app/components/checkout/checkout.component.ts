@@ -9,7 +9,7 @@ import { CartItem } from 'src/app/models/cart-item.model';
 import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
 import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
-import { Cart2Service } from 'src/app/services/cart2.service';
+import { IndexCartService } from 'src/app/services/index-cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { StripeCheckoutComponent } from '../stripe-checkout/stripe-checkout.component';
 
@@ -32,7 +32,7 @@ export class CheckoutComponent implements OnInit {
   email: string
   name: string
 
-  constructor(private service: CheckoutService, private cartService: Cart2Service, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  constructor(private service: CheckoutService, private cartService: IndexCartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
   async ngOnInit(): Promise<void> {
     //   this._oktaAuth.tokenManager.get("idToken").then(
     //     (s) => {
@@ -71,6 +71,7 @@ export class CheckoutComponent implements OnInit {
           productImage: item.productImage,
           productPrice: item.productPrice,
           productStock: item.productStock,
+          category: item.category,
           storageId: item.storageId
         }
       }

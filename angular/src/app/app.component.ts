@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
-import { Cart2Service } from './services/cart2.service';
+import { IndexCartService } from './services/index-cart.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   name$!: Observable<String>;
 
-  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: Cart2Service) {
+  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService) {
   }
 
   public ngOnInit(): void {
@@ -126,6 +126,7 @@ export class AppComponent implements OnInit {
   }
 
   getCartLength(): number {
+    console.log("cartLength");
     return this.cartService.length;
   }
 

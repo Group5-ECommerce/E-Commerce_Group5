@@ -3,7 +3,7 @@ import { Product } from '../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { filter, from, map, Observable, of, tap } from 'rxjs';
-import { Cart2Service } from 'src/app/services/cart2.service';
+import { IndexCartService } from 'src/app/services/index-cart.service';
 
 interface ProductCategory {
   code: string;
@@ -33,7 +33,7 @@ export class CustomerProductListComponent implements OnInit {
   query?: string
   queryResults?: number
 
-  constructor(private productService: ProductService, private cartService: CartService, private cart2Service: Cart2Service) { }
+  constructor(private productService: ProductService, private cartService: CartService, private cart2Service: IndexCartService) { }
 
 
   ngOnInit(): void {
