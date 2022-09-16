@@ -31,4 +31,47 @@ export class MyOrdersComponent implements OnInit {
     })
   }
 
+  getStatusStyle(status:string) {
+    let style = {};
+    switch (status) {
+      case "Processing":
+        style = {
+        'backgroundColor': "LightBlue",
+        'color':  "#383d41"
+        }
+        break;
+      case "Fulfilling":
+        style =  {
+          'backgroundColor': "#0a58ca",
+          'color':  "#fff"
+          }
+        break;
+      case "Shipped":
+        style =  {
+          'backgroundColor': "#fff3cd",
+          'color':  "#856404"
+          }
+        break;
+      case "Delivered":
+        style =  {
+          'backgroundColor': "#d4edda",
+          'color':  "#155724"
+          }
+        break;
+      case "Cancelled":
+        style =  {
+          'backgroundColor': "#f8d7da",
+          'color':  "#721c24"
+          }
+        break;
+      default:
+        style =  {
+          'backgroundColor': "#fefefe",
+          'color':  "#818182"
+          }
+        break;
+    }
+    return style;
+  }
+
 }
