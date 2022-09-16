@@ -35,13 +35,15 @@ export class CustomerProductListComponent implements OnInit {
   saveToCart(el: HTMLElement, product: Product): void {
     // If it is a primary button, meaning it should "Add To Cart"
     if (el.classList.contains("btn-primary")) {
-      this.cartService.addProduct(product);
+      // this.cartService.addProduct(product);
+      this.cart2Service.addProduct(product)
       el.classList.remove("btn-primary");
       el.classList.add("btn-danger");
       el.textContent = "Remove From Cart";
     }
     else {
-      this.cartService.removeProduct(product);
+      // this.cartService.removeProduct(product);
+      this.cart2Service.deleteProduct(product)
       el.textContent = "Add to Cart";
       el.classList.remove("btn-danger");
       el.classList.add("btn-primary");
@@ -49,9 +51,9 @@ export class CustomerProductListComponent implements OnInit {
 
   }
 
-  saveToIndexedDb(product: Product) {
-    this.cart2Service.addProduct(product)
-  }
+  // saveToIndexedDb(product: Product) {
+  //   this.cart2Service.addProduct(product)
+  // }
 
 
 

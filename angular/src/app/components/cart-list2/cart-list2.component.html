@@ -3,12 +3,15 @@
     <table class="table table-light">
       <thead class="thead-light">
         <tr>
-          <th>Okta Id</th>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Image</th>
-          <th>Amount</th>
+          <th>oktaId</th>
+          <th><button (click)="sortCart($event)">productId</button></th>
+          <th><button (click)="sortCart($event)">productName</button></th>
+
+          <th><button (click)="sortCart($event)">productPrice</button></th>
+          <th>productImage</th>
+          <th><button (click)="sortCart($event)">amt</button></th>
+          <th><button (click)="sortCart($event)">productStock</button></th>
+
           <th>Action</th>
         </tr>
       </thead>
@@ -38,8 +41,9 @@
             <button (click)="c.amt!=c.productStock? c.amt=c.amt+1:c.productStock; updateAmount(c)"
               class="btn amt-btn"><i class="bi bi-caret-up-fill"></i></button>
           </td>
+          <td>{{c.productStock}} in stock</td>
           <td>
-            <button class="btn btn-warning btn-sm" (click)="deleteItem(c)">Delete</button>
+            <button class="btn btn-warning btn-sm">Delete</button>
           </td>
         </tr>
       </tbody>

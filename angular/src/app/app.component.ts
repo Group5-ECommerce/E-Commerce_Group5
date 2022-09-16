@@ -16,13 +16,15 @@ export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
   isVisible: boolean = false;
   cartUrl = "http://localhost:8080/cart"
+  // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
 
   public isAuthenticated$!: Observable<boolean>;
 
 
-  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: Cart2Service) { }
+  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: Cart2Service) {
+  }
 
   public ngOnInit(): void {
     this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
@@ -32,28 +34,56 @@ export class AppComponent implements OnInit {
     window.onclick = (e) => {
       if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
     };
-    //works but duplicates on refresh and also persists when sign out in db
-    this._oktaStateService.authState$.pipe(
-      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
-      map((authState) => authState.idToken?.claims.sub)
-    ).subscribe(id => {
-      this.http.get(this.cartUrl).subscribe(items => {
-        this.cartService.fillCartWithProducts(items)
-      })
-      console.log(id);
-    });
+
+    // this.isAuthenticated$.subscribe(isValid => {
+    //   if (isValid) {
+    //     this.count++;
+    //     sessionStorage.setItem("count",this.count.toString());
+    //     if ( sessionStorage.getItem("count")) {
+    //       if(sessionStorage)
+    //       this.http.get(this.cartUrl).subscribe(items =>
+    //         this.cartService.fillCartWithProducts(items))
+    //     }
+
+    //   }
 
 
+    // })
+
+    // this._oktaStateService.authState$.pipe(
+    //   filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+    //   map((authState) => {
+    //     let sub = authState.idToken?.claims.sub
+    //     console.log("sub: ", sub)
+    //     if (sub !== null || sub !== undefined) {
+    //       console.log("here")
+    //       this.http.get(this.cartUrl).subscribe(items =>
+    //         this.cartService.fillCartWithProducts(items))
+    //     }
+    //   })
+    // )
+
+    if (this._oktaAuth.isLoginRedirect()) {
+      try {
+        this._oktaAuth.handleLoginRedirect().then(res => {
+          this._oktaAuth.tokenManager.get("idToken").then(_ => this.http.get(this.cartUrl).subscribe(items =>
+            this.cartService.fillCartWithProducts(items)))
+        });
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 
-  public async signIn(): Promise<void> {
+  public async signIn() {
     // This may be useful in the future: { originalUri: '/' }
+    //works but duplicates on refresh and also persists when sign out in db
+
     await this._oktaAuth.signInWithRedirect().then(_ => {
 
-      this._router.navigate(['/product']);
+      // this._router.navigate(['/product']);
 
-    }
-    );
+    });
   }
 
   public uploadCart() {
@@ -69,8 +99,9 @@ export class AppComponent implements OnInit {
     this.http.put(this.cartUrl, cartItems).subscribe(); //void
 
     //clear cart after
+    console.log("clearing cart")
     await this.cartService.clearCart();
-
+    // debugger
     await this._oktaAuth.signOut();
   }
 

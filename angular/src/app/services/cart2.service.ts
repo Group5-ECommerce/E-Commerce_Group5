@@ -11,6 +11,8 @@ export class Cart2Service {
   tableName = "userCart"
   oktaId?: string;
   watcher = new Subject()
+  sortingColName = "";
+  sortBtnClicks!: number;
 
   constructor(private db: IndexedDatabase, private _oktaStateService: OktaAuthStateService) {
     this._oktaStateService.authState$.subscribe(
@@ -61,6 +63,27 @@ export class Cart2Service {
     })
   }
 
+  deleteProduct(product: Product) {
+    this.db.transaction('rw', this.db.table(this.tableName), async () => {
+      let key = (await this.db.table(this.tableName).where({ userId: this.oktaId, productId: product.productId }).primaryKeys())[0];
+
+      let item = await this.db.table(this.tableName).get(key);
+      if (item.amt > 1) {
+        return this.db.table(this.tableName).update(key, { amt: --item.amt })
+      } else {
+        return this.db.table(this.tableName).delete(key)
+      }
+
+    }).then(async (res) => {
+      console.log(res)
+      // let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
+      // console.log(items)
+      // this.watcher.next(items)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
   async getUserCart() {
     let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray();
     console.log(items)
@@ -102,35 +125,64 @@ export class Cart2Service {
     return this.db.table(this.tableName).clear();
   }
 
-  fillCartWithProducts(cartItems: any): Promise<boolean> {
+  async fillCartWithProducts(cartItems: any): Promise<boolean> {
     console.log("cartItems inside fillcartwithproducts", cartItems)
-    return this.db.transaction('rw', this.db.table(this.tableName), () => {
-      cartItems.forEach((product: any) => {
-        let item = {
-          userId: product.oktaId,
-          amt: product.amt,
-          productId: product.productId,
-          productName: product.productName,
-          productPrice: product.productPrice,
-          productImage: product.productImage,
-          productStock: product.productStock,
-          storageId: product.storageId
-        }
-        this.db.table(this.tableName).put(
-          item
-        )
+    try {
+      const res = await this.db.transaction('rw', this.db.table(this.tableName), () => {
+        cartItems.forEach((product: any) => {
+          let item = {
+            userId: product.oktaId,
+            amt: product.amt,
+            productId: product.productId,
+            productName: product.productName,
+            productPrice: product.productPrice,
+            productImage: product.productImage,
+            productStock: product.productStock,
+            storageId: product.storageId
+          };
+          this.db.table(this.tableName).put(
+            item
+          );
 
-      })
-    }).then((res) => {
-      console.log(res)
+        });
+      });
       return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
 
-    }).catch((err) => {
-      console.log(err)
-      return false
-    })
+
+  }
 
 
+  sortCart(event: any) {
+    // console.log(event.target.innerText, this.sortingColName)
+    if (event.target.innerText !== this.sortingColName) {
+      this.sortBtnClicks = 0
+      this.sortingColName = event.target.innerText;
+    }
+
+    if (this.sortBtnClicks % 2 == 0) { //desc
+      this.db.table(this.tableName).orderBy(this.sortingColName).reverse().toArray().then(res => {
+
+        // this.cartList = res;
+        this.sortBtnClicks++;
+        this.watcher.next(res);
+        // console.log(this.cartList)
+      })
+    } else { //asc
+      this.db.table(this.tableName).orderBy(this.sortingColName).toArray().then(res => {
+        // this.cartList = res;
+
+        this.sortBtnClicks++;
+        this.watcher.next(res);
+        // console.log(this.cartList)
+      })
+    }
+    // console.log(this.sortBtnClicks)
+
+    // console.log(this.db.table(this.tableName).orderBy(event.target.value).reverse())
   }
 
 }

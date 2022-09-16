@@ -34,4 +34,11 @@ export class CartList2Component implements OnInit {
     this.cartService.deleteItem(item)
   }
 
+  sortCart(event: any) {
+
+    this.cartService.sortCart(event);
+  }
+
+
+
 }

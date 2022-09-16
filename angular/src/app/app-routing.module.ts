@@ -24,13 +24,12 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'product-list', component: AdminProductListComponent, canActivate: [AdminGuard] },
 { path: 'add-product', component: AddProductComponent, canActivate: [AdminGuard] },
 { path: 'edit-product/:id', component: EditProductComponent, canActivate: [AdminGuard] },
-{ path: 'cart-list', component: CartListComponent },
+{ path: 'cart-list', component: CartList2Component },
 { path: 'checkout', component: CheckoutComponent, canActivate: [CustomerGuard] },
 { path: 'order-list', component: OrderListComponent, canActivate: [OktaAuthGuard] },
 { path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
 { path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard] },
 { path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard] },
-{ path: 'cart-list2', component: CartList2Component },
 { path: '', redirectTo: "product-list", pathMatch: "full" },
 ];
 

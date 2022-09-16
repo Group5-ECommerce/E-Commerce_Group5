@@ -1,6 +1,7 @@
 package com.hcl.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,10 +149,14 @@ public class CartController {
 
 	@GetMapping("/cart")
 	public List<Cart> getCart(Principal principal) {
+		List<Cart> items = new ArrayList();
 		String oktaId = principal.getName();
-		System.out.println("on sign in oktaId: "+oktaId);
-		List<Cart> items = cartRepository.findByOktaId(oktaId);
-		System.out.println(items);
+		if (oktaId != null) {
+			items = cartRepository.findByOktaId(oktaId);
+			System.out.println("on sign in oktaId: " + oktaId);
+		}
+
+		System.out.println("items: " + items);
 		return items;
 	}
 
