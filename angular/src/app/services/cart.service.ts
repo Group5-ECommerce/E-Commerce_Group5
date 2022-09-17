@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
 import { Product } from "../models/product.model";
 
-// const baseUrl = "http://localhost:8080/cart";
+// const baseUrl = "http://localhost:8000/cart";
 @Injectable({
   providedIn: 'root'
 })

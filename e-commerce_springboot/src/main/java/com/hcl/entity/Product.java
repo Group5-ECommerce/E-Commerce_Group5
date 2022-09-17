@@ -33,6 +33,8 @@ public class Product {
     private double productPrice;
     @Column(name="storageId")
     private String storageId;
+    @Column(name="category")
+    private String category;
    
 	
     

@@ -142,8 +142,8 @@ export class CheckoutComponent implements OnInit {
 
   // onSubmit()
   // {
-  //   // await fetch("http://localhost:8080/cart/1/2", {method: "post"});
-  //   // await fetch("http://localhost:8080/cart").then(res => res.text().then(json => console.log(json)));
+  //   // await fetch("http://localhost:8000/cart/1/2", {method: "post"});
+  //   // await fetch("http://localhost:8000/cart").then(res => res.text().then(json => console.log(json)));
 
   //   let payment = new PaymentInfo ();
   //   payment.cardHolderFirstName = this.checkoutFormGroup.get(['cardInformation'])?.value.cardHolderFirstName
