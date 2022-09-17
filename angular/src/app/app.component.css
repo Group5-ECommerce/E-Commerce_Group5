@@ -1,6 +1,6 @@
 /* Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/
 .dropbtn {
-  background-color: #3498DB;
+  background-color: #55a9e1;
 
   /* Clips the text with an ellipsis if it is too long.*/
   max-width: 160px;
@@ -13,6 +13,7 @@
   font-size: 16px;
   border: none;
   cursor: pointer;
+  border-radius: 15px;
 }
 
 .dropbtn:hover,
@@ -35,6 +36,7 @@
   /* Thanks to https://stackoverflow.com/a/30467081 for this code to align the dropdown on the left of the right element.*/
   left: auto !important;
   right: 0 !important;
+  border-radius: 25px;
 }
 
 .dropdown-content a {
@@ -196,8 +198,9 @@ footer a {
 
 
 #logo{
-  justify-content: left;
-  padding-right: 25%;
+  text-shadow: 1px 1px 2px gray;
+  padding-right: 5%;
+  padding-left: 2%;
 }
 
 .navbar-btn{
@@ -233,7 +236,6 @@ a {
 }
 
 #cartbutton{
-  vertical-align: top;
   padding-right: 15px;
   padding-left:10px;
 }
@@ -247,4 +249,37 @@ a {
     position: absolute; 
     margin-left: -10px;
     margin-top: 7px;
+}
+
+.dropdownborder{
+  border-bottom: solid 2px white;
+}
+
+.dropdown-top:hover,
+.dropdown-top:focus{
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.dropdown-bottom:hover,
+.dropdown-bottom:focus{
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.navbar ul{
+  min-width: 25%;
+}
+.navbar li{
+  min-width: 20%;
+  padding-right: 4%;
+}
+
+.navbar{
+  display: table;
+  min-width: 100%
+}
+
+.navbar h1, a{
+  display:table-cell;
 }
