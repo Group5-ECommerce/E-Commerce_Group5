@@ -117,6 +117,14 @@
 
         <hr class="BlinkMacSystemFont mt-3">
 
+        <div class="row">
+          <h3>Credit Card / Debit Card</h3>
+          <div id = "card-element"></div>
+          <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
+        </div>
+
+        <hr class="BlinkMacSystemFont mt-3">
+
         <span class = "w-100"></span>
         <div class="alert alert-success col-sm-5 my-2 mx-auto" role="alert" *ngIf="isSubmitted && isConfirmed">
           <strong>Order Submitted!</strong>
@@ -124,9 +132,9 @@
         </div>
       </div>
       <div class="container text-center">
-        <button [disabled]="!checkOutForm.form.valid || isSubmitted && isConfirmed" class="btn btn-primary btn-md mb-5 mx-5"
+        <button [disabled]="!checkOutForm.form.valid || isSubmitted || !isConfirmed " class="btn btn-primary btn-md mb-5 mx-5"
           (click)="submitOrder()">Confirm Order</button>
-          <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted || !isConfirmed" routerLink="/my-orders">View My Orders</button>
+          <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted" routerLink="/my-orders">View My Orders</button>
       </div>
     </form>
     <app-stripe-checkout></app-stripe-checkout>

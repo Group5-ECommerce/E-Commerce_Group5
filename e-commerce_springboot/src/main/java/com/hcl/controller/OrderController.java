@@ -3,11 +3,16 @@ package com.hcl.controller;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.dto.Payment;
 import com.hcl.dto.Purchase;
 import com.hcl.entity.Address;
 import com.hcl.entity.Order;
@@ -33,9 +39,13 @@ import com.hcl.service.AddressService;
 import com.hcl.service.OrderService;
 import com.hcl.service.SendEmail;
 //import com.hcl.service.UserService;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -64,6 +74,9 @@ public class OrderController {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Value("${stripe.key.secret}") 
+	String secretKey;
 
 	@PostMapping("/checkout/{email}/{name}")
 	@ApiOperation(value = "Checkout for Order")
@@ -123,7 +136,8 @@ public class OrderController {
 		paymentRepo.save(payment);
 
 		// Creates an order based on the list of products and amounts.
-
+		
+		
 	    SendEmail.sendOrderConfirmation(email,name,order);
 
 		String message = p.getMessage();
@@ -133,6 +147,32 @@ public class OrderController {
 
 	public String generateTrackingNumber() {
 		return UUID.randomUUID().toString();
+	}
+	
+	
+	public PaymentIntent createPayment(Payment pmt) throws StripeException
+	{
+		List<String> paymentMethodTypes = new ArrayList<>();
+		paymentMethodTypes.add("card");
+		Map<String,Object> map = new HashMap<>();
+		map.put("amount" , pmt.getAmount());
+		map.put("currency", pmt.getCurrency());
+		map.put("payment_method_types", paymentMethodTypes);
+		map.put("description", "E-Commerce Purchase");
+		
+		return PaymentIntent.create(map);
+		
+	}
+	
+	@PostMapping("/payment-intent")
+	public ResponseEntity<String> creatingPayment (@RequestBody Payment pmt) throws StripeException
+	{
+		Stripe.apiKey = secretKey;
+		PaymentIntent p = this.createPayment(pmt);
+		
+		String pmtStr = p.toJson();
+		
+		return new ResponseEntity<>(pmtStr, HttpStatus.OK);
 	}
 
 	@GetMapping("/order")

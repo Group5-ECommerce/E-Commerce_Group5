@@ -1,15 +1,18 @@
 import { STRING_TYPE } from '@angular/compiler';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Event } from '@angular/router';
 import { OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { EMPTY } from 'rxjs';
 import { Address } from 'src/app/models/address/address';
 import { CartItem } from 'src/app/models/cart-item.model';
+import { Payment } from 'src/app/models/payment';
 import { PaymentInfo } from 'src/app/models/paymentInfo/payment-info';
 import { Purchase } from 'src/app/models/purchase/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { environment } from 'src/environments/environment';
 import { StripeCheckoutComponent } from '../stripe-checkout/stripe-checkout.component';
 
 @Component({
@@ -22,9 +25,12 @@ export class CheckoutComponent implements OnInit {
   // checkoutFormGroup!: FormGroup;
 
   payment = new PaymentInfo()
+  stripe = Stripe(environment.stripePublishableKey)
   billingAddressId = new Address()
   shippingAddressId = new Address()
   cart: CartItem[]
+  cardElement: any
+  displayError: any = ""
   isSubmitted = false
   isConfirmed = false
   @ViewChild(StripeCheckoutComponent) strikeCheckout: StripeCheckoutComponent;
@@ -43,9 +49,11 @@ export class CheckoutComponent implements OnInit {
     this.email = idToken.claims.email!
     this.name = idToken.claims.name!
     
+    this.setUpPaymentForm()
+
   }
 
-  submitOrder() {
+  async submitOrder() {
     this.payment.billingAddressId = this.billingAddressId
     this.payment.shippingAddressId = this.shippingAddressId
 
@@ -58,6 +66,20 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
+    let totalPrice: number
+    totalPrice = 0;
+    for(const c of this.cart)
+    {
+        totalPrice = totalPrice + (c.product.productPrice * c.amt);
+    }
+
+    console.log(totalPrice);
+
+    let pmt = new Payment()
+    pmt.amount = Math.round(totalPrice * 100)
+    pmt.currency = "USD"
+
+
     let purchase = new Purchase();
     purchase.payment = this.payment
     purchase.items = this.cart
@@ -67,10 +89,30 @@ export class CheckoutComponent implements OnInit {
     console.log(this.email)
     console.log(this.name)
 
-    this.isSubmitted = true;
 
     // let email: string
     // email = "sds@sds"  // okta - email
+    
+    this.service.createPaymentIntent(pmt).subscribe(
+      (paymentIntentResponse) => {
+        this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+          {
+            payment_method: {
+              card: this.cardElement,
+              billing_details: {
+                email: this.email,
+                name: `${purchase.payment.billingAddressId.firstName} ${purchase.payment.billingAddressId.lastName}`,
+                address: {
+                  line1: purchase.payment.billingAddressId.streetAddress,
+                  city: purchase.payment.billingAddressId.city,
+                  state:  purchase.payment.billingAddressId.state,
+                  postal_code:purchase.payment.billingAddressId.zip ,
+                  country: purchase.payment.billingAddressId.country
+                }
+            }
+          }
+        })
+        })
 
     this.service.confirmOrder(purchase, this.email, this.name).subscribe(
       {
@@ -82,17 +124,46 @@ export class CheckoutComponent implements OnInit {
       }
     )
 
-    let totalPrice: number
-    totalPrice = 0;
-    for(const c of this.cart)
-    {
-        totalPrice = totalPrice + (c.product.productPrice * c.amt);
-    }
+   
 
-    console.log(totalPrice);
+   // this.strikeCheckout.checkout(totalPrice);
+   // this.isConfirmed = true
+  // this.isSubmitted = true;
 
-    this.strikeCheckout.checkout(totalPrice);
-    this.isConfirmed = true;
+  }
+
+  setUpPaymentForm() 
+  {
+    var elements = this.stripe.elements();
+
+    // Create a card element ... and hide the zip-code field
+    this.cardElement = elements.create('card', { hidePostalCode: true });
+
+    // Add an instance of card UI component into the 'card-element' div
+    this.cardElement.mount('#card-element');
+
+    // Add event binding for the 'change' event on the card element
+    this.cardElement.on('change', (event) => {
+
+      // get a handle to card-errors element
+      this.displayError = document.getElementById('card-errors');
+
+      if (event.complete) {
+        this.displayError.textContent = "";
+        this.isConfirmed = true;
+      } else if (event.error) {
+        // show validation error to customer
+        this.displayError.textContent = event.error.message;
+        this.isConfirmed = false;
+      }
+        else if (!event.complete)
+        {
+          this.isConfirmed = false;
+        }
+      
+
+    });
+    
   }
   closeAlert() {
     this.isSubmitted = false;
