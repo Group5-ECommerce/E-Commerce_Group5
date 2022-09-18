@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
   }
 
   getCartLength(): number {
-    console.log("cartLength");
+    // console.log("cartLength");
     return this.cartService.length;
   }
 

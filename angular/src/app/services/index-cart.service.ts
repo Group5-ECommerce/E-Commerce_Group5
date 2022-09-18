@@ -29,8 +29,11 @@ export class IndexCartService {
   }
 
   async addProduct(product: Product) {
+
+    if (!this.oktaId) this.oktaId = "guest";
+
     let existingItem = await this.db.table(this.tableName).where({ productId: product.productId, userId: this.oktaId }).toArray()
-    // console.log(existingItem)
+    console.log(existingItem)
     this.db.transaction('rw', this.db.table(this.tableName), async () => {
       let item;
       if (existingItem.length != 0) {
@@ -79,7 +82,7 @@ export class IndexCartService {
 
     }).then(async (res) => {
       console.log(res)
-      this.length -=1;
+      this.length -= 1;
       // let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
       // console.log(items)
       // this.watcher.next(items)
@@ -90,11 +93,12 @@ export class IndexCartService {
 
   async getUserCart() {
     if (!this.oktaId) return [];
+
     let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray();
     console.log(items)
     // Items is sometimes incorrectly 0 directly logging in. This messes with the cart length in the nav bar.
     // The items were queued to be added in fillCartWithProducts, but this function runs before that transaction is complete afaik.
-    if (items.length !==0 ) this.length = items.length;
+    if (items.length !== 0) this.length = items.length;
 
     this.watcher.next(items)
     return items;
@@ -116,6 +120,7 @@ export class IndexCartService {
   }
 
   deleteItem(item: any) {
+
     this.db.transaction('rw', this.db.table(this.tableName), async () => {
       let key = (await this.db.table(this.tableName).where({ userId: this.oktaId, productId: item.productId }).primaryKeys())[0];
 
@@ -123,7 +128,7 @@ export class IndexCartService {
     }).then(async (res) => {
       console.log(res)
       let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
-      this.length -=1;
+      this.length -= 1;
       // console.log(items)
       this.watcher.next(items)
     }).catch((err) => {
@@ -138,6 +143,9 @@ export class IndexCartService {
 
   async fillCartWithProducts(cartItems: any): Promise<boolean> {
     try {
+      const guestItems = await this.db.table(this.tableName).where({ userId: 'guest' }).modify({ userId: this.oktaId });
+      this.length = guestItems;
+
       const res = await this.db.transaction('rw', this.db.table(this.tableName), () => {
         cartItems.forEach((product: any) => {
           let item = {
@@ -154,16 +162,14 @@ export class IndexCartService {
             item
           );
         });
-        console.log(cartItems.length);
-        this.length=cartItems.length;
+        // console.log(cartItems.length);
+        this.length += cartItems.length;
       });
       return true;
     } catch (err) {
       console.log(err);
       return false;
     }
-
-
   }
 
 
