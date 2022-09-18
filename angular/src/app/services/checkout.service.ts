@@ -10,7 +10,7 @@ export class CheckoutService {
 
   private checkOutUrl = 'http://localhost:8000/checkout'
 
-  private paymentIntentUrl = 'http://localhost:8080/payment-intent'
+  private paymentIntentUrl = 'http://localhost:8000/payment-intent'
 
   constructor(private HttpClient: HttpClient) { }
   

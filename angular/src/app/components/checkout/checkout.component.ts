@@ -47,7 +47,7 @@ export class CheckoutComponent implements OnInit {
     const idToken = await this._oktaAuth.tokenManager.get('idToken');
     this.email = idToken.claims.email!
     this.name = idToken.claims.name!
-    
+
     this.setUpPaymentForm()
 
   }
@@ -65,17 +65,50 @@ export class CheckoutComponent implements OnInit {
     //   return;
     // }
     let cart = await this.cartService.getUserCart();
-    if (cart.length == 0) { //will always be array
+
+    /* This probably isn't an efficient way to map the cart items for the backend.
+    There is probably a simpler solution to the issue of Order Controller wanting a list of 
+    private int productId;
+    @Column(name="productName")
+    private String productName;
+    @Column(name="productStock")
+    private int productStock;
+    @Column(name="productImage")
+    private String productImage;
+    @Column(name="productPrice", columnDefinition="Decimal(10,2)")
+    private double productPrice;
+    @Column(name="storageId")
+    private String storageId;
+    @Column(name="category")
+    private String category;
+    */
+   console.log(cart);
+   let backendCart:Array<any> = [];
+    cart.forEach((c: any) => {
+      backendCart.push({
+        "amt": c.amt,
+        "product": {
+          "productName": c.productName,
+          "productStock": c.productStock,
+          "productImage": c.productImage,
+          "productPrice": c.productPrice,
+          "storageId": c.storageId,
+          "category": c.category,
+        }
+      });
+    })
+
+    if (backendCart.length == 0) { //will always be array
       console.log("error loading cart")
       return;
     }
 
+    console.log(backendCart);
     let totalPrice: number
     totalPrice = 0;
-    for(const c of cart)
-    {
+    for (const c of backendCart) {
       console.log(c);
-        totalPrice = totalPrice + (c.productPrice * c.amt);
+      totalPrice = totalPrice + (c.product.productPrice * c.amt);
     }
 
     console.log(totalPrice);
@@ -87,7 +120,7 @@ export class CheckoutComponent implements OnInit {
 
     let purchase = new Purchase();
     purchase.payment = this.payment
-    purchase.items = cart;
+    purchase.items = backendCart;
     purchase.message = "Payment Succeeded!"
 
     console.log(purchase)
@@ -97,7 +130,7 @@ export class CheckoutComponent implements OnInit {
 
     // let email: string
     // email = "sds@sds"  // okta - email
-    
+
     this.service.createPaymentIntent(pmt).subscribe(
       (paymentIntentResponse) => {
         this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
@@ -110,14 +143,14 @@ export class CheckoutComponent implements OnInit {
                 address: {
                   line1: purchase.payment.billingAddressId.streetAddress,
                   city: purchase.payment.billingAddressId.city,
-                  state:  purchase.payment.billingAddressId.state,
-                  postal_code:purchase.payment.billingAddressId.zip ,
+                  state: purchase.payment.billingAddressId.state,
+                  postal_code: purchase.payment.billingAddressId.zip,
                   country: purchase.payment.billingAddressId.country
                 }
+              }
             }
-          }
-        })
-        })
+          })
+      })
 
     this.service.confirmOrder(purchase, this.email, this.name).subscribe(
       {
@@ -129,16 +162,15 @@ export class CheckoutComponent implements OnInit {
       }
     )
 
-   
 
-   // this.strikeCheckout.checkout(totalPrice);
-   // this.isConfirmed = true
-  // this.isSubmitted = true;
+
+    // this.strikeCheckout.checkout(totalPrice);
+    // this.isConfirmed = true
+    // this.isSubmitted = true;
 
   }
 
-  setUpPaymentForm() 
-  {
+  setUpPaymentForm() {
     var elements = this.stripe.elements();
 
     // Create a card element ... and hide the zip-code field
@@ -161,14 +193,13 @@ export class CheckoutComponent implements OnInit {
         this.displayError.textContent = event.error.message;
         this.isConfirmed = false;
       }
-        else if (!event.complete)
-        {
-          this.isConfirmed = false;
-        }
-      
+      else if (!event.complete) {
+        this.isConfirmed = false;
+      }
+
 
     });
-    
+
   }
   closeAlert() {
     this.isSubmitted = false;
