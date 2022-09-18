@@ -18,7 +18,8 @@ export class IndexCartService {
   constructor(private db: IndexedDatabase, private _oktaStateService: OktaAuthStateService) {
     this._oktaStateService.authState$.subscribe(
       (s) => {
-        this.oktaId = s.idToken?.claims.sub
+        this.oktaId = s.idToken?.claims.sub;
+        this.getUserCart();
       }
     );
   }
@@ -88,8 +89,13 @@ export class IndexCartService {
   }
 
   async getUserCart() {
+    if (!this.oktaId) return [];
     let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray();
     console.log(items)
+    // Items is sometimes incorrectly 0 directly logging in. This messes with the cart length in the nav bar.
+    // The items were queued to be added in fillCartWithProducts, but this function runs before that transaction is complete afaik.
+    if (items.length !==0 ) this.length = items.length;
+
     this.watcher.next(items)
     return items;
   }
@@ -126,11 +132,11 @@ export class IndexCartService {
   }
 
   clearCart() {
+    this.length = 0;
     return this.db.table(this.tableName).clear();
   }
 
   async fillCartWithProducts(cartItems: any): Promise<boolean> {
-    console.log("cartItems inside fillcartwithproducts", cartItems)
     try {
       const res = await this.db.transaction('rw', this.db.table(this.tableName), () => {
         cartItems.forEach((product: any) => {
@@ -144,12 +150,12 @@ export class IndexCartService {
             productStock: product.productStock,
             storageId: product.storageId
           };
-          this.length = cartItems.length;
           this.db.table(this.tableName).put(
             item
           );
-
         });
+        console.log(cartItems.length);
+        this.length=cartItems.length;
       });
       return true;
     } catch (err) {

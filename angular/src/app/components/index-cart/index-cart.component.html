@@ -50,10 +50,10 @@
     </table>
 
   </div>
-  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="cartItems!.length>5">
+  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="cartItems && cartItems!.length>5">
     <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
   </div>
-  <div class="checkoutbtn mt-3 d-flex justify-content-center" *ngIf="cartItems!.length>0">
+  <div class="checkoutbtn mt-3 d-flex justify-content-center" *ngIf="cartItems && cartItems!.length>0">
     <a class="btn btn-primary" role="button" routerLink="/checkout">Checkout</a>
   </div>
 

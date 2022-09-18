@@ -15,7 +15,7 @@ import { IndexCartService } from './services/index-cart.service';
 export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
   isVisible: boolean = false;
-  cartUrl = "http://localhost:8080/cart"
+  cartUrl = "http://localhost:8000/cart"
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
@@ -50,39 +50,13 @@ export class AppComponent implements OnInit {
       if (this.isVisible && e.target !== this.userButton.nativeElement) this.toggleDropdown();
     };
 
-    // this.isAuthenticated$.subscribe(isValid => {
-    //   if (isValid) {
-    //     this.count++;
-    //     sessionStorage.setItem("count",this.count.toString());
-    //     if ( sessionStorage.getItem("count")) {
-    //       if(sessionStorage)
-    //       this.http.get(this.cartUrl).subscribe(items =>
-    //         this.cartService.fillCartWithProducts(items))
-    //     }
-
-    //   }
-
-
-    // })
-
-    // this._oktaStateService.authState$.pipe(
-    //   filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
-    //   map((authState) => {
-    //     let sub = authState.idToken?.claims.sub
-    //     console.log("sub: ", sub)
-    //     if (sub !== null || sub !== undefined) {
-    //       console.log("here")
-    //       this.http.get(this.cartUrl).subscribe(items =>
-    //         this.cartService.fillCartWithProducts(items))
-    //     }
-    //   })
-    // )
-
     if (this._oktaAuth.isLoginRedirect()) {
       try {
+        // Handle login redirect makes sure Okta has stored the tokens.
         this._oktaAuth.handleLoginRedirect().then(res => {
-          this._oktaAuth.tokenManager.get("idToken").then(_ => this.http.get(this.cartUrl).subscribe(items =>
-            this.cartService.fillCartWithProducts(items)))
+          // Gets this user's cart from the backend (using the userId from the token), and then adds it to the cart.
+          this.http.get(this.cartUrl).subscribe(items =>
+            this.cartService.fillCartWithProducts(items))
         });
       } catch (e) {
         console.log(e)
