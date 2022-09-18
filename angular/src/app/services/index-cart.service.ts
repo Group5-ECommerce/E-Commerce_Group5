@@ -158,12 +158,17 @@ export class IndexCartService {
             productStock: product.productStock,
             storageId: product.storageId
           };
-          this.db.table(this.tableName).put(
-            item
-          );
+
+          // If the guest's cart does not this item, add the item from the server.
+          // Otherwise, keep the version from the guest (which the user inputted more recently).
+          if (!this.db.table(this.tableName).where({ productId: product.productId, userId: this.oktaId }).toArray()) {
+            this.db.table(this.tableName).put(
+              item
+            );
+            this.length += 1;
+          }
         });
         // console.log(cartItems.length);
-        this.length += cartItems.length;
       });
       return true;
     } catch (err) {
