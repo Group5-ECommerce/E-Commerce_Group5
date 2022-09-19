@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
 
+
+
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
@@ -11,7 +13,7 @@ export class MyOrdersComponent implements OnInit {
 
   constructor(private orderService: OrderService) {}
 
-  orders: Order[];
+  orders?: Order[];
   pageNum?: number;
 
 
@@ -27,7 +29,7 @@ export class MyOrdersComponent implements OnInit {
     {
       console.log(response)
       this.orders = response;
-      this.orders = this.orders.reverse();
+      this.orders = this.orders!.reverse();
     })
   }
 
