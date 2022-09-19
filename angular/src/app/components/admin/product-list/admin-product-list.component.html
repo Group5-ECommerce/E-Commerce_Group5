@@ -1,7 +1,6 @@
 <div class="container">
 
 
-
   <table class="table table-light">
     <thead class="thead-light">
       <tr>
@@ -11,7 +10,7 @@
         <th>Image</th>
         <th>Price</th>
         <th>Storage ID</th>
-        <th>Action</th>
+        <th>Category</th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +21,7 @@
         <td>{{p.productImage}}</td>
         <td>${{p.productPrice}}</td>
         <td>{{p.storageId}}</td>
+        <td>{{p.category}}</td>
         <td>
           <div class="d-flex">
             <button class="btn btn-secondary inline" style="margin-right: 10px;"
@@ -32,7 +32,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products!.length>5">
+  <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="products && products!.length>5">
     <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
   </div>
   <button class="btn btn-primary" [routerLink]="['/add-product']">Add New Product</button>

@@ -12,7 +12,7 @@ import com.hcl.repo.OrderRepository;
 //import com.hcl.service.UserService;
 
 @Service
-public class OrderService{
+public class OrderService {
 
 	@Autowired
 	OrderRepository orderRepo;
@@ -20,9 +20,11 @@ public class OrderService{
 	public List<Order> findAll() {
 		return orderRepo.findAll();
 	}
+
 	public void save(Order order) {
 		orderRepo.save(order);
 	}
+
 	public Optional<Order> findById(Integer id) {
 		return orderRepo.findById(id);
 	}
@@ -30,9 +32,17 @@ public class OrderService{
 	public Optional<Order> findByTrackingNumber(String trackingNumber) {
 		return orderRepo.findByTrackingNumber(trackingNumber);
 	}
-	public List<Order> findByOktaId(String oktaId) 
-	{
+
+	public List<Order> findByOktaId(String oktaId) {
 		return orderRepo.findByOktaId(oktaId);
+	}
+
+	public void deleteAll() {
+		orderRepo.deleteAll();
+	}
+
+	public void deleteById(int id) {
+		orderRepo.deleteById(id);
 	}
 
 }

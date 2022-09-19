@@ -5,4 +5,5 @@ export class Product {
   productImage!: string;
   productPrice!: number;
   storageId!: number;
+  category!: string;
 }
