@@ -9,7 +9,6 @@ import { Purchase } from 'src/app/models/purchase/purchase';
 import { IndexCartService } from 'src/app/services/index-cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { environment } from 'src/environments/environment';
-import { StripeCheckoutComponent } from '../stripe-checkout/stripe-checkout.component';
 
 @Component({
   selector: 'app-checkout',
@@ -29,7 +28,6 @@ export class CheckoutComponent implements OnInit {
   displayError: any = ""
   isSubmitted = false
   isConfirmed = false
-  @ViewChild(StripeCheckoutComponent) strikeCheckout: StripeCheckoutComponent;
   email: string
   name: string
 
