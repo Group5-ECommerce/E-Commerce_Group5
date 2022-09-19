@@ -11,6 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+// import com.hcl.config.Secret;
 import com.hcl.entity.Order;
 
 public class SendEmail {
@@ -52,7 +53,7 @@ public class SendEmail {
 		}
 	}
 
-	public static void sendOrderConfirmation(String email, String username, Order order) {
+	public static void sendOrderConfirmation(String email, String name, Order order) {
 		String to = email;
 		String from = "no-reply@e-commerce.com";
 
@@ -66,10 +67,10 @@ public class SendEmail {
 
 			// Rather than doing this forEach statement, we should look into using templates
 			// with something like https://freemarker.apache.org/
-			AtomicReference<String> messageContent = new AtomicReference<String>(
-					"<h1>Hello " + username + ", thank you for ordering on our E-Commerce website!</h1>"
-							+ "\n<h2>Order Details</h2><table border='1' style='border-collapse:collapse; max-width:800px;'>"
-							+ "<tr><th style='width: 10%;'>Image</th><th>Product</th><th>Price</th><th>Quantity</th></tr>");
+			AtomicReference<String> messageContent = new AtomicReference<String>("<h1> Hello " + name
+					+ " ! Thank you for ordering on our E-Commerce website!</h1>"
+					+ "\n<h2>Order Details</h2><table border='1' style='border-collapse:collapse; max-width:800px;'>"
+					+ "<tr><th style='width: 10%;'>Image</th><th>Product</th><th>Price</th><th>Quantity</th></tr>");
 			// AtomicReference allows us to adjust the string in the forEach/lambda scope.
 			// We could do a for loop, but this permits use of Java8 features.
 			order.getItems().stream().forEach(i -> {
@@ -91,8 +92,8 @@ public class SendEmail {
 	}
 
 	private static Session setUpAndGetSession() {
-		final String username = "ed52bb704178d8";
-		final String password = "49d68afff407d4";
+		final String username = "309a4325dec66c";
+		final String password = "1104d20b89578d";
 
 		// Paste host address from the SMTP settings tab in your Mailtrap Inbox
 		String host = "smtp.mailtrap.io";

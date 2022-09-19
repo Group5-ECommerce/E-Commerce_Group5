@@ -3,11 +3,16 @@ package com.hcl.controller;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,26 +21,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.dto.Payment;
 import com.hcl.dto.Purchase;
 import com.hcl.entity.Address;
 import com.hcl.entity.Order;
 import com.hcl.entity.OrderItem;
 import com.hcl.entity.PaymentInfo;
 import com.hcl.entity.Product;
-import com.hcl.entity.User;
+//import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
 import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
 import com.hcl.repo.ProductRepository;
-import com.hcl.repo.UserRepository;
+//import com.hcl.repo.UserRepository;
 import com.hcl.service.AddressService;
 import com.hcl.service.OrderService;
 import com.hcl.service.SendEmail;
-import com.hcl.service.UserService;
+//import com.hcl.service.UserService;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -44,8 +54,8 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-	@Autowired
-	UserService userService;
+//	@Autowired
+//	UserService userService;
 
 	@Autowired
 	private AddressRepository addressRepo;
@@ -56,18 +66,23 @@ public class OrderController {
 	@Autowired
 	private AddressService addressService;
 
-	@Autowired
-	private UserRepository userRepo;
+//	@Autowired
+//	private UserRepository userRepo;
 
 	@Autowired
 	private OrderRepository orderRepo;
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Value("${stripe.key.secret}") 
+	String secretKey;
 
-	@PostMapping("/checkout/{email}")
+	@PostMapping("/checkout/{email}/{name}")
+	@PreAuthorize("hasAuthority('Customer') and !hasAuthority('Admin')")
 	@ApiOperation(value = "Checkout for Order")
-	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email) {
+	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name, Principal principal) {
+		String oktaId = principal.getName();
 		List<cartItem> items = p.getItems();
 		if (items == null)
 			System.out.println("null");
@@ -96,19 +111,19 @@ public class OrderController {
 			productRepository.save(product);
 		}
 
-		User u = userRepo.findByEmail(email).get();
+		//User u = userRepo.findByOktaId(oktaId).get();
 
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
 
-		addressService.addAddress(u, s);
-		addressService.addAddress(u, b);
+		addressService.addAddress(oktaId, s);
+		addressService.addAddress(oktaId, b);
 
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 		order.setItems(orderItems);
 		order.setTotalPrice(totalPrice);
-		order.setUser(u);
+		order.setOktaId(oktaId);
 		order.setShippingAddress(p.getPayment().getShippingAddressId());
 		String number = generateTrackingNumber();
 		order.setTrackingNumber(number);
@@ -118,16 +133,13 @@ public class OrderController {
 
 		payment.setBillingAddressId(p.getPayment().getBillingAddressId());
 		payment.setShippingAddressId(p.getPayment().getShippingAddressId());
-		payment.setCardHolderFirstName(p.getPayment().getCardHolderFirstName());
-		payment.setCardHolderLastName(p.getPayment().getCardHolderLastName());
-		payment.setCardNumber(p.getPayment().getCardNumber());
-		payment.setCvv(p.getPayment().getCvv());
 		payment.setOrder(order);
 		paymentRepo.save(payment);
 
 		// Creates an order based on the list of products and amounts.
-
-		SendEmail.sendOrderConfirmation(u.getEmail(), u.getUsername(), order);
+		
+		
+	    SendEmail.sendOrderConfirmation(email,name,order);
 
 		String message = p.getMessage();
 		return new Purchase(payment, items, message);
@@ -136,6 +148,32 @@ public class OrderController {
 
 	public String generateTrackingNumber() {
 		return UUID.randomUUID().toString();
+	}
+	
+	
+	public PaymentIntent createPayment(Payment pmt) throws StripeException
+	{
+		List<String> paymentMethodTypes = new ArrayList<>();
+		paymentMethodTypes.add("card");
+		Map<String,Object> map = new HashMap<>();
+		map.put("amount" , pmt.getAmount());
+		map.put("currency", pmt.getCurrency());
+		map.put("payment_method_types", paymentMethodTypes);
+		map.put("description", "E-Commerce Purchase");
+		
+		return PaymentIntent.create(map);
+		
+	}
+	
+	@PostMapping("/payment-intent")
+	public ResponseEntity<String> creatingPayment (@RequestBody Payment pmt) throws StripeException
+	{
+		Stripe.apiKey = secretKey;
+		PaymentIntent p = this.createPayment(pmt);
+		
+		String pmtStr = p.toJson();
+		
+		return new ResponseEntity<>(pmtStr, HttpStatus.OK);
 	}
 
 	@GetMapping("/order")
@@ -149,16 +187,30 @@ public class OrderController {
 	@PreAuthorize("hasAuthority('Customer')")
 	@ApiOperation(value = "Gets all Orders by Username")
 	public List<Order> getMyOrders(Principal principal) {
-		return orderService.findByUsername(principal.getName());
+		return orderService.findByOktaId(principal.getName());
+		
 	}
 
-	@GetMapping("/trackOrder/{trackingNumber}")
+	@GetMapping("/orderItems/{trackingNumber}")
 	@ApiOperation(value = "Find Order by Tracking Number")
 	@PreAuthorize("hasAuthority('Customer')")
-	public List<OrderItem> trackOrder(@PathVariable String trackingNumber) {
+	public List<OrderItem> getOrderItemsByTrackingNumber(@PathVariable String trackingNumber) {
+		System.out.println(trackingNumber);
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
 			return order.get().getItems();
+		}
+		return null;
+	}
+	
+	@GetMapping("/order/{trackingNumber}")
+	@ApiOperation(value = "Find Order by Tracking Number")
+	@PreAuthorize("hasAuthority('Customer') or hasAuthority('Admin')")
+	public Order trackOrder(@PathVariable String trackingNumber) {
+		System.out.println(trackingNumber);
+		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
+		if (order.isPresent()) {
+			return order.get();
 		}
 		return null;
 	}

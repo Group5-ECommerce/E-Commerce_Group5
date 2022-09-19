@@ -1,12 +1,13 @@
-body{
-  z-index:0;
-
-}
-
-
 /* Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/
 .dropbtn {
   background-color: #3498DB;
+
+  /* Clips the text with an ellipsis if it is too long.*/
+  max-width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   color: white;
   padding: 10px;
   font-size: 16px;
@@ -189,6 +190,44 @@ footer a {
 }
 
 .navbarlinks {
-  padding:0 50px;
-  color: #cfcfcf
+  color: #cfcfcf;
+  transition: 0.2s;
+}
+
+
+#logo{
+  justify-content: left;
+  padding-right: 25%;
+}
+
+.navbar-btn{
+  padding:0 20px;
+  border: hidden;
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar-btn::after {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 2px;
+  background:orange;
+  transition: 0.4s;
+}
+
+.navbar-btn:hover::after {
+  width: 100%;
+}
+
+.hoverbtn, .hoverbtn:visited{
+  color:white;
+}
+
+.hoverbtn:hover{
+  color:orange;
+  transition: 0.4s;
 }

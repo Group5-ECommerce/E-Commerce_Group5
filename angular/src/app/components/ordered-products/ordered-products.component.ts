@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Product } from 'src/app/models/product.model';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
-  selector: 'app-orderered-products',
-  templateUrl: './orderered-products.component.html',
-  styleUrls: ['./orderered-products.component.css']
+  selector: 'app-ordered-products',
+  templateUrl: './ordered-products.component.html',
+  styleUrls: ['./ordered-products.component.css']
 })
-export class OrdereredProductsComponent implements OnInit {
+export class OrderedProductsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
-  tracker!: string
-  orderItems!: OrderItem[]
+  @Input() tracker!: string
+  @Input() orderItems!: OrderItem[]
   pageNum?: number
 
   ngOnInit(): void {

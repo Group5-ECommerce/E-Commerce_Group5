@@ -37,8 +37,7 @@ public class ProductController {
 
 	@GetMapping("/product")
 	@ApiOperation(value = "Show All Products")
-	public List<Product> listAllProduct(Principal principal) {
-
+	public List<Product> listAllProduct() {
 		return repo.findAll();
 	}
 

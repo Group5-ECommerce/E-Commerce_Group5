@@ -8,7 +8,7 @@ import { Product } from '../models/product.model';
 export class ProductService {
 
   constructor(private http: HttpClient) { }
-  url = "http://localhost:8080";
+  url = "http://localhost:8000";
   private coudinaryImgSaveUrl = "https://api.cloudinary.com/v1_1/gaurav-cloudinary/image/upload";
 
   createProduct(product: Product) {

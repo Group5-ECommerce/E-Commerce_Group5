@@ -7,34 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.entity.Order;
-import com.hcl.entity.User;
+//import com.hcl.entity.User;
 import com.hcl.repo.OrderRepository;
-import com.hcl.service.UserService;
+//import com.hcl.service.UserService;
 
 @Service
-public class OrderService{
-	@Autowired
-	UserService userService;
-	
+public class OrderService {
+
 	@Autowired
 	OrderRepository orderRepo;
-	public List<Order> findByUsername(String username){
-		Optional<User> user = userService.getUserByUsername(username);
-		
-		return orderRepo.findAllByUser(user.get());
-	}
+
 	public List<Order> findAll() {
 		return orderRepo.findAll();
 	}
+
 	public void save(Order order) {
 		orderRepo.save(order);
 	}
+
 	public Optional<Order> findById(Integer id) {
 		return orderRepo.findById(id);
 	}
 
 	public Optional<Order> findByTrackingNumber(String trackingNumber) {
 		return orderRepo.findByTrackingNumber(trackingNumber);
+	}
+
+	public List<Order> findByOktaId(String oktaId) {
+		return orderRepo.findByOktaId(oktaId);
+	}
+
+	public void deleteAll() {
+		orderRepo.deleteAll();
+	}
+
+	public void deleteById(int id) {
+		orderRepo.deleteById(id);
 	}
 
 }
