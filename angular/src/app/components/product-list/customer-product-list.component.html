@@ -10,15 +10,15 @@
     </div>
 
     <div class="input-group justify-content-center mb-5">
-      <div>
+      <div class=" form-outline">
         <input [(ngModel)]="query" type="search" class="form-control" placeholder="Product"
           (keyup.enter)="showResults()" autocomplete="off" />
       </div>
-      <div class="btn-group ">
+      <div class="btn-group">
         <button type="button" class="btn btn-primary" (click)="showResults()">
           Search
         </button>
-        <button class="btn btn-secondary " (click)="resetResults()">Reset</button>
+        <button class="btn btn-secondary" (click)="resetResults()">Reset</button>
       </div>
     </div>
 
@@ -40,6 +40,7 @@
                 <button *ngIf="product.productStock<=0" type="button" class="btn btn-secondary" disabled>Out of Stock</button>
 				<button *ngIf="product.productStock>0" #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
                   Cart</button>
+                <!-- <button (click)="saveToIndexedDb(product)">save to IndexedDb</button> -->
               </div>
 
             </div>

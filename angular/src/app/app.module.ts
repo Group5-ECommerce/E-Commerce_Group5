@@ -19,15 +19,15 @@ import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './pipes/filter.pipe';
 import { OrderTrackComponent } from './components/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
-import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
+import { IndexCartComponent } from './components/index-cart/index-cart.component';
+import { IndexedDatabase } from './indexeddb';
+import { OrderedProductsComponent } from './components/ordered-products/ordered-products.component';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -52,14 +52,13 @@ const oktaAuth = new OktaAuth({
     EditProductComponent,
     EditUserComponent,
     ChangePasswordComponent,
-    CartListComponent,
     CheckoutComponent,
     OrderListComponent,
-    OrdereredProductsComponent,
+    OrderedProductsComponent,
     OrderTrackComponent,
     FilterPipe,
     MyOrdersComponent,
-    StripeCheckoutComponent
+    IndexCartComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +71,7 @@ const oktaAuth = new OktaAuth({
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    CustomerGuard, AdminGuard
+    CustomerGuard, AdminGuard, IndexedDatabase
   ],
   bootstrap: [AppComponent]
 })

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StripeCheckoutComponent } from './stripe-checkout.component';
+import { IndexCartComponent } from './index-cart.component';
 
-describe('StripeCheckoutComponent', () => {
-  let component: StripeCheckoutComponent;
-  let fixture: ComponentFixture<StripeCheckoutComponent>;
+describe('IndexCartComponent', () => {
+  let component: IndexCartComponent;
+  let fixture: ComponentFixture<IndexCartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StripeCheckoutComponent ]
+      declarations: [ IndexCartComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StripeCheckoutComponent);
+    fixture = TestBed.createComponent(IndexCartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
