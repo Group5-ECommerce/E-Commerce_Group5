@@ -27,7 +27,7 @@
     </ng-container>
 
     <div class="container h-50 w-75 mt-2" *ngIf="queryResults!=0; else noResults">
-      <div class="row row-cols-sm-4 g-3 mb-2 justify-content-start">
+      <div class="row row-cols-sm-4 g-3 mb-2 justify-content-center">
         <div class="col"
           *ngFor="let product of displayedProducts! | paginate: { itemsPerPage: 8, currentPage: pageNum }">
           <div class="card">
