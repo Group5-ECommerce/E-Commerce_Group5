@@ -117,48 +117,27 @@
 
         <hr class="BlinkMacSystemFont mt-3">
 
-        <h4 class="mb-3">Payment Information</h4>
+      <a href = "https://stripe.com/docs/testing#cards" target='_blank'>Test Card Info</a>
         <div class="row">
-          <div class="col-md-5">
-            <label for="cardHolderFirstName">First Name</label>
-            <input [(ngModel)]="payment.cardHolderFirstName" input id="cardHolderFirstName" type="text"
-              class="form-control" name="cardHolderFirstName" required #cardHolderFirstName = "ngModel">
-              <span *ngIf = "cardHolderFirstName.touched && cardHolderLastName.invalid" class = "errormessage" style = "color:red">Enter credit card holder first name</span>
-          </div>
-
-          <div class="col-md-5">
-            <label for="cardHolderLastName">Last Name</label>
-            <input [(ngModel)]="payment.cardHolderLastName" input id="cardHolderLastName" type="text"
-              class="form-control" name="cardHolderLastName" required #cardHolderLastName = "ngModel">
-              <span *ngIf = "cardHolderLastName.touched && cardHolderLastName.invalid" class = "errormessage" style = "color:red">Enter credit card holder last name</span>
-          </div>
+          <h3>Credit Card / Debit Card</h3>
+          <div id = "card-element"></div>
+          <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
         </div>
 
-        <div class="col-md-6">
-          <label for="cardNumber">Card Number</label>
-          <input [(ngModel)]="payment.cardNumber" input id="cardNumber" type="text" class="form-control"
-            name="cardNumber" required #cardNumber= "ngModel">
-            <span *ngIf = "cardNumber.touched && cardNumber.invalid" class = "errormessage" style = "color:red">Enter a valid 16-digit credit card number</span>
+        <hr class="BlinkMacSystemFont mt-3">
 
-          <div class="col-md-2">
-            <label for="cvv">CVV</label>
-            <input [(ngModel)]="payment.cvv" type="text" class="form-control" name="cvv" required #cvv = "ngModel">
-              <span *ngIf = "cvv.touched && cvv.invalid" class = "errormessage" style = "color:red">Enter a valid CVV code</span>
-          </div>
-        </div>
         <span class = "w-100"></span>
-        <div class="alert alert-success col-sm-5 my-2 mx-auto" role="alert" *ngIf="isSubmitted">
+        <div class="alert alert-success col-sm-5 my-2 mx-auto" role="alert" *ngIf="isSubmitted && isConfirmed">
           <strong>Order Submitted!</strong>
           <button class="close btn btn-sm mx-3 float-end" (click)="closeAlert()">X</button>
         </div>
       </div>
       <div class="container text-center">
-        <button [disabled]="!checkOutForm.form.valid || isSubmitted && isConfirmed" class="btn btn-primary btn-md mb-5 mx-5"
+        <button [disabled]="!checkOutForm.form.valid || isSubmitted || !isConfirmed " class="btn btn-primary btn-md mb-5 mx-5"
           (click)="submitOrder()">Confirm Order</button>
-          <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted || !isConfirmed" routerLink="/my-orders">View My Orders</button>
+          <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted" routerLink="/my-orders">View My Orders</button>
       </div>
     </form>
-    <app-stripe-checkout></app-stripe-checkout>
   </div>
 </body>
 

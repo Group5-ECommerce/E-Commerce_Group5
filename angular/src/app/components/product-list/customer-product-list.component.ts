@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
-import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
-import { filter, from, map, Observable, of, tap } from 'rxjs';
+import { IndexCartService } from 'src/app/services/index-cart.service';
+
+interface ProductCategory {
+  code: string;
+  description: string;
+}
+
 
 @Component({
   selector: 'app-customer-product-list',
   templateUrl: './customer-product-list.component.html',
   styleUrls: ['./customer-product-list.component.css']
 })
+
 export class CustomerProductListComponent implements OnInit {
 
   products?: Product[];
@@ -16,10 +22,16 @@ export class CustomerProductListComponent implements OnInit {
   currentIndex = -1;
   title = "product list"
   pageNum?: number
+  selectedCategory?: string[];
+  filteredCategory?= ''
+
+  public ChangeCategory($event: any) {
+    this.filteredCategory = ($event.target as HTMLSelectElement).value;
+  }
   query?: string
   queryResults?: number
 
-  constructor(private productService: ProductService, private cartService: CartService) { }
+  constructor(private productService: ProductService, private cart2Service: IndexCartService) { }
 
 
   ngOnInit(): void {
@@ -34,13 +46,15 @@ export class CustomerProductListComponent implements OnInit {
   saveToCart(el: HTMLElement, product: Product): void {
     // If it is a primary button, meaning it should "Add To Cart"
     if (el.classList.contains("btn-primary")) {
-      this.cartService.addProduct(product);
+      // this.cartService.addProduct(product);
+      this.cart2Service.addProduct(product)
       el.classList.remove("btn-primary");
       el.classList.add("btn-danger");
       el.textContent = "Remove From Cart";
     }
     else {
-      this.cartService.removeProduct(product);
+      // this.cartService.removeProduct(product);
+      this.cart2Service.deleteProduct(product)
       el.textContent = "Add to Cart";
       el.classList.remove("btn-danger");
       el.classList.add("btn-primary");
@@ -48,34 +62,20 @@ export class CustomerProductListComponent implements OnInit {
 
   }
 
-
-
   retrieveProducts(): void {
+    console.log(this.filteredCategory);
     this.productService.getProductList().subscribe({
       next: (data) => {
         this.products = (data);
         this.displayedProducts = this.products;
         this.queryResults = this.displayedProducts.length;
+        this.selectedCategory = [...new Set(this.products.map(p => p.category))]
       },
       error: (e) => console.log(e)
     })
   }
 
   showResults() {
-    // if (this.query) {
-    //   this.displayedProducts = this.products?.pipe(
-    //     map((prods: any[]) => {
-    //       return prods.filter((p: Product) => {
-    //         if (p.productName) {
-    //           console.log(p.productName, "===", this.query, " result: ", p.productName === this.query)
-    //           return p.productName.toLowerCase() == this.query?.toLowerCase() || this.query === ""
-    //         }
-    //         return false
-    //       })
-    //     })
-    //   )
-
-    // }
     if (this.query) {
       this.displayedProducts = this.products?.filter(p => {
         // console.log("query ", this.query)
@@ -90,16 +90,16 @@ export class CustomerProductListComponent implements OnInit {
       this.displayedProducts = this.products
       this.queryResults = this.displayedProducts?.length
     }
+    if (this.filteredCategory != '')
+      this.displayedProducts = this.displayedProducts?.filter(p => p.category === this.filteredCategory)
   }
 
   resetResults() {
     this.displayedProducts = this.products
+    // Resets category dropdown to "All products"
+    document.getElementById("categoryDropdown")!.getElementsByTagName('option')[0].selected = true;
+    this.filteredCategory = "";
+
     this.queryResults = this.displayedProducts?.length
   }
-
-  // tester(event: any) {
-  //   console.log((event.target.value).toLocalLowerCase())
-  // }
-
-
 }

@@ -23,20 +23,9 @@ public class PaymentInfo {
     @Column(name="paymentId")
     private int paymentId;
  
-    @Column(name="cardHolderFirstName")
-    private String cardHolderFirstName;
-    @Column(name="cardHolderLastName")
-    private String cardHolderLastName;
-    
     @OneToOne
     @JoinColumn(name="orderId")
     private Order order;
-    
-    @Column(name="cardNumber")
-    private String cardNumber;
-    
-    @Column(name = "CVV")
-    private String cvv;
     
     @OneToOne
     @JoinColumn(name = "billingAddress")
