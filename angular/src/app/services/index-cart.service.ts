@@ -54,7 +54,8 @@ export class IndexCartService {
           productPrice: product.productPrice,
           productImage: product.productImage,
           productStock: product.productStock,
-          storageId: product.storageId
+          storageId: product.storageId, 
+          category: product.category
         }
         this.length += 1;
         this.db.table(this.tableName).put(
@@ -160,7 +161,8 @@ export class IndexCartService {
             productPrice: product.productPrice,
             productImage: product.productImage,
             productStock: product.productStock,
-            storageId: product.storageId
+            storageId: product.storageId,
+            category: product.category
           };
 
           const instancesOfItemtInGuestCart = await this.db.table(this.tableName).where({ productId: product.productId, userId: this.oktaId }).toArray()

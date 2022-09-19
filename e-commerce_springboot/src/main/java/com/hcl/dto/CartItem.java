@@ -17,4 +17,6 @@ public class CartItem {
 	private int productStock;
 	private float productPrice;
 	private int storageId;
+	private String category;
+
 }
