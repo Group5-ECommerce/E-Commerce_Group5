@@ -8,14 +8,13 @@ import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { OrdereredProductsComponent } from './components/orderered-products/orderered-products.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { OrderTrackComponent } from './components/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { IndexCartComponent } from './components/index-cart/index-cart.component';
+import { OrderedProductsComponent } from './components/ordered-products/ordered-products.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
@@ -28,7 +27,7 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 { path: 'cart-list', component: IndexCartComponent },
 { path: 'checkout', component: CheckoutComponent, canActivate: [CustomerGuard] },
 { path: 'order-list', component: OrderListComponent, canActivate: [OktaAuthGuard] },
-{ path: 'ordered-products/:tracker', component: OrdereredProductsComponent },
+{ path: 'ordered-products/:tracker', component: OrderedProductsComponent },
 {path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard]},
 {path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard]},
 {path: 'order-track', component: OrderTrackComponent},
