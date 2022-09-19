@@ -59,6 +59,7 @@ export class CheckoutComponent implements OnInit {
       backendCart.push({
         "amt": c.amt,
         "product": {
+          "productId": c.productId,
           "productName": c.productName,
           "productStock": c.productStock,
           "productImage": c.productImage,
