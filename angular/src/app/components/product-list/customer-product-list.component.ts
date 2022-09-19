@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
-import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
-import { filter, from, map, Observable, of, tap } from 'rxjs';
 import { IndexCartService } from 'src/app/services/index-cart.service';
 
 interface ProductCategory {
@@ -33,7 +31,7 @@ export class CustomerProductListComponent implements OnInit {
   query?: string
   queryResults?: number
 
-  constructor(private productService: ProductService, private cartService: CartService, private cart2Service: IndexCartService) { }
+  constructor(private productService: ProductService, private cart2Service: IndexCartService) { }
 
 
   ngOnInit(): void {
@@ -104,10 +102,4 @@ export class CustomerProductListComponent implements OnInit {
 
     this.queryResults = this.displayedProducts?.length
   }
-
-  // tester(event: any) {
-  //   console.log((event.target.value).toLocalLowerCase())
-  // }
-
-
 }

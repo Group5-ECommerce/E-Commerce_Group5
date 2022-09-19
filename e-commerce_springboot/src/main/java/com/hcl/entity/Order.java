@@ -59,7 +59,7 @@ public class Order {
 	@Column(name = "orderStatus")
 	private String orderStatus;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	// Thanks to https://stackoverflow.com/a/61870411 for this property.
 	// Marking CascadeType as all in the OneToMany annotation wasn't adding a
 	// property, and I wasn't sure why. It seems to be a Hibernate <-> JPA nuance.

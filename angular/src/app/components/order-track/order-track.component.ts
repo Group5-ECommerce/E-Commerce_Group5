@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from '../../services/order.service'
-import { OrdereredProductsComponent } from '../orderered-products/orderered-products.component';
+import { OrderedProductsComponent } from '../ordered-products/ordered-products.component';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { OrdereredProductsComponent } from '../orderered-products/orderered-prod
 export class OrderTrackComponent implements OnInit {
 
   input = new trackingInput();
-  @ViewChild(OrdereredProductsComponent) orderedProducts: OrdereredProductsComponent;
+  @ViewChild(OrderedProductsComponent) orderedProducts: OrderedProductsComponent;
   orderItems: OrderItem[];
   canSubmit: boolean = false;
   order?: Order;

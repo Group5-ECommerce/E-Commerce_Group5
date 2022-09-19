@@ -9,7 +9,7 @@ import { Product } from '../models/product.model';
 })
 export class IndexCartService {
   tableName = "userCart"
-  oktaId?: string;
+  oktaId?: string = "guest";
   watcher = new Subject()
   sortingColName = "";
   sortBtnClicks!: number;
@@ -18,7 +18,11 @@ export class IndexCartService {
   constructor(private db: IndexedDatabase, private _oktaStateService: OktaAuthStateService) {
     this._oktaStateService.authState$.subscribe(
       (s) => {
-        this.oktaId = s.idToken?.claims.sub;
+        // If this is a user, get their user id
+        if (s.isAuthenticated) {
+          this.oktaId = s.idToken?.claims.sub;
+        }
+        // If not, we should still get any guest cart items stored in this browser.
         this.getUserCart();
       }
     );
@@ -29,8 +33,11 @@ export class IndexCartService {
   }
 
   async addProduct(product: Product) {
+
+    if (!this.oktaId) this.oktaId = "guest";
+
     let existingItem = await this.db.table(this.tableName).where({ productId: product.productId, userId: this.oktaId }).toArray()
-    // console.log(existingItem)
+    console.log(existingItem)
     this.db.transaction('rw', this.db.table(this.tableName), async () => {
       let item;
       if (existingItem.length != 0) {
@@ -80,7 +87,7 @@ export class IndexCartService {
 
     }).then(async (res) => {
       console.log(res)
-      this.length -=1;
+      this.length -= 1;
       // let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
       // console.log(items)
       // this.watcher.next(items)
@@ -91,11 +98,12 @@ export class IndexCartService {
 
   async getUserCart() {
     if (!this.oktaId) return [];
+
     let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray();
     console.log(items)
     // Items is sometimes incorrectly 0 directly logging in. This messes with the cart length in the nav bar.
     // The items were queued to be added in fillCartWithProducts, but this function runs before that transaction is complete afaik.
-    if (items.length !==0 ) this.length = items.length;
+    if (items.length !== 0) this.length = items.length;
 
     this.watcher.next(items)
     return items;
@@ -117,6 +125,7 @@ export class IndexCartService {
   }
 
   deleteItem(item: any) {
+
     this.db.transaction('rw', this.db.table(this.tableName), async () => {
       let key = (await this.db.table(this.tableName).where({ userId: this.oktaId, productId: item.productId }).primaryKeys())[0];
 
@@ -124,7 +133,7 @@ export class IndexCartService {
     }).then(async (res) => {
       console.log(res)
       let items = await this.db.table(this.tableName).where({ userId: this.oktaId }).toArray()
-      this.length -=1;
+      this.length -= 1;
       // console.log(items)
       this.watcher.next(items)
     }).catch((err) => {
@@ -139,8 +148,11 @@ export class IndexCartService {
 
   async fillCartWithProducts(cartItems: any): Promise<boolean> {
     try {
+      const guestItems = await this.db.table(this.tableName).where({ userId: 'guest' }).modify({ userId: this.oktaId });
+      this.length = guestItems;
+
       const res = await this.db.transaction('rw', this.db.table(this.tableName), () => {
-        cartItems.forEach((product: any) => {
+        cartItems.forEach(async (product: any) => {
           let item = {
             userId: product.oktaId,
             amt: product.amt,
@@ -152,20 +164,24 @@ export class IndexCartService {
             storageId: product.storageId,
             category: product.category
           };
-          this.db.table(this.tableName).put(
-            item
-          );
+
+          const instancesOfItemtInGuestCart = await this.db.table(this.tableName).where({ productId: product.productId, userId: this.oktaId }).toArray()
+
+          // If the guest's cart does not contains this item, add the item from the server.
+          // Otherwise, keep the version from the guest (which the user inputted more recently).
+          if (instancesOfItemtInGuestCart.length === 0 ) {
+            this.db.table(this.tableName).put(
+              item
+            );
+            this.length += 1;
+          }
         });
-        console.log(cartItems.length);
-        this.length=cartItems.length;
       });
       return true;
     } catch (err) {
       console.log(err);
       return false;
     }
-
-
   }
 
 
