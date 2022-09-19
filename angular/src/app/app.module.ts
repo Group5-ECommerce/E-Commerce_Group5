@@ -6,14 +6,14 @@ import { AppComponent } from './app.component';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
 
-import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
+import { OktaAuthGuard, OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProfileComponent } from './components/profile/profile.component';
 import { config } from "../config/app.config";
 import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
 import { ProductService } from './services/product.service';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
 import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
@@ -59,7 +59,9 @@ const oktaAuth = new OktaAuth({
     OrderTrackComponent,
     FilterPipe,
     MyOrdersComponent,
-    StripeCheckoutComponent
+    StripeCheckoutComponent,
+    OktaAuthGuard,
+    FormsModule
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,7 @@ const oktaAuth = new OktaAuth({
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

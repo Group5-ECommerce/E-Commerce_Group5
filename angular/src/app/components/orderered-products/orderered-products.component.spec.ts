@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from "@angular/router/testing";
 import { OrdereredProductsComponent } from './orderered-products.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 describe('OrdereredProductsComponent', () => {
   let component: OrdereredProductsComponent;
@@ -8,7 +10,8 @@ describe('OrdereredProductsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrdereredProductsComponent ]
+      declarations: [ OrdereredProductsComponent ],
+      imports: [HttpClientModule, NgxPaginationModule, RouterTestingModule]
     })
     .compileComponents();
 

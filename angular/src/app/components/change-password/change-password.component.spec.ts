@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { ChangePasswordComponent } from './change-password.component';
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
@@ -8,7 +9,9 @@ describe('ChangePasswordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChangePasswordComponent ]
+      declarations: [ChangePasswordComponent],
+      imports: [HttpClientModule, OktaAuthModule],
+      providers: [ChangePasswordComponent]
     })
     .compileComponents();
 
