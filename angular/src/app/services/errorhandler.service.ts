@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { MyMonitoringService } from 'src/logging.service';
+import { MyMonitoringService } from 'src/app/services/logging.service';
 
 @Injectable({
   providedIn: 'root'

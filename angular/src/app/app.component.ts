@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoggingSeverity } from '@microsoft/applicationinsights-web';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
-import { MyMonitoringService } from 'src/logging.service';
+import { MyMonitoringService } from 'src/app/services/logging.service';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
   name$!: Observable<String>;
 
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService, private myMonitoringService: MyMonitoringService) {
+    myMonitoringService.logPageView('mainpage');
   }
 
   public ngOnInit(): void {
