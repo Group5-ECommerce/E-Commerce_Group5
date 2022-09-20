@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - ecommerce-capstone-fronten
 on:
   push:
     branches:
-      - master
+      - rachid
     paths:
       - 'angular/**'
   workflow_dispatch:
