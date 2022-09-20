@@ -45,11 +45,10 @@ import com.stripe.model.PaymentIntent;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Api(tags= "Order")
+@Api(tags = "Order")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
@@ -74,14 +73,15 @@ public class OrderController {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
-	@Value("${stripe.key.secret}") 
+
+	@Value("${stripe.key.secret}")
 	String secretKey;
 
 	@PostMapping("/checkout/{email}/{name}")
 	@PreAuthorize("hasAuthority('Customer') and !hasAuthority('Admin')")
 	@ApiOperation(value = "Checkout for Order")
-	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name, Principal principal) {
+	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name,
+			Principal principal) {
 		String oktaId = principal.getName();
 		List<cartItem> items = p.getItems();
 		if (items == null)
@@ -111,7 +111,7 @@ public class OrderController {
 			productRepository.save(product);
 		}
 
-		//User u = userRepo.findByOktaId(oktaId).get();
+		// User u = userRepo.findByOktaId(oktaId).get();
 
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
@@ -137,9 +137,8 @@ public class OrderController {
 		paymentRepo.save(payment);
 
 		// Creates an order based on the list of products and amounts.
-		
-		
-	    SendEmail.sendOrderConfirmation(email,name,order);
+
+		SendEmail.sendOrderConfirmation(email, name, order);
 
 		String message = p.getMessage();
 		return new Purchase(payment, items, message);
@@ -149,30 +148,27 @@ public class OrderController {
 	public String generateTrackingNumber() {
 		return UUID.randomUUID().toString();
 	}
-	
-	
-	public PaymentIntent createPayment(Payment pmt) throws StripeException
-	{
+
+	public PaymentIntent createPayment(Payment pmt) throws StripeException {
 		List<String> paymentMethodTypes = new ArrayList<>();
 		paymentMethodTypes.add("card");
-		Map<String,Object> map = new HashMap<>();
-		map.put("amount" , pmt.getAmount());
+		Map<String, Object> map = new HashMap<>();
+		map.put("amount", pmt.getAmount());
 		map.put("currency", pmt.getCurrency());
 		map.put("payment_method_types", paymentMethodTypes);
 		map.put("description", "E-Commerce Purchase");
-		
+
 		return PaymentIntent.create(map);
-		
+
 	}
-	
+
 	@PostMapping("/payment-intent")
-	public ResponseEntity<String> creatingPayment (@RequestBody Payment pmt) throws StripeException
-	{
+	public ResponseEntity<String> creatingPayment(@RequestBody Payment pmt) throws StripeException {
 		Stripe.apiKey = secretKey;
 		PaymentIntent p = this.createPayment(pmt);
-		
+
 		String pmtStr = p.toJson();
-		
+
 		return new ResponseEntity<>(pmtStr, HttpStatus.OK);
 	}
 
@@ -188,7 +184,7 @@ public class OrderController {
 	@ApiOperation(value = "Gets all Orders by Username")
 	public List<Order> getMyOrders(Principal principal) {
 		return orderService.findByOktaId(principal.getName());
-		
+
 	}
 
 	@GetMapping("/orderItems/{trackingNumber}")
@@ -202,7 +198,7 @@ public class OrderController {
 		}
 		return null;
 	}
-	
+
 	@GetMapping("/order/{trackingNumber}")
 	@ApiOperation(value = "Find Order by Tracking Number")
 	@PreAuthorize("hasAuthority('Customer') or hasAuthority('Admin')")
