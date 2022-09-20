@@ -28,6 +28,7 @@ import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { IndexCartComponent } from './components/index-cart/index-cart.component';
 import { IndexedDatabase } from './indexeddb';
 import { OrderedProductsComponent } from './components/ordered-products/ordered-products.component';
+import { ErrorhandlerService } from './services/errorhandler.service';
 
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
@@ -71,7 +72,8 @@ const oktaAuth = new OktaAuth({
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    CustomerGuard, AdminGuard, IndexedDatabase
+    CustomerGuard, AdminGuard, IndexedDatabase,
+  {provide: ErrorhandlerService, useClass: ErrorhandlerService}
   ],
   bootstrap: [AppComponent]
 })

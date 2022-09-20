@@ -21,7 +21,7 @@ import com.hcl.repo.ProductRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://ecommerce-capstone-frontend.azurewebsites.net")
 @RestController
 @Api(tags = "Products")
 public class ProductController {

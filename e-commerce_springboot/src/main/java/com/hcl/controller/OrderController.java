@@ -48,7 +48,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://ecommerce-capstone-frontend.azurewebsites.net")
 @Api(tags= "Order")
 public class OrderController {
 	@Autowired

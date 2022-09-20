@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
+import { MyMonitoringService } from 'src/logging.service';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
 
   name$!: Observable<String>;
 
-  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService) {
+  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService, private myMonitoringService: MyMonitoringService) {
   }
 
   public ngOnInit(): void {
