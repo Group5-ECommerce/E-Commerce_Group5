@@ -26,3 +26,39 @@
   line-height:30px;
   padding:0px 15px;
 }
+
+#blue-white-table td,
+th {
+    border: 1px solid #ddd;
+}
+
+#blue-white-table th {
+    background-color: deepskyblue;
+    color: white;
+    border-top: 0px;
+}
+
+#blue-white-table tr:nth-child(even) {
+    background-color: rgba(8, 192, 248, 0.164)
+}
+
+#blue-white-table th:first-of-type {
+    border-top-left-radius: 10px;
+    border-left: 0px;
+    border-top: 0px;
+}
+
+#blue-white-table th:last-of-type {
+    border-top-right-radius: 10px;
+    border-right: 0px;
+    border-top: 0px;
+}
+
+.no-hover {
+  pointer-events: none;
+}
+
+.no-hover:hover {
+  color: transparent !important;
+  text-decoration: none;
+}
