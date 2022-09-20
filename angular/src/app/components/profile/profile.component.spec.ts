@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 import { ProfileComponent } from './profile.component';
 
@@ -8,7 +9,8 @@ describe('ProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
+      declarations: [ ProfileComponent ],
+      providers: [OktaAuth]
     })
     .compileComponents();
 

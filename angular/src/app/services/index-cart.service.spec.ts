@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
+import { OktaAuth } from '@okta/okta-auth-js';
+import { IndexedDatabase } from 'src/app/indexeddb';
 import { IndexCartService } from './index-cart.service';
 
-describe('Cart2Service', () => {
+describe('IndexCartService', () => {
   let service: IndexCartService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [IndexedDatabase, OktaAuth]
+    });
     service = TestBed.inject(IndexCartService);
   });
 
