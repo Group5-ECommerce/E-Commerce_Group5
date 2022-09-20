@@ -1,8 +1,10 @@
-name: Build
+name: SonarCloud
 on:
   push:
     branches:
       - master
+    paths: 
+      - 'e-commerce_springboot/**'
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
