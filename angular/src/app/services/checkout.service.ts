@@ -8,9 +8,9 @@ import { Purchase } from '../models/purchase/purchase';
 })
 export class CheckoutService {
 
-  private checkOutUrl = 'http://localhost:8000/checkout'
+  private checkOutUrl = 'https://ecommerce-capstone.azurewebsites.net/checkout'
 
-  private paymentIntentUrl = 'http://localhost:8000/payment-intent'
+  private paymentIntentUrl = 'https://ecommerce-capstone.azurewebsites.net/payment-intent'
 
   constructor(private HttpClient: HttpClient) { }
   

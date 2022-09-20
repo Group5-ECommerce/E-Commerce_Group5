@@ -9,7 +9,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
 
-  private url = "http://localhost:8000/"
+  private url = "https://ecommerce-capstone.azurewebsites.net/"
 
   constructor(private http: HttpClient) { }
 

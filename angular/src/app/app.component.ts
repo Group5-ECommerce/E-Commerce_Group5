@@ -17,7 +17,7 @@ import { IndexCartService } from './services/index-cart.service';
 export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
   isVisible: boolean = false;
-  cartUrl = "http://localhost:8000/cart"
+  cartUrl = "https://ecommerce-capstone.azurewebsites.net/cart"
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
