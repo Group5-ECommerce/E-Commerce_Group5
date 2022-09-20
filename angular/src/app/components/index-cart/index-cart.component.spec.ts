@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { IndexCartComponent } from './index-cart.component';
 
@@ -20,4 +20,8 @@ describe('IndexCartComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`should start on page 1`, async(() => {
+    expect(component.pageNum).toEqual(1);
+  }));
 });

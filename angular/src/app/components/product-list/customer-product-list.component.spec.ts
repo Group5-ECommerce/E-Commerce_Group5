@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async} from '@angular/core/testing';
+import { ProductService } from 'src/app/services/product.service';
 
 import { CustomerProductListComponent } from './customer-product-list.component';
 
@@ -8,7 +9,7 @@ describe('ProductListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomerProductListComponent ]
+      declarations: [ CustomerProductListComponent ],
     })
     .compileComponents();
 
@@ -20,4 +21,8 @@ describe('ProductListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`should have multiple products`, async(() => {
+    expect(component.products?.length).toBeGreaterThanOrEqual(1);
+  }));
 });

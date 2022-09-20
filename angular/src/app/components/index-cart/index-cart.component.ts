@@ -35,7 +35,6 @@ export class IndexCartComponent implements OnInit {
   }
 
   sortCart(event: any) {
-
     this.cartService.sortCart(event);
   }
 

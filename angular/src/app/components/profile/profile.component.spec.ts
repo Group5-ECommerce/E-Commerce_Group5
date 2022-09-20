@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
 
@@ -20,4 +20,10 @@ describe('ProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`html should only show one user`,async (() => {
+    fixture.detectChanges
+    const el = fixture.nativeElement.querySelector('p');
+    expect(component.name$).toBeNull(false);
+  }));
 });
