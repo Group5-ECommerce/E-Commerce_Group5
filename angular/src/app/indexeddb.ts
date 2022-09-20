@@ -9,7 +9,7 @@ export class IndexedDatabase extends Dexie {
       userCart: '++id, [userId+productId], amt, productName, productStock, productImage, productPrice, storageId'
     });
     this.version(2).stores({
-      userCart: '++id, userId, productId,[userId+productId], amt, productName, productStock, productImage, productPrice, storageId'
+      userCart: '++id, userId, productId,[userId+productId], amt, productName, productStock, productImage, productPrice, storageId, category'
     });
 
     this.open().then(data => console.log("DB Opened"))
