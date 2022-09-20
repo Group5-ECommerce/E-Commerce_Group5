@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - master
-    paths: 
-      - 'e-commerce_springboot/**'
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
@@ -37,4 +35,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Group5-ECommerce_E-Commerce_Group5
+        run: |
+              cd e-commerce_springboot 
+              mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Group5-ECommerce_E-Commerce_Group5
