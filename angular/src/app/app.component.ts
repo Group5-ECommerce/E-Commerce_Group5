@@ -13,7 +13,7 @@ import { IndexCartService } from './services/index-cart.service';
 })
 
 export class AppComponent implements OnInit {
-  title = 'okta-angular-quickstart';
+  title = 'angular';
   isVisible: boolean = false;
   cartUrl = "http://localhost:8000/cart"
   // count: number;

@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OKTA_AUTH } from '@okta/okta-angular';
 
 import { AuthInterceptor } from './auth.interceptor';
 
-
 describe('AuthInterceptor', () => {
+  const authSpy = jasmine.createSpyObj('OktaAuth', ['login']);
+
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
       AuthInterceptor,
-      OktaAuth
+      { provide: OKTA_AUTH, useValue: authSpy }
       ]
   }));
 

@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EditUserComponent } from './edit-user.component';
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OKTA_AUTH } from '@okta/okta-angular';
 
 describe('EditUserComponent', () => {
   let component: EditUserComponent;
   let fixture: ComponentFixture<EditUserComponent>;
+  const authSpy = jasmine.createSpyObj('OktaAuth', ['login']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [HttpClient, OktaAuth],
+      providers: [HttpClient, { provide: OKTA_AUTH, useValue: authSpy }],
       declarations: [ EditUserComponent ]
     })
     .compileComponents();

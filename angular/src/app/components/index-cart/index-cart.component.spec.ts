@@ -1,15 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { of } from 'rxjs';
 import { IndexedDatabase } from 'src/app/indexeddb';
 import { IndexCartComponent } from './index-cart.component';
 
 describe('IndexCartComponent', () => {
   let component: IndexCartComponent;
   let fixture: ComponentFixture<IndexCartComponent>;
-
+  const authSpy = jasmine.createSpyObj('OktaAuth', ['login']);
+  const authStateSpy = jasmine.createSpyObj('OktaAuthStateService', [], {
+    authState$: of({
+      isAuthenticated: false
+    })
+  });
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [IndexedDatabase, OktaAuth],
+      imports: [CommonModule, NgxPaginationModule],
+      providers: [IndexedDatabase, { provide: OKTA_AUTH, useValue: authSpy },
+        { provide: OktaAuthStateService, useValue: authStateSpy }
+      ],
       declarations: [ IndexCartComponent ]
     })
     .compileComponents();

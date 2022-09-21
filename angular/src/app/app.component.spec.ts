@@ -1,10 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
+import { IndexedDatabase } from './indexeddb';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
+    const authStateSpy = jasmine.createSpyObj('OktaAuthStateService', [], {
+      authState$: of({
+        isAuthenticated: false
+      })
+    });
+  
+    const authSpy = jasmine.createSpyObj('OktaAuth', ['login'], {
+      isLoginRedirect: () => {return false}
+    });
+    const httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'get'])
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
@@ -13,7 +27,10 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        OktaAuth
+        { provide: OktaAuthStateService, useValue: authStateSpy },
+        { provide: OKTA_AUTH, useValue: authSpy },
+        {provide: HttpClient, useValue: httpClientSpy},
+        IndexedDatabase
       ]
     }).compileComponents();
   });

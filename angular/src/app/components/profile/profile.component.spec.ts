@@ -1,16 +1,29 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { of } from 'rxjs';
 
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
+  
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+
+  const authSpy = jasmine.createSpyObj('OktaAuthStateService', [], {
+    authState$: of({
+      isAuthenticated: true,
+      idToken: {
+        claims: {
+          name
+        }
+      }
+    })
+  });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
-      providers: [OktaAuth]
+      providers: [{ provide: OktaAuthStateService, useValue: authSpy }]
     })
     .compileComponents();
 
