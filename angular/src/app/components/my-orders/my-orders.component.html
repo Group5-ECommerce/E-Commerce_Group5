@@ -8,6 +8,7 @@
         <th>Status</th>
         <th>Tracking Number</th>
         <th>Total Bill</th>
+        <th>Status</th>
         <th>Details</th>
       </tr>
     </thead>
@@ -18,6 +19,7 @@
         <td>{{o.orderStatus}}</td>
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
+        <td [ngStyle] = "getStatusStyle(o.orderStatus!)"><strong>{{o.orderStatus}}</strong></td>
         <td>
           <button [routerLink]="['../ordered-products',o.trackingNumber]" class="btn btn-warning">Details</button>
         </td>

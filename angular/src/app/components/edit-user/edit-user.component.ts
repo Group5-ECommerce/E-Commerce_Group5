@@ -1,10 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { OktaAuthStateService } from '@okta/okta-angular';
-import { AuthState } from '@okta/okta-auth-js';
-import { map, filter } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { UserDetailsService } from 'src/app/services/user-details.service';
-import { config } from 'src/config/app.config';
 
 @Component({
   selector: 'app-edit-user',
