@@ -17,7 +17,7 @@ export class UserDetailsService {
   id: String;
 
   constructor(private httpClient: HttpClient, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) {
-    this.updateUserDetails();
+    // this.updateUserDetails();
   }
   
   updateUserDetails(){
