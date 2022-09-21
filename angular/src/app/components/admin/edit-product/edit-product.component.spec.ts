@@ -1,5 +1,7 @@
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from "@angular/router/testing";
 import { EditProductComponent } from './edit-product.component';
 
 describe('EditProductComponent', () => {
@@ -8,6 +10,8 @@ describe('EditProductComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule, RouterTestingModule, FormsModule],
+      providers: [HttpClient],
       declarations: [ EditProductComponent ]
     })
     .compileComponents();

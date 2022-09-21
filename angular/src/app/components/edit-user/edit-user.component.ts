@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService } from '@okta/okta-angular';
 import { AuthState } from '@okta/okta-auth-js';
 import { map, filter } from 'rxjs';
