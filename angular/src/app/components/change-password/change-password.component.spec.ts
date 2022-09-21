@@ -6,11 +6,13 @@ import { OktaAuth } from '@okta/okta-auth-js';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
-
+  let mockOktaAuth;
+  let httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'get'])
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [HttpClient, OktaAuth],
+      providers: [{provide: HttpClient, useValue: httpClientSpy}, 
+                  {provide: OktaAuth, useClass: mockOktaAuth}],
       declarations: [ ChangePasswordComponent ]
     })
     .compileComponents();

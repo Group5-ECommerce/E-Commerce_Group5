@@ -22,10 +22,4 @@ describe('ProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it(`html should only show one user`,async (() => {
-    fixture.detectChanges
-    const el = fixture.nativeElement.querySelector('p');
-    expect(component.name$).toBeNull(false);
-  }));
 });
