@@ -6,6 +6,7 @@ import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
 import { MyMonitoringService } from 'src/app/services/logging.service';
+import { environment } from 'src/environments/environment';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
@@ -17,7 +18,7 @@ import { IndexCartService } from './services/index-cart.service';
 export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
   isVisible: boolean = false;
-  cartUrl = "https://ecommerce-capstone.azurewebsites.net/cart"
+  cartUrl = environment.ecommercecapstoneUrl + '/cart';
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
