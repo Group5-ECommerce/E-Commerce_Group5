@@ -75,6 +75,7 @@ export class CustomerProductListComponent implements OnInit {
   }
 
   showResults() {
+    this.pageNum = 1;
     if (this.query) {
       this.displayedProducts = this.products?.filter(p => {
         // console.log("query ", this.query)

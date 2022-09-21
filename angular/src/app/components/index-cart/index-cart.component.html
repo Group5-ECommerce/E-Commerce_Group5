@@ -1,25 +1,24 @@
 <div class="container-fluid">
   <div class="container">
-    <table class="table table-light">
+    <table class="table table-light" id="blue-white-table">
       <thead class="thead-light">
         <tr>
-          <th>oktaId</th>
-          <th><button (click)="sortCart($event)">productId</button></th>
-          <th><button (click)="sortCart($event)">productName</button></th>
+          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productId')">Product Id</button></th>
+          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productName')">Name</button></th>
+          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('category')">Category</button></th>
+          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productPrice')">Price</button></th>
+          <th><button class = "btn btn-outline-light border-0 no-hover" >Image</button></th>
+          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('amt')">Amount</button></th>
+          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productStock')">Stock</button></th>
 
-          <th><button (click)="sortCart($event)">productPrice</button></th>
-          <th>productImage</th>
-          <th><button (click)="sortCart($event)">amt</button></th>
-          <th><button (click)="sortCart($event)">productStock</button></th>
-
-          <th>Action</th>
+          <th><button class = "btn btn-outline-light border-0 no-hover" >Action</button></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let c of cartItems | paginate: { itemsPerPage: 5, currentPage: pageNum} ">
-          <td>{{c.userId}}</td>
           <td>{{c.productId}}</td>
           <td>{{c.productName}}</td>
+          <td>{{c.category}}</td>
           <td>${{c.productPrice}}</td>
           <td><img class="float-left  m-2" src="{{c.productImage}}" alt="product image" style=" width: 20;;
                     height: 20px;"></td>

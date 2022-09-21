@@ -185,11 +185,11 @@ export class IndexCartService {
   }
 
 
-  sortCart(event: any) {
+  sortCart(field:string) {
     // console.log(event.target.innerText, this.sortingColName)
-    if (event.target.innerText !== this.sortingColName) {
+    if (field !== this.sortingColName) {
       this.sortBtnClicks = 0
-      this.sortingColName = event.target.innerText;
+      this.sortingColName = field;
     }
 
     if (this.sortBtnClicks % 2 == 0) { //desc

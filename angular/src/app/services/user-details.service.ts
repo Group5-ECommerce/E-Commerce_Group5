@@ -10,17 +10,19 @@ import { config } from 'src/config/app.config';
 })
 export class UserDetailsService {
 
-  username: String;
-  lastName: String;
-  firstName: String;
-  email: String;
-  id: String;
+  username: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  id: string;
 
   constructor(private httpClient: HttpClient, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) {
-    // this.updateUserDetails();
+    if (this._oktaAuth.tokenManager) {
+      this.updateUserDetails();
+    }
   }
-  
-  updateUserDetails(){
+
+  updateUserDetails() {
     this._oktaAuth.tokenManager.get("idToken").then(
       (id) => {
         this.email = id.claims.email!;
@@ -43,7 +45,7 @@ export class UserDetailsService {
       return false;
     }))
       .subscribe((response: any) => {
-        this._oktaAuth.tokenManager.renew('idToken').then( token => this.updateUserDetails());
+        this._oktaAuth.tokenManager.renew('idToken').then(token => this.updateUserDetails());
         return true;
       }
       );

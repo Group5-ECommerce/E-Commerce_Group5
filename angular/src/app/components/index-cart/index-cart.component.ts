@@ -34,8 +34,8 @@ export class IndexCartComponent implements OnInit {
     this.cartService.deleteItem(item)
   }
 
-  sortCart(event: any) {
-    this.cartService.sortCart(event);
+  sortCart(field: string) {
+    this.cartService.sortCart(field);
   }
 
 
