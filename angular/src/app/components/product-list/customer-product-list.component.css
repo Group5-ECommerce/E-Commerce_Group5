@@ -31,4 +31,21 @@
     height: 200px;
     object-fit: fill;
 }
+/*
+.stock-scroll{
+  overflow: hidden;
+}
 
+.card{
+  min-width:max-content;
+  min-height: max-content;
+}
+
+.col{
+  min-width: max-content
+}
+
+.input-group{
+  padding-top: 10px;
+}
+*/

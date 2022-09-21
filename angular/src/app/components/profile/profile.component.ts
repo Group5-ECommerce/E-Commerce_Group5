@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService } from '@okta/okta-angular';
 import { filter, map, Observable } from 'rxjs';
 import { AuthState } from '@okta/okta-auth-js';

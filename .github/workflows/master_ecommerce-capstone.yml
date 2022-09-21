@@ -6,7 +6,7 @@ name: Build and deploy JAR app to Azure Web App - ecommerce-capstone
 on:
   push:
     branches:
-      - master
+      - rachid
     paths: 
       - 'e-commerce_springboot/**'
   workflow_dispatch:
