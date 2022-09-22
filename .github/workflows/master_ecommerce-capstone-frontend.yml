@@ -6,14 +6,12 @@ name: Build and deploy Node.js app to Azure Web App - ecommerce-capstone-fronten
 on:
   push:
     branches:
-      - rachid
-    paths:
-      - 'angular/**'
+      - master
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -25,15 +23,15 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          cd angular
-          npm install --force
-          npm run build --prod
-      
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./angular/dist/angular
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,10 +47,10 @@ jobs:
           name: node-app
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'ecommerce-capstone-frontend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9A767245FF1246E6984F565FC697C2CF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8EC0205445FD4A86A27EC3AE0934E0B1 }}
           package: .
