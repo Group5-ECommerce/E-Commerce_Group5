@@ -15,49 +15,91 @@
   </div>
   <div class="container">
     <h4 class="mt-5">Billing Address</h4>
-    <form #checkOutForm = "ngForm">
+    <form #checkOutForm="ngForm">
       <div class="row">
         <div class="col-sm-5">
           <label for="firstName">First Name</label>
           <input [(ngModel)]="billingAddressId.firstName" input id="firstName" class="form-control" type="text"
-            name="firstName" #firstName = "ngModel" required >
-          <span *ngIf = "firstName.touched && firstName.invalid" class = "errormessage" style = "color:red">Enter first name</span>
+            name="firstName" #firstName="ngModel" required>
+          <span *ngIf="firstName.touched && firstName.invalid" class="errormessage" style="color:red">Enter first
+            name</span>
         </div>
         <div class="col-sm-5">
           <label for="lastName">Last Name</label>
           <input [(ngModel)]="billingAddressId.lastName" input id="lastName" class="form-control" type="text"
-            name="lastName" #lastName = "ngModel" required>
-            <span *ngIf = "lastName.touched && lastName.invalid" class = "errormessage" style = "color:red">Enter last name</span>
+            name="lastName" #lastName="ngModel" required>
+          <span *ngIf="lastName.touched && lastName.invalid" class="errormessage" style="color:red">Enter last
+            name</span>
         </div>
         <div class="col-sm-5">
           <label for="StreetAddress">Street Address</label>
           <input [(ngModel)]="billingAddressId.streetAddress" input id="StreetAddress" class="form-control" type="text"
-            name="streetAddress" #streetAddress = "ngModel" required>
-            <span *ngIf = "streetAddress.touched && streetAddress.invalid" class = "errormessage" style = "color:red">Enter street address</span>
+            name="streetAddress" #streetAddress="ngModel" required>
+          <span *ngIf="streetAddress.touched && streetAddress.invalid" class="errormessage" style="color:red">Enter
+            street address</span>
         </div>
         <div class="col-sm-3">
           <label for="city">City</label>
           <input [(ngModel)]="billingAddressId.city" input id="city" class="form-control" type="text" name="city"
-            required #city = "ngModel">
-            <span *ngIf = "city.touched && city.invalid" class = "errormessage" style = "color:red">Enter city</span>
+            required #city="ngModel">
+          <span *ngIf="city.touched && city.invalid" class="errormessage" style="color:red">Enter city</span>
         </div>
         <div class="col-sm-1">
           <label for="state">State</label>
           <input [(ngModel)]="billingAddressId.state" input id="state" class="form-control" type="text" placeholder="CA"
-            name="state" required #state = "ngModel">
-            <span *ngIf = "state.touched && state.invalid" class = "errormessage" style = "color:red">Enter state</span>
+            name="state" required #state="ngModel">
+          <span *ngIf="state.touched && state.invalid" class="errormessage" style="color:red">Enter state</span>
         </div>
         <div class="col-sm-4">
           <label for="zip">Zip</label>
           <input [(ngModel)]="billingAddressId.zip" input id="zip" class="form-control" type="text" placeholder="08824"
-            name="zip" required #zip = "ngModel">
-            <span *ngIf = "zip.touched && zip.invalid" class = "errormessage" style = "color:red">Enter zip code</span>
+            name="zip" required #zip="ngModel">
+          <span *ngIf="zip.touched && zip.invalid" class="errormessage" style="color:red">Enter zip code</span>
         </div>
         <div class="col-sm-3">
           <label for="zip">Country</label>
-          <input [(ngModel)]="billingAddressId.country" input id="country" class="form-control" type="text"
-            placeholder="USA" name="country" required #country= "ngModel">
-            <span *ngIf = "country.touched && country.invalid" class = "errormessage" style = "color:red">Enter country</span>
+          <!-- All countries -->
+          <select placeholder="Country" id="country" name="country" [(ngModel)]="billingAddressId.country" input class="form-control"
+            name="country" required #country="ngModel">
+            <option disabled hidden selected = "selected">Select Country</option>
+            <option value="AR">Argentina</option>
+            <option value="AW">Aruba</option>
+            <option value="BS">Bahamas</option>
+            <option value="BB">Barbados</option>
+            <option value="BZ">Belize</option>
+            <option value="BB">Bolivia</option>
+            <option value="BR">Brazil</option>
+            <option value="CA">Canada</option>
+            <option value="KY">Cayman Islands</option>
+            <option value="CL">Chile</option>
+            <option value="CO">Colombia</option>
+            <option value="CR">Costa Rica</option>
+            <option value="CU">Cuba</option>
+            <option value="DM">Dominica</option>
+            <option value="DO">Dominican Republic</option>
+            <option value="EC">Ecuador</option>
+            <option value="SV">El Salvador</option>
+            <option value="GD">Grenada</option>
+            <option value="GT">Guatemala</option>
+            <option value="GY">Guyana</option>
+            <option value="HT">Haiti</option>
+            <option value="HN">Honduras</option>
+            <option value="JM">Jamaica</option>
+            <option value="MX">Mexico</option>
+            <option value="NI">Nicaragua</option>
+            <option value="PA">Panama</option>
+            <option value="PY">Paraguay</option>
+            <option value="PE">Peru</option>
+            <option value="PR">Puerto Rico</option>      
+            <option value="SR">Suriname</option>    
+            <option value="TT">Trinidad and Tobago</option>
+            <option value="US">United States</option>
+            <option value="UM">United States Minor Outlying Islands</option>
+            <option value="UY">Uruguay</option>
+            <option value="VE">Venezuela</option>
+            <option value="VI">Virgin Islands, U.S.</option>
+          </select>
+          <span *ngIf="country.touched && country.invalid" class="errormessage" style="color:red">Enter country</span>
         </div>
 
         <hr class="BlinkMacSystemFont mt-3">
@@ -74,78 +116,79 @@
           <div class="col-sm-5">
             <label for="firstName">First Name</label>
             <input [(ngModel)]="shippingAddressId.firstName" input id="firstName" class="form-control" type="text"
-              name="shippingfirstName" required #shippingfirstName= "ngModel">
-              <span *ngIf = "shippingfirstName.touched && shippingfirstName.invalid" class = "errormessage" style = "color:red">Enter first name</span>
+              name="shippingfirstName" required #shippingfirstName="ngModel">
+            <span *ngIf="shippingfirstName.touched && shippingfirstName.invalid" class="errormessage"
+              style="color:red">Enter first name</span>
           </div>
           <div class="col-sm-5">
             <label for="lastName">Last Name</label>
             <input [(ngModel)]="shippingAddressId.lastName" input id="lastName" class="form-control" type="text"
-              name="shippinglastName" required #shippinglastName = "ngModel">
-              <span *ngIf = "shippinglastName.touched && shippinglastName.invalid" class = "errormessage" style = "color:red">Enter last name</span>
+              name="shippinglastName" required #shippinglastName="ngModel">
+            <span *ngIf="shippinglastName.touched && shippinglastName.invalid" class="errormessage"
+              style="color:red">Enter last name</span>
           </div>
           <div class="col-sm-5">
             <label for="streetAddress">Street Address</label>
             <input [(ngModel)]="shippingAddressId.streetAddress" input id="streetAddress" class="form-control"
-              type="text" name="shippingstreetAddress" required #shippingstreetAddress = "ngModel">
-              <span *ngIf = "shippingstreetAddress.touched && shippingstreetAddress.invalid" class = "errormessage" style = "color:red">Enter street address</span>
+              type="text" name="shippingstreetAddress" required #shippingstreetAddress="ngModel">
+            <span *ngIf="shippingstreetAddress.touched && shippingstreetAddress.invalid" class="errormessage"
+              style="color:red">Enter street address</span>
           </div>
           <div class="col-sm-3">
             <label for="city">City</label>
-            <input [(ngModel)]="shippingAddressId.city" input id="city" class="form-control" type="text" name="shippingcity"
-              required #shippingcity = "ngModel">
-              <span *ngIf = "shippingcity.touched && shippingcity.invalid" class = "errormessage" style = "color:red">Enter city </span>
+            <input [(ngModel)]="shippingAddressId.city" input id="city" class="form-control" type="text"
+              name="shippingcity" required #shippingcity="ngModel">
+            <span *ngIf="shippingcity.touched && shippingcity.invalid" class="errormessage" style="color:red">Enter city
+            </span>
           </div>
           <div class="col-sm-1">
             <label for="state">State</label>
             <input [(ngModel)]="shippingAddressId.state" input id="state" class="form-control" type="text"
-              placeholder="CA" name="shippingstate" required #shippingstate= "ngModel">
-            <span *ngIf = "shippingstate.touched && shippingstate.invalid" class = "errormessage" style = "color:red">Enter state</span>
+              placeholder="CA" name="shippingstate" required #shippingstate="ngModel">
+            <span *ngIf="shippingstate.touched && shippingstate.invalid" class="errormessage" style="color:red">Enter
+              state</span>
           </div>
           <div class="col-sm-4">
             <label for="zip">Zip</label>
             <input [(ngModel)]="shippingAddressId.zip" input id="zip" class="form-control" type="text"
-              placeholder="08824" name="shippingzip" required #shippingzip = "ngModel">
-            <span *ngIf = "shippingzip.touched && shippingzip.invalid" class = "errormessage" style = "color:red">Enter zip code</span>
+              placeholder="08824" name="shippingzip" required #shippingzip="ngModel">
+            <span *ngIf="shippingzip.touched && shippingzip.invalid" class="errormessage" style="color:red">Enter zip
+              code</span>
           </div>
           <div class="col-sm-3">
-            <label for="zip">Country</label>
-            <input [(ngModel)]="shippingAddressId.country" input id="zip" class="form-control" type="text"
-              placeholder="USA" name="shippingcountry" required #shippingcountry = "ngModel">
-              <span *ngIf = "shippingcountry.touched && shippingcountry.invalid" class = "errormessage" style = "color:red">Enter country</span>
+            <label for="country">Country</label>
+            <input [(ngModel)]="shippingAddressId.country" input id="country" class="form-control" type="text"
+              placeholder="US" name="shippingcountry" maxlength="2" required #shippingcountry="ngModel">
+            <span *ngIf="shippingcountry.touched && shippingcountry.invalid" class="errormessage"
+              style="color:red">Enter country</span>
           </div>
         </div>
 
         <hr class="BlinkMacSystemFont mt-3">
 
-      <a href = "https://stripe.com/docs/testing#cards" target='_blank'>Test Card Info</a>
+        <a href="https://stripe.com/docs/testing#cards" target='_blank'>Test Card Info</a>
         <div class="row">
           <h3>Credit Card / Debit Card</h3>
-          <div id = "card-element"></div>
+          <div id="card-element"></div>
           <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
         </div>
 
         <hr class="BlinkMacSystemFont mt-3">
 
-        <span class = "w-100"></span>
+        <span class="w-100"></span>
         <div class="alert alert-success col-sm-5 my-2 mx-auto" role="alert" *ngIf="isSubmitted && isConfirmed">
           <strong>Order Submitted!</strong>
           <button class="close btn btn-sm mx-3 float-end" (click)="closeAlert()">X</button>
         </div>
       </div>
       <div class="container text-center">
-        <button [disabled]="!checkOutForm.form.valid || isSubmitted || !isConfirmed " class="btn btn-primary btn-md mb-5 mx-5"
-          (click)="submitOrder()">Confirm Order</button>
-          <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted" routerLink="/my-orders">View My Orders</button>
+        <button [disabled]="!checkOutForm.form.valid || isSubmitted || !isConfirmed "
+          class="btn btn-primary btn-md mb-5 mx-5" (click)="submitOrder()">Confirm Order</button>
+        <button class="btn btn-success btn-md mb-5" [disabled]="!isSubmitted" routerLink="/my-orders">View My
+          Orders</button>
       </div>
     </form>
   </div>
 </body>
 
 </html>
-
-
-
-
-
-
-

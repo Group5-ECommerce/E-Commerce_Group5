@@ -1,6 +1,6 @@
 <h3 class="text-center">My Orders</h3>
 <div class="container">
-  <table class="table" id = "blue-white-table">
+  <table class="table" id = "blue-white-table" aria-label="orderTable">
     <thead class="thead-light">
       <tr>
         <th>Order Id</th>
@@ -8,7 +8,6 @@
         <th>Status</th>
         <th>Tracking Number</th>
         <th>Total Bill</th>
-        <th>Status</th>
         <th>Details</th>
       </tr>
     </thead>
@@ -16,10 +15,9 @@
       <tr *ngFor="let o of orders | paginate: { itemsPerPage: 5, currentPage: pageNum}">
         <td>{{o.orderId}}</td>
         <td>{{o.orderTime | date:"medium"}}</td>
-        <td>{{o.orderStatus}}</td>
+        <td><strong>{{o.orderStatus}}</strong></td>
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
-        <td [ngStyle] = "getStatusStyle(o.orderStatus!)"><strong>{{o.orderStatus}}</strong></td>
         <td>
           <button [routerLink]="['../ordered-products',o.trackingNumber]" class="btn btn-warning">Details</button>
         </td>
