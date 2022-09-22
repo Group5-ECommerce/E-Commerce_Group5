@@ -9,7 +9,7 @@ import { Purchase } from '../models/purchase/purchase';
 })
 export class CheckoutService {
 
-  private checkOutUrl = environment.ecommercecapstoneUrl;
+  private checkOutUrl = environment.ecommercecapstoneUrl + "/checkout";
 
   private paymentIntentUrl = environment.ecommercecapstoneUrl + '/payment-intent'
 
