@@ -11,7 +11,7 @@
   <ng-template #signedIn>
     <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
     <ul class="nav justify-content-end">
-      <!-- If they are an admin, display the admin links. Otherwise, display the customer links.-->
+      <!-- If they are an admin, display the admin links. Otherwise, display the customer links-->
       <ng-container *ngIf="(isAdmin$ | async) === true; else customerNav">
         <li class="navbarlinks"><button class = "btn-default navbar-btn"><a class="hoverbtn" routerLink="/product-list">Edit Catalogue</a></button></li>
         <li class="navbarlinks"><button class = "btn-default navbar-btn"><a class="hoverbtn" routerLink="/order-list">Orders</a></button></li>

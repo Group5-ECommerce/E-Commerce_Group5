@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Product } from '../models/product.model';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Product } from '../models/product.model';
 export class ProductService {
 
   constructor(private http: HttpClient) { }
-  url = "http://localhost:8000";
+  url = environment.ecommercecapstoneUrl;
   private coudinaryImgSaveUrl = "https://api.cloudinary.com/v1_1/gaurav-cloudinary/image/upload";
 
   createProduct(product: Product) {
