@@ -4,5 +4,5 @@ export const environment = {
   appInsights: {
     instrumentationKey:'33da3c0d-6fef-4dac-93f8-aab1706923db'
   },
-  ecommercecapstoneUrl:'https://ecommerce-capstone.azurewebsites.net'
+  ecommercecapstoneUrl:'https://ecommerce-capstone-backend.azurewebsites.net'
 };
