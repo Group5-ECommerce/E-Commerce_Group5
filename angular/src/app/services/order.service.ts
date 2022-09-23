@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { OrderItem } from '../models/order-item.model';
 import { Order } from '../models/order.model';
 
@@ -10,7 +9,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
 
-  private url = environment.ecommercecapstoneUrl + '/';
+  private url = "http://localhost:8000/"
 
   constructor(private http: HttpClient) { }
 

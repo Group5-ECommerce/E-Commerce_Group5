@@ -1,12 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoggingSeverity } from '@microsoft/applicationinsights-web';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
-import { MyMonitoringService } from 'src/app/services/logging.service';
-import { environment } from 'src/environments/environment';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
@@ -18,7 +15,7 @@ import { IndexCartService } from './services/index-cart.service';
 export class AppComponent implements OnInit {
   title = 'angular';
   isVisible: boolean = false;
-  cartUrl = environment.ecommercecapstoneUrl + '/cart';
+  cartUrl = "http://localhost:8000/cart"
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
@@ -28,8 +25,7 @@ export class AppComponent implements OnInit {
 
   name$!: Observable<String>;
 
-  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService, private myMonitoringService: MyMonitoringService) {
-    myMonitoringService.logPageView('mainpage');
+  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService) {
   }
 
   public ngOnInit(): void {
