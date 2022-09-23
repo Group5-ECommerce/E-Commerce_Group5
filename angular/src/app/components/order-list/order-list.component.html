@@ -17,10 +17,9 @@
         <td>{{o.oktaId}}</td>
         <td>{{o.orderId}}</td>
         <td>{{o.orderTime | date:"medium"}}</td>
-        <td>{{o.orderStatus}}</td>
+        <td [ngStyle] = "getStatusStyle(o.orderStatus!)"><strong>{{o.orderStatus}}</strong></td>
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
-
         <td>
           <button [routerLink]="['../ordered-products',o.trackingNumber]" class="btn btn-warning">Details</button>
         </td>
