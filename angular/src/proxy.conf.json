@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://https://ecommerce-capstone.azurewebsites.net:3000",
+    "target": "https://ecommerce-capstone-backend.azurewebsites.net:3000",
     "secure": false,
     "pathRewrite": {
       "^/api": ""
