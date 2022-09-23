@@ -13,7 +13,7 @@ export class MyOrdersComponent implements OnInit {
 
   constructor(private orderService: OrderService) {}
 
-  orders?: Order[];
+  orders: Order[];
   pageNum?: number;
 
 

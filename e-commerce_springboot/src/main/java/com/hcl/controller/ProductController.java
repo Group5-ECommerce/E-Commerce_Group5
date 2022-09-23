@@ -61,4 +61,20 @@ public class ProductController {
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}
+	@PostMapping("/product/{rating}/{productid}")
+	@PreAuthorize("hasAuthority('Admin')")
+	public void systemrating(@PathVariable Integer rating, @PathVariable Integer productId) {
+		//repo.save(rating);
+		//repo.findById(productId);
+		Optional<Product> product = repo.findById(productId);
+		if (product.isPresent()) {
+			int rating1 = product.get().getTotalRating() + rating;
+			product.get().setTotalRating(rating1);
+			int rating2 =product.get().getNumberrating() + 1;
+			product.get().setNumberrating(rating2);
+			repo.save(product.get());
+		}
+		
+	}
+	
 }

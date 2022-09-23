@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { noop } from 'rxjs';
 import { Product } from '../models/product.model';
 
 @Injectable({
@@ -29,6 +30,9 @@ export class ProductService {
 
   deleteProduct(id: number) {
     return this.http.delete(this.url + "/product/" + id);
+  }
+  addrating(id: number) {
+    return this.http.post(this.url + "/product/4/5", null);
   }
 
   saveImgToCloudinary(file: any) {

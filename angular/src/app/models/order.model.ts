@@ -3,10 +3,10 @@ import { CartItem } from "./cart-item.model"
 import { User } from "./user.model"
 
 export class Order {
-  items?: CartItem[]
+  items: CartItem[]
   orderId?: number
   user?: User
-  oktaId?: string
+  oktaId: string
   trackingNumber?: string
   totalPrice?: number
   shippingAddress?: Address
