@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private addAuthHeaderToAllowedOrigins(request: HttpRequest<unknown>): HttpRequest<unknown> {
     let req = request;
     // The backend wants the ID token because it contains the user's groups.
-    const backendOrigin = ['https://ecommerce-capstone.azurewebsites.net'];
+    const backendOrigin = ['https://ecommerce-capstone-frontend.azurewebsites.net/'];
     if (!!backendOrigin.find(origin => request.url.includes(origin))) {
       const authToken = this._oktaAuth.getIdToken();
       if (authToken != null) {
