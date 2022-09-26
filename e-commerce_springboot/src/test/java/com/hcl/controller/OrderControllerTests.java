@@ -18,7 +18,6 @@ public class OrderControllerTests {
 	@Test
 	void checkout() {
 		OrderController oc = new OrderController();
-		Assertions.assertThat(oc.secretKey).isNotNull();
 		
 		oc.checkout(null, null, null, null);
 		// when(orderRepository.findAll()).thenReturn(list);
