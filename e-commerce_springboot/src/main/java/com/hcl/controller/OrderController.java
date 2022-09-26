@@ -3,10 +3,13 @@ package com.hcl.controller;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,12 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.config.MQConfig;
 import com.hcl.dto.Purchase;
 import com.hcl.entity.Address;
 import com.hcl.entity.Order;
 import com.hcl.entity.OrderItem;
 import com.hcl.entity.PaymentInfo;
 import com.hcl.entity.Product;
+import com.hcl.model.Message;
 //import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
@@ -65,6 +70,9 @@ public class OrderController {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private RabbitTemplate template;
+
 	@PostMapping("/checkout/{email}/{name}")
 	@ApiOperation(value = "Checkout for Order")
 	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name, Principal principal) {
@@ -94,6 +102,10 @@ public class OrderController {
 
 			// save stock changes after checkout
 			product.setProductStock(product.getProductStock() - amt);
+			if (product.getProductStock() < 5) {
+				Message message = new Message(UUID.randomUUID().toString(), product.getProductName() + " is out of stock.", new Date());
+				template.convertAndSend(MQConfig.EXCHANGE, MQConfig.ROUTING_KEY, message);
+				}
 			productRepository.save(product);
 		}
 
