@@ -43,7 +43,6 @@ public class MockOrderServiceTest {
 
 	@Test
 	void findAll() {
-
 		List<Order> list = new ArrayList();
 		list.add(new Order());
 		list.add(new Order());
@@ -51,7 +50,6 @@ public class MockOrderServiceTest {
 		list = orderService.findAll();
 		Assertions.assertThat(list).hasSize(2);
 		verify(orderRepository, times(1)).findAll();
-
 	}
 
 	@Test
