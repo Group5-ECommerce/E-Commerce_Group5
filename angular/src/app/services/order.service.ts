@@ -26,8 +26,11 @@ export class OrderService {
     return this.http.get<Order>(this.url + `order/${tracker}`);
   }
 
-  getMyOrders(): Observable<any>
-  {
+  getMyOrders(): Observable<any> {
     return this.http.get<Order[]>(this.url + 'myOrders');
+  }
+
+  changeOrderStatus(order: Order): Observable<any> {
+    return this.http.put<Order>(this.url + "order", order);
   }
 }

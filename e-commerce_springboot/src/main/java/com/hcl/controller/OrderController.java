@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -207,6 +208,18 @@ public class OrderController {
 		Optional<Order> order = orderService.findByTrackingNumber(trackingNumber);
 		if (order.isPresent()) {
 			return order.get();
+		}
+		return null;
+	}
+
+	@PutMapping("/order")
+	@PreAuthorize("hasAuthority('Admin')")
+	public Order changeOrderStatus(@RequestBody Order order) {
+		Optional<Order> persistedOrder = orderService.findById(order.getOrderId());
+		if (persistedOrder.isPresent()) {
+			Order persisted = persistedOrder.get();
+			persisted.setOrderStatus(order.getOrderStatus());
+			return orderRepo.save(persisted);
 		}
 		return null;
 	}
