@@ -19,7 +19,7 @@ public class OrderControllerTests {
 	void checkout() {
 		OrderController oc = new OrderController();
 		
-		oc.checkout(null, null, null, null);
+		// oc.checkout(null, null, null, null);
 		// when(orderRepository.findAll()).thenReturn(list);
 		// list = orderService.findAll();
 		// Assertions.assertThat(list).hasSize(2);
