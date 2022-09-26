@@ -10,7 +10,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
 
-  private url = environment.ecommercecapstoneUrl + '/';
+  private url = environment.backendURL + '/';
 
   constructor(private http: HttpClient) { }
 

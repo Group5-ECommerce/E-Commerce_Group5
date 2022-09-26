@@ -9,7 +9,7 @@ import { Product } from '../models/product.model';
 export class ProductService {
 
   constructor(private http: HttpClient) { }
-  url = environment.ecommercecapstoneUrl;
+  url = environment.backendURL;
   private coudinaryImgSaveUrl = "https://api.cloudinary.com/v1_1/gaurav-cloudinary/image/upload";
 
   createProduct(product: Product) {
