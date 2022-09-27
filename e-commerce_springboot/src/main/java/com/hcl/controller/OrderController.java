@@ -4,11 +4,14 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.dto.Payment;
+import com.hcl.config.MQConfig;
 import com.hcl.dto.Purchase;
 import com.hcl.entity.Address;
 import com.hcl.entity.Order;
 import com.hcl.entity.OrderItem;
 import com.hcl.entity.PaymentInfo;
 import com.hcl.entity.Product;
+import com.hcl.model.Message;
 //import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
@@ -48,7 +53,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "https://white-stone-04a29cc10.1.azurestaticapps.net")
 @Api(tags= "Order")
 public class OrderController {
 	@Autowired
@@ -77,6 +82,9 @@ public class OrderController {
 	
 	@Value("${stripe.key.secret}") 
 	String secretKey;
+
+	@Autowired
+	private RabbitTemplate template;
 
 	@PostMapping("/checkout/{email}/{name}")
 	@PreAuthorize("hasAuthority('Customer') and !hasAuthority('Admin')")
@@ -108,6 +116,10 @@ public class OrderController {
 
 			// save stock changes after checkout
 			product.setProductStock(product.getProductStock() - amt);
+			if (product.getProductStock() < 5) {
+				Message message = new Message(UUID.randomUUID().toString(), product.getProductName() + " is out of stock.", new Date());
+				template.convertAndSend(MQConfig.EXCHANGE, MQConfig.ROUTING_KEY, message);
+				}
 			productRepository.save(product);
 		}
 

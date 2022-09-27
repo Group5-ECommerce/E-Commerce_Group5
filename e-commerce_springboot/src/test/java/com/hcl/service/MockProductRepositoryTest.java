@@ -70,6 +70,12 @@ public class MockProductRepositoryTest {
 		product.setProductImage(product.getProductName());
 		product.setProductPrice(new Random().doubles(5, 1000).limit(1).findFirst().getAsDouble());
 		product.setStorageId("Washington");
+		
+		product.getProductId();
+		product.getProductName();
+		product.getProductImage();
+		product.getProductPrice();
+		product.getStorageId();
 
 		mockProductRepository.save(product);
 		verify(mockProductRepository, times(1)).save(product);

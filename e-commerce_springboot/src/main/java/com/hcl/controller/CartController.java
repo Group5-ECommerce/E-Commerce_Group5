@@ -16,7 +16,7 @@ import com.hcl.entity.Cart;
 import com.hcl.repo.CartRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "https://white-stone-04a29cc10.1.azurestaticapps.net")
 public class CartController {
 	@Autowired
 	private CartRepository cartRepository;

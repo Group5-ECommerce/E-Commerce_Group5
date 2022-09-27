@@ -44,8 +44,11 @@ public class ProductRepositoryTest {
 		product.setProductImage(product.getProductName());
 		product.setProductPrice(new Random().doubles(5, 1000).limit(1).findFirst().getAsDouble());
 		product.setStorageId("Washington");
+		product.setCategory("Device");
+		product.setProductStock(22);
 		// embedded db
 		productRepository.save(product);
+		
 		List<Product> products = productRepository.findAll();
 		Assertions.assertThat(products).extracting(Product::getProductId).containsOnly(product.getProductId());
 	}
@@ -55,6 +58,7 @@ public class ProductRepositoryTest {
 		Product product = new Product();
 		productRepository.save(product);
 		Product returned = productRepository.findById(product.getProductId()).get();
+		Assertions.assertThat(returned.equals(product));
 		Assertions.assertThat(returned).extracting(Product::getProductId).isEqualTo(returned.getProductId());
 	}
 
@@ -65,5 +69,4 @@ public class ProductRepositoryTest {
 		productRepository.deleteById(product.getProductId());
 		Assertions.assertThat(productRepository.findAll()).isEmpty();
 	}
-
 }
