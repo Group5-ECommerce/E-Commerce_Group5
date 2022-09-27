@@ -26,6 +26,7 @@
     "@okta/okta-angular": "5.1",
     "@okta/okta-auth-js": "6.0",
     "applicationinsights-js": "^1.0.21",
+    "amqplib": "^0.10.3",
     "bootstrap": "^5.2.0",
     "bootstrap-icons": "^1.9.1",
     "dexie": "^3.2.2",
