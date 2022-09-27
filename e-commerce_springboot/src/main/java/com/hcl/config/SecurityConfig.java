@@ -12,9 +12,9 @@ import com.okta.spring.boot.oauth.Okta;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/admin").hasAuthority("Admin").antMatchers("/order")
-				.hasAuthority("Customer").antMatchers("/cart").hasAuthority("Customer").antMatchers("/").permitAll()
-				.and().oauth2ResourceServer().jwt(); // or .opaqueToken();
+		http.authorizeRequests().antMatchers("/admin").hasAuthority("Admin").antMatchers("/cart")
+				.hasAuthority("Customer").antMatchers("/").permitAll().and().oauth2ResourceServer().jwt(); // or
+																											// .opaqueToken();
 
 		// process CORS annotations
 		http.cors();
