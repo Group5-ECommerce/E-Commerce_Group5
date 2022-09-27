@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
         const auth = await this._oktaAuth.isAuthenticated();
-        if (auth == true) {
+        if (auth) {
            // Thanks to https://stackoverflow.com/a/71136301 for this await observable's first value structure.
            // This makes the function wait to return until the service's request comes back as true or false.
            const isAdmin = await firstValueFrom(this.oktaSvc.hasAnyGroups("Admin"));
