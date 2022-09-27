@@ -1,4 +1,4 @@
-package com.hcl.service;
+package com.hcl.repo;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.hcl.entity.Product;
-import com.hcl.repo.ProductRepository;
 
 //Calls
 @ExtendWith(MockitoExtension.class)
