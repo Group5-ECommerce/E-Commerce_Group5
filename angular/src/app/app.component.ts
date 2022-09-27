@@ -18,7 +18,7 @@ import { IndexCartService } from './services/index-cart.service';
 export class AppComponent implements OnInit {
   title = 'angular';
   isVisible: boolean = false;
-  cartUrl = environment.ecommercecapstoneUrl + '/cart';
+  cartUrl = environment.backendURL + '/cart';
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;

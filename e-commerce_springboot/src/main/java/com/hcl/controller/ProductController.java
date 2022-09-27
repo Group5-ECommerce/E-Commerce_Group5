@@ -21,7 +21,6 @@ import com.hcl.repo.ProductRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-//@CrossOrigin(origins = "https://white-stone-04a29cc10.1.azurestaticapps.net")
 @RestController
 @Api(tags = "Products")
 public class ProductController {
