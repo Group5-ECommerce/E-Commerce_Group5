@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
