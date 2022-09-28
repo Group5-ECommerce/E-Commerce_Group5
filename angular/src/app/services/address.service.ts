@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Address } from '../models/address/address';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { Address } from '../models/address/address';
 })
 export class AddressService {
 
-  private addressUrl = 'http://localhost:8080/listOfAddressById'
+  private addressUrl = environment.backendURL + "/listOfAddressById";
 
   constructor(private HttpClient: HttpClient) { }
 
