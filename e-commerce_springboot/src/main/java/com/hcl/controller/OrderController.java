@@ -53,7 +53,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @Api(tags = "Order")
 public class OrderController {
 	@Autowired
