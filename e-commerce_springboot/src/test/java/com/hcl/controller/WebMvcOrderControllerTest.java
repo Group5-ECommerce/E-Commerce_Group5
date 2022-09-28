@@ -1,9 +1,11 @@
 package com.hcl.controller;
 
+import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,12 +25,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcl.dto.Payment;
+import com.hcl.dto.Purchase;
 import com.hcl.entity.Order;
 import com.hcl.entity.OrderItem;
+import com.hcl.entity.PaymentInfo;
+import com.hcl.entity.Product;
+import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
 import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
@@ -40,8 +51,13 @@ import com.hcl.service.OrderService;
 //@SpringBootTest
 //@ExtendWith(MockitoExtension.class)
 //@AutoConfigureMockMvc
+
+//spring sec auto-configured
 @WebMvcTest(controllers = OrderController.class)
-public class OrderControllerTest {
+//spring sec non-auto config
+//@SpringBootTest
+//@AutoConfigureMockMvc
+public class WebMvcOrderControllerTest {
 
 	@MockBean
 	private OrderService orderService;
@@ -168,17 +184,60 @@ public class OrderControllerTest {
 	}
 
 	@Test
-	void getMyOrders_Customer() {
+	@WithMockUser(username = "tuco", authorities = "Customer")
+	void getMyOrders_Customer() throws Exception {
 
+		// security context created and user entry provided thanks to mock user
+		User userdetail = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = userdetail.getUsername();
+
+		Order order = new Order();
+		order.setOktaId(username);
+		Order order1 = new Order();
+		order1.setOktaId("hector");
+		Order order2 = new Order();
+		order2.setOktaId(username);
+
+		List<Order> list = new ArrayList();
+		list.add(order);
+		list.add(order2);
+
+		orderService.save(order);
+		orderService.save(order1);
+		orderService.save(order2);
+
+		when(orderService.findByOktaId(username)).thenReturn(list);
+
+		mockMvc.perform(get("/myOrders").content(MediaType.APPLICATION_JSON_VALUE)).andDo(print())
+				.andExpect(status().isOk()).andExpect(jsonPath("$.length()", is(2)))
+				.andExpect(jsonPath("$[*].oktaId").value(everyItem(is(username))));
+
+		orderService.deleteAll();
 	}
 
 	@Test
-	void creatingPayment_Customer() {
-
+	void creatingPayment_Customer() throws JsonProcessingException, Exception {
+		Payment payment = new Payment();
+		payment.setAmount(100);
+		payment.setCurrency("eur");
+		mockMvc.perform(post("/payment-intent").with(jwt().authorities(customerAuthority))
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(payment))).andDo(print())
+				.andExpect(status().isOk()).andExpect(jsonPath("$").exists());
 	}
 
 	@Test
-	void checkout_Customer() {
+	@WithMockUser(username = "tuco", authorities = "Customer")
+	void checkout_Customer() throws JsonProcessingException, Exception {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String email = username + "@" + username + ".com";
+		List<cartItem> items = new ArrayList();
+		items.add(new cartItem(new Product(), 1));
+		items.add(new cartItem(new Product(), 2));
+		items.add(new cartItem(new Product(), 3));
+		Purchase feed = new Purchase(new PaymentInfo(), items, "checkout successful");
 
+		mockMvc.perform(post("/checkout/{email}/{name}", email, username).contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(feed))).andDo(print()).andExpect(status().isOk())
+				.andExpect(jsonPath("$").exists());
 	}
 }
