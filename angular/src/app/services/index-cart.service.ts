@@ -42,7 +42,9 @@ export class IndexCartService {
       let item;
       if (existingItem.length != 0) {
         item = existingItem[0]
-        item.amt++;
+        if (item && item.amt < item.productStock) {
+          item.amt++;
+        }
         let key = (await this.db.table(this.tableName).where({ userId: this.oktaId, productId: item.productId }).primaryKeys())[0];
         this.db.table(this.tableName).update(key, { amt: item.amt })
       } else {
@@ -54,7 +56,7 @@ export class IndexCartService {
           productPrice: product.productPrice,
           productImage: product.productImage,
           productStock: product.productStock,
-          storageId: product.storageId, 
+          storageId: product.storageId,
           category: product.category
         }
         this.length += 1;
@@ -169,7 +171,7 @@ export class IndexCartService {
 
           // If the guest's cart does not contains this item, add the item from the server.
           // Otherwise, keep the version from the guest (which the user inputted more recently).
-          if (instancesOfItemtInGuestCart.length === 0 ) {
+          if (instancesOfItemtInGuestCart.length === 0) {
             this.db.table(this.tableName).put(
               item
             );
@@ -185,7 +187,7 @@ export class IndexCartService {
   }
 
 
-  sortCart(field:string) {
+  sortCart(field: string) {
     // console.log(event.target.innerText, this.sortingColName)
     if (field !== this.sortingColName) {
       this.sortBtnClicks = 0
