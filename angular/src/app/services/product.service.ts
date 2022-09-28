@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from '../models/product.model';
 
@@ -10,7 +11,8 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
   url = environment.backendURL;
-  private coudinaryImgSaveUrl = "https://api.cloudinary.com/v1_1/gaurav-cloudinary/image/upload";
+  private cloudinaryImgSaveUrl = "https://api.cloudinary.com/v1_1/gaurav-cloudinary/image/upload";
+  categories: string[];
 
   createProduct(product: Product) {
     return this.http.post(this.url + "/product", product);
@@ -37,6 +39,10 @@ export class ProductService {
     imgForm.append("file", file)
     imgForm.append("upload_preset", "default_preset")
     imgForm.append("cloud_name", "gaurav-cloudinary")
-    return this.http.post(this.coudinaryImgSaveUrl, imgForm)
+    return this.http.post(this.cloudinaryImgSaveUrl, imgForm)
+  }
+
+  setCategories(cats:string[]){
+    this.categories = cats;
   }
 }

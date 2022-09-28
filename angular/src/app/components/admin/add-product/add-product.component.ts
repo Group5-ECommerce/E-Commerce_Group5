@@ -19,6 +19,8 @@ export class AddProductComponent implements OnInit {
   //for form reset
   @ViewChild('addProductForm')
   form: NgForm
+  useExistingCat?: boolean;
+
 
   constructor(private productService: ProductService) { }
 
