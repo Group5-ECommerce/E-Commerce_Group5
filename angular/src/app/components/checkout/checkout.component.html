@@ -16,6 +16,19 @@
   <div class="container">
     <h4 class="mt-5">Billing Address</h4>
     <form #checkOutForm = "ngForm">
+      <div class="input-space">
+        <label class="au-checkbox">
+          <input type="checkbox" #checkBox>
+          <span class="au-checkmark"></span>Are you planning to use an existing address?
+        </label>
+      </div>
+      <div *ngIf = "checkBox.checked">
+        <select (change) = "onSelectAddress()" id = "addressSelect">
+          <option *ngFor = "let selectedAddress of userAddress; index as i" value = "{{i}}">
+            {{selectedAddress.streetAddress}}
+          </option>
+        </select>
+      </div>
       <div class="row">
         <div class="col-sm-5">
           <label for="firstName">First Name</label>
@@ -133,7 +146,7 @@
         </div>
       </div>
       <div class="container text-center">
-        <button [disabled]="!checkOutForm.form.valid || isSubmitted || !isConfirmed " class="btn btn-primary btn-md mb-5 mx-5"
+        <button [disabled]="!checkOutForm.form.valid || isSubmitted || !isConfirmed" class="btn btn-primary btn-md mb-5 mx-5"
           (click)="submitOrder()">Confirm Order</button>
           <button class="btn btn-success btn-md mb-5" [disabled] = "!isSubmitted" routerLink="/my-orders">View My Orders</button>
       </div>

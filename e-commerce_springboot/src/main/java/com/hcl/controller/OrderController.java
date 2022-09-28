@@ -79,7 +79,7 @@ public class OrderController {
 	String secretKey;
 
 	@PostMapping("/checkout/{email}/{name}")
-	@PreAuthorize("hasAuthority('Customer') and !hasAuthority('Admin')")
+	@PreAuthorize("hasAuthority('Customer')and !hasAuthority('Admin')")
 	@ApiOperation(value = "Checkout for Order")
 	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name, Principal principal) {
 		String oktaId = principal.getName();

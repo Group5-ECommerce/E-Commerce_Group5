@@ -92,8 +92,8 @@ public class SendEmail {
 	}
 
 	private static Session setUpAndGetSession() {
-		final String username = "309a4325dec66c";
-		final String password = "1104d20b89578d";
+		final String username = "aa051f4afa3683";
+		final String password = "0177cec489fa8f";
 
 		// Paste host address from the SMTP settings tab in your Mailtrap Inbox
 		String host = "smtp.mailtrap.io";
