@@ -1,6 +1,5 @@
 package com.hcl.controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +20,6 @@ import com.hcl.repo.ProductRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @Api(tags = "Products")
 public class ProductController {

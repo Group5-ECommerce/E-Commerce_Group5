@@ -3,9 +3,9 @@
   <div class="row d-flex justify-content-center container">
 
     <div class="col-md-4">
-      <select class = "form-select" id = "categoryDropdown" (change)="ChangeCategory($event)">
-        <option value = "">All Products</option>
-        <option *ngFor ="let category of selectedCategory!">{{category}}</option>
+      <select class="form-select" id="categoryDropdown" (change)="ChangeCategory($event)">
+        <option value="">All Products</option>
+        <option *ngFor="let category of selectedCategory!">{{category}}</option>
       </select>
     </div>
 
@@ -35,14 +35,18 @@
             <div class="card-body">
               <h4 class="card-title text-center">{{product?.productName}}</h4>
               <h5 class="mx-3 text-center">Price: ${{product?.productPrice}}</h5>
-              <h5 class=" mx-3 text-center">Remaining: {{product?.productStock}}</h5>
+
               <h5 class=" mx-3 text-center">Rating : {{product?.numberrating!/product?.totalRating!*5}}/5</h5>
               <!--<p-rating [ngModel] = "4" [readonly] = "true"></p-rating>-->
+
+              <h5 class=" mx-3 text-center stock-scroll">Left: {{product?.productStock}}</h5>
+
               <div class="d-flex container justify-content-center">
-                <button *ngIf="product.productStock<=0" type="button" class="btn btn-secondary" disabled>Out of Stock</button>
-				<button *ngIf="product.productStock>0" #refEl type="button" class="btn btn-primary " (click)="saveToCart(refEl, product)">Add To
+                <button *ngIf="product.productStock<=0" type="button" class="btn btn-secondary" disabled>Out of
+                  Stock</button>
+                <button *ngIf="product.productStock>0" #refEl type="button" class="btn btn-primary "
+                  [disabled]="(isAdmin$ | async)===true" (click)="saveToCart(refEl, product)">Add To
                   Cart</button>
-                <!-- <button (click)="saveToIndexedDb(product)">save to IndexedDb</button> -->
               </div>
 
             </div>

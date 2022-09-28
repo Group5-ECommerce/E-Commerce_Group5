@@ -9,6 +9,7 @@ import { Purchase } from 'src/app/models/purchase/purchase';
 import { IndexCartService } from 'src/app/services/index-cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { environment } from 'src/environments/environment';
+import { AddressService } from 'src/app/services/address.service';
 
 @Component({
   selector: 'app-checkout',
@@ -23,15 +24,20 @@ export class CheckoutComponent implements OnInit {
   stripe = Stripe(environment.stripePublishableKey)
   billingAddressId = new Address()
   shippingAddressId = new Address()
+  currentUserAddress = new Address()
+  val = new Address()
   cart: CartItem[]
+  userAddress: Address[]
   cardElement: any
   displayError: any = ""
   isSubmitted = false
   isConfirmed = false
+  autoCompleted = false
   email: string
   name: string
+  id: string
 
-  constructor(private service: CheckoutService, private cartService: IndexCartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  constructor(private service: CheckoutService,private addressService: AddressService, private cartService: IndexCartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
   async ngOnInit(): Promise<void> {
     //   this._oktaAuth.tokenManager.get("idToken").then(
     //     (s) => {
@@ -40,8 +46,11 @@ export class CheckoutComponent implements OnInit {
     const idToken = await this._oktaAuth.tokenManager.get('idToken');
     this.email = idToken.claims.email!
     this.name = idToken.claims.name!
+    
 
     this.setUpPaymentForm()
+
+    this.getUserAddress()
 
   }
 
@@ -166,5 +175,23 @@ export class CheckoutComponent implements OnInit {
     if (event.target.checked) {
       this.shippingAddressId = this.billingAddressId;
     }
+  }
+
+  getUserAddress()
+  {
+    this.addressService.getAddressById().subscribe((response) =>
+    {
+      this.userAddress = response;
+      console.log(this.userAddress);
+    })
+  }
+
+  onSelectAddress()
+  {
+      //this.billingAddressId = a.value;
+      let i = (document.getElementById('addressSelect') as HTMLInputElement).value;
+      this.billingAddressId = this.userAddress[i];
+      console.log(this.billingAddressId);
+
   }
 }

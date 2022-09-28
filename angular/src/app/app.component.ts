@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
@@ -15,7 +16,7 @@ import { IndexCartService } from './services/index-cart.service';
 export class AppComponent implements OnInit {
   title = 'okta-angular-quickstart';
   isVisible: boolean = false;
-  cartUrl = "http://localhost:8000/cart"
+  cartUrl = environment.backendURL + '/cart';
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
@@ -66,7 +67,6 @@ export class AppComponent implements OnInit {
 
   public async signIn() {
     // This may be useful in the future: { originalUri: '/' }
-    //works but duplicates on refresh and also persists when sign out in db
 
     await this._oktaAuth.signInWithRedirect().then(_ => {
 

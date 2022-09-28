@@ -1,25 +1,24 @@
 <h3 class="text-center">My Orders</h3>
 
 <div class="container">
-  <table class=" table table-light">
+  <table class="table blue-white-table">
     <thead class="thead-light">
       <tr>
-        <th>okta id</th>
-        <th>order id</th>
-        <th>date</th>
-        <th>status</th>
-        <th>tracking number</th>
-        <th>total bill</th>
-        <th>details</th>
+        <th>Order Id</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Tracking Number</th>
+        <th>Total Bill</th>
+        <th>Details</th>
         <th>Rate our product</th>
+
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let o of orders | paginate: { itemsPerPage: 5, currentPage: pageNum}">
-        <td>{{o.oktaId}}</td>
         <td>{{o.orderId}}</td>
         <td>{{o.orderTime | date:"medium"}}</td>
-        <td>{{o.orderStatus}}</td>
+        <td><strong>{{o.orderStatus}}</strong></td>
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
         <td>
