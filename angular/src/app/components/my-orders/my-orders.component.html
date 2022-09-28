@@ -19,7 +19,7 @@
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
         <td>
-          <button [routerLink]="['../ordered-products',o.trackingNumber]" class="btn btn-warning">Details</button>
+          <button [routerLink]="['../ordered-products', o.trackingNumber]" [queryParams] = "{returnPage: 'my-orders'}" class="btn btn-warning">Details</button>
         </td>
       </tr>
     </tbody>

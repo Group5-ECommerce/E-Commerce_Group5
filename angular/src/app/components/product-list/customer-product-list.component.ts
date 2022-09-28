@@ -76,6 +76,7 @@ export class CustomerProductListComponent implements OnInit {
         this.products = (data);
         this.displayedProducts = this.products;
         this.queryResults = this.displayedProducts.length;
+        // parsing selectedCategory a Set removes duplicate categories.
         this.selectedCategory = [...new Set(this.products.map(p => p.category))]
       },
       error: (e) => console.log(e)
