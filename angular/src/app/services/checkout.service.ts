@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Payment } from '../models/payment';
 import { Purchase } from '../models/purchase/purchase';
 @Injectable({
@@ -8,9 +9,9 @@ import { Purchase } from '../models/purchase/purchase';
 })
 export class CheckoutService {
 
-  private checkOutUrl = 'http://localhost:8080/checkout'
+  private checkOutUrl = environment.backendURL + "/checkout";
 
-  private paymentIntentUrl = 'http://localhost:8080/payment-intent'
+  private paymentIntentUrl = environment.backendURL + '/payment-intent'
 
   constructor(private HttpClient: HttpClient) { }
   

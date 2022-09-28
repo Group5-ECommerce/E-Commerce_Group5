@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { OktaAuth } from '@okta/okta-auth-js';
 import { UserDetailsService } from '../../services/user-details.service';
 
 @Component({
-  selector: 'app-change-password',
+  selector: 'app-change-panssword',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
+@Injectable()
 export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }

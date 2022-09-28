@@ -8,10 +8,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
-import { ProfileComponent } from './components/profile/profile.component';
 import { config } from "../config/app.config";
 import { AdminProductListComponent } from './components/admin/product-list/admin-product-list.component';
-import { ProductService } from './services/product.service';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
@@ -20,10 +18,10 @@ import { CustomerProductListComponent } from './components/product-list/customer
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderListComponent } from './components/admin/order-list/order-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './pipes/filter.pipe';
-import { OrderTrackComponent } from './components/order-track/order-track.component';
+import { OrderTrackComponent } from './components/admin/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { IndexCartComponent } from './components/index-cart/index-cart.component';
 import { IndexedDatabase } from './indexeddb';
@@ -45,7 +43,6 @@ const oktaAuth = new OktaAuth({
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent,
     AdminProductListComponent,
     CustomerProductListComponent,
     AddProductComponent,

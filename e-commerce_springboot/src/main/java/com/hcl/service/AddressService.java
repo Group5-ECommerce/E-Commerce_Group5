@@ -1,8 +1,6 @@
 package com.hcl.service;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +15,10 @@ public class AddressService {
 
 	@Autowired
 	private AddressRepository repo;
-	
-	
-	
-	public void addAddress(String oktaId , Address a) 
-	{
+
+	public Address addAddress(String oktaId, Address a) {
 		a.setOktaId(oktaId);
-		repo.save(a);
+		return repo.save(a);
 	}
 
 	public List<Address> getAllAddress() {
