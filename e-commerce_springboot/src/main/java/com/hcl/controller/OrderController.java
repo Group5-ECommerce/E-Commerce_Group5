@@ -174,6 +174,7 @@ public class OrderController {
 
 	}
 
+	@PreAuthorize("hasAuthority('Customer')")
 	@PostMapping("/payment-intent")
 	public ResponseEntity<String> creatingPayment(@RequestBody Payment pmt) throws StripeException {
 		Stripe.apiKey = secretKey;
