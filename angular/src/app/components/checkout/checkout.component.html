@@ -24,8 +24,7 @@
       </div>
       <div *ngIf="checkBox.checked">
         <select (change)="onSelectAddress()" id="addressSelect">
-          <option>
-          </option>
+          <option>Select Address</option>
           <option *ngFor="let selectedAddress of userAddress; index as i" value="{{i}}">
             {{selectedAddress.streetAddress}}
           </option>

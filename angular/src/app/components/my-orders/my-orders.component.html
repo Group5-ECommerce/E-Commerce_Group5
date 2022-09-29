@@ -22,7 +22,7 @@
         <td>{{o.trackingNumber}}</td>
         <td>${{o.totalPrice}}</td>
         <td>
-          <button [routerLink]="['../ordered-products',o.trackingNumber]" class="btn btn-warning">Details</button>
+          <button [routerLink]="[o.trackingNumber]" class="btn btn-warning">Details</button>
         </td>
         <td><p-rating [cancel]="false"></p-rating></td>
       </tr>
