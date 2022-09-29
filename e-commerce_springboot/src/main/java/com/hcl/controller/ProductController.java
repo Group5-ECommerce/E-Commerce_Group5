@@ -42,11 +42,8 @@ public class ProductController {
 
 	@GetMapping("/product/{id}")
 	@ApiOperation(value = "Get Product With Id")
-	public Product getProductId(@PathVariable Integer id) {
-		Optional<Product> product = repo.findById(id);
-		if (product.isPresent())
-			return product.get();
-		return null;
+	public Optional<Product> getProductId(@PathVariable Integer id) {
+		return repo.findById(id);
 	}
 
 	@PutMapping("/product")
