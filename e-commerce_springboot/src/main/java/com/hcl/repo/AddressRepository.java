@@ -16,5 +16,8 @@ public interface AddressRepository extends JpaRepository<Address,Integer>{
 	//Optional<Address> findByUserId(Integer userId);
 	
 	List <Address> findByOktaId(String oktaId);
+	//List<Address> findByStreetAddress(String streetAddress);
+
+//	boolean exists(Address b);
 
 }

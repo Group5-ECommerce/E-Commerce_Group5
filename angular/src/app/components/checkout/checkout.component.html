@@ -170,12 +170,58 @@
               code</span>
           </div>
           <div class="col-sm-3">
+            <label for="zip">Country</label>
+            <!-- All countries -->
+            <select placeholder="Country" id="shippingAddresscountry" name="country" [(ngModel)]="shippingAddressId.country" input class="form-control"
+              name="shippignAddresscountry" required #shippingAddresscountry="ngModel">
+              <option disabled hidden selected = "selected">Select Country</option>
+              <option value="AR">Argentina</option>
+              <option value="AW">Aruba</option>
+              <option value="BS">Bahamas</option>
+              <option value="BB">Barbados</option>
+              <option value="BZ">Belize</option>
+              <option value="BB">Bolivia</option>
+              <option value="BR">Brazil</option>
+              <option value="CA">Canada</option>
+              <option value="KY">Cayman Islands</option>
+              <option value="CL">Chile</option>
+              <option value="CO">Colombia</option>
+              <option value="CR">Costa Rica</option>
+              <option value="CU">Cuba</option>
+              <option value="DM">Dominica</option>
+              <option value="DO">Dominican Republic</option>
+              <option value="EC">Ecuador</option>
+              <option value="SV">El Salvador</option>
+              <option value="GD">Grenada</option>
+              <option value="GT">Guatemala</option>
+              <option value="GY">Guyana</option>
+              <option value="HT">Haiti</option>
+              <option value="HN">Honduras</option>
+              <option value="JM">Jamaica</option>
+              <option value="MX">Mexico</option>
+              <option value="NI">Nicaragua</option>
+              <option value="PA">Panama</option>
+              <option value="PY">Paraguay</option>
+              <option value="PE">Peru</option>
+              <option value="PR">Puerto Rico</option>      
+              <option value="SR">Suriname</option>    
+              <option value="TT">Trinidad and Tobago</option>
+              <option value="US">United States</option>
+              <option value="UM">United States Minor Outlying Islands</option>
+              <option value="UY">Uruguay</option>
+              <option value="VE">Venezuela</option>
+              <option value="VI">Virgin Islands, U.S.</option>
+            </select>
+            <span *ngIf="shippingAddresscountry.touched && shippingAddresscountry.invalid" class="errormessage" style="color:red">Enter country</span>
+          </div>
+  
+          <!-- <div class="col-sm-3">
             <label for="country">Country</label>
             <input [(ngModel)]="shippingAddressId.country" input id="country" class="form-control" type="text"
               placeholder="US" name="shippingcountry" maxlength="2" required #shippingcountry="ngModel">
             <span *ngIf="shippingcountry.touched && shippingcountry.invalid" class="errormessage"
               style="color:red">Enter country</span>
-          </div>
+          </div> -->
         </div>
 
         <hr class="BlinkMacSystemFont mt-3">

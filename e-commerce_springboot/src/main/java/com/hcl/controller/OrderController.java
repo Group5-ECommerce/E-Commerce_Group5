@@ -127,24 +127,58 @@ public class OrderController {
 
 		Address s = p.getPayment().getShippingAddressId();
 		Address b = p.getPayment().getBillingAddressId();
+		
+		PaymentInfo payment = new PaymentInfo();
+		
+		List<Address> addressDb = addressRepo.findAll();
 
-		addressService.addAddress(oktaId, s);
-		addressService.addAddress(oktaId, b);
-
+		if(addressDb.contains(b) == true && s.equals(b) == true)
+		{
+			order.setShippingAddress(b);
+			payment.setBillingAddressId(b);
+			payment.setShippingAddressId(b);
+			System.out.println("1");
+		}
+		else if(addressDb.contains(b) == false && s.equals(b) == true)
+		{
+			addressService.addAddress(oktaId, b);
+			order.setShippingAddress(b);
+			payment.setBillingAddressId(b);
+			payment.setShippingAddressId(b);
+			System.out.println("2");
+				
+		}
+		else if(addressDb.contains(b) == true && s.equals(b) == false)
+		{
+			addressService.addAddress(oktaId, s);
+			order.setShippingAddress(s);
+			payment.setBillingAddressId(b);
+			payment.setShippingAddressId(s);
+			System.out.println("3");	
+		}
+		else
+		{
+			addressService.addAddress(oktaId, b);
+			addressService.addAddress(oktaId, s);
+			order.setShippingAddress(s);
+			payment.setBillingAddressId(b);
+			payment.setShippingAddressId(s);
+			System.out.println("4");
+			
+		}
+	
 		order.setOrderStatus("Processing");
 		order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 		order.setItems(orderItems);
 		order.setTotalPrice(totalPrice);
 		order.setOktaId(oktaId);
-		order.setShippingAddress(p.getPayment().getShippingAddressId());
+		//order.setShippingAddress(p.getPayment().getShippingAddressId());
 		String number = generateTrackingNumber();
 		order.setTrackingNumber(number);
 		orderRepo.save(order);
 
-		PaymentInfo payment = new PaymentInfo();
-
-		payment.setBillingAddressId(p.getPayment().getBillingAddressId());
-		payment.setShippingAddressId(p.getPayment().getShippingAddressId());
+		//PaymentInfo payment = new PaymentInfo();
+	
 		payment.setOrder(order);
 		paymentRepo.save(payment);
 
