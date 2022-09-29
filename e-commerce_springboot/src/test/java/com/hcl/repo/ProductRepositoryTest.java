@@ -68,12 +68,4 @@ public class ProductRepositoryTest {
 		productRepository.deleteById(product.getProductId());
 		Assertions.assertThat(productRepository.findAll()).isEmpty();
 	}
-	
-	@Test
-	void allArgsConstructorAndMethods() {
-		Product product2 = new Product(5, "name", 5, "testImg", 1.23, "1", "Device");
-		product2.hashCode();
-		product2.toString();
-	}
-
 }

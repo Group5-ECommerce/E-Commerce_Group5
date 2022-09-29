@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Order } from 'src/app/models/order.model';
-import { OrderService } from '../../services/order.service'
-import { OrderedProductsComponent } from '../ordered-products/ordered-products.component';
+import { OrderService } from '../../../services/order.service'
+import { OrderedProductsComponent } from '../../ordered-products/ordered-products.component';
 
 
 @Component({

@@ -20,7 +20,6 @@ import com.hcl.repo.ProductRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @Api(tags = "Products")
 public class ProductController {
@@ -59,4 +58,20 @@ public class ProductController {
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}
+	@PostMapping("/product/{rating}/{productid}")
+	@PreAuthorize("hasAuthority('Admin')")
+	public void systemRating(@PathVariable Integer rating, @PathVariable Integer productId) {
+		//repo.save(rating);
+		//repo.findById(productId);
+		Optional<Product> product = repo.findById(productId);
+		if (product.isPresent()) {
+			int totalOfRatings = product.get().getTotalOfRatings() + rating;
+			product.get().setTotalOfRatings(totalOfRatings);
+			int numberOfRatings =product.get().getNumberOfRatings() + 1;
+			product.get().setNumberOfRatings(numberOfRatings);
+			repo.save(product.get());
+		}
+		
+	}
+	
 }

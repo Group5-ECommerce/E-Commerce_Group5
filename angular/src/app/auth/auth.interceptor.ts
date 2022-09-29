@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { config } from 'src/config/app.config';
+import { environment } from 'src/environments/environment';
 
 
 // Thanks to the Okta guide for this code: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#use-the-access-token
@@ -19,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private addAuthHeaderToAllowedOrigins(request: HttpRequest<unknown>): HttpRequest<unknown> {
     let req = request;
     // The backend wants the ID token because it contains the user's groups.
-    const backendOrigin = ['http://localhost:8000'];
+    const backendOrigin = [environment.backendURL];
     if (!!backendOrigin.find(origin => request.url.includes(origin))) {
       const authToken = this._oktaAuth.getIdToken();
       if (authToken != null) {
