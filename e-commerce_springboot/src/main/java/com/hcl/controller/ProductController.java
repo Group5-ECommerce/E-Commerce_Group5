@@ -61,15 +61,15 @@ public class ProductController {
 	}
 	@PostMapping("/product/{rating}/{productid}")
 	@PreAuthorize("hasAuthority('Admin')")
-	public void systemrating(@PathVariable Integer rating, @PathVariable Integer productId) {
+	public void systemRating(@PathVariable Integer rating, @PathVariable Integer productId) {
 		//repo.save(rating);
 		//repo.findById(productId);
 		Optional<Product> product = repo.findById(productId);
 		if (product.isPresent()) {
-			int rating1 = product.get().getTotalRating() + rating;
-			product.get().setTotalRating(rating1);
-			int rating2 =product.get().getNumberrating() + 1;
-			product.get().setNumberrating(rating2);
+			int totalOfRatings = product.get().getTotalOfRatings() + rating;
+			product.get().setTotalOfRatings(totalOfRatings);
+			int numberOfRatings =product.get().getNumberOfRatings() + 1;
+			product.get().setNumberOfRatings(numberOfRatings);
 			repo.save(product.get());
 		}
 		

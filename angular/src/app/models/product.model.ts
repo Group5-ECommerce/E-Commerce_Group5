@@ -7,6 +7,6 @@ export class Product {
   storageId!: number;
   category!: string;
   rating?: string;
-  numberrating!: number;
-  totalRating!: number;
+  numberOfRatings!: number;
+  totalOfRatings!: number;
 }
