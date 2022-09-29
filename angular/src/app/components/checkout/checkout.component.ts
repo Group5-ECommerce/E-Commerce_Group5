@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit {
   name: string
   id: string
 
-  constructor(private service: CheckoutService,private addressService: AddressService, private cartService: IndexCartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  constructor(private service: CheckoutService, private addressService: AddressService, private cartService: IndexCartService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
   async ngOnInit(): Promise<void> {
     //   this._oktaAuth.tokenManager.get("idToken").then(
     //     (s) => {
@@ -46,7 +46,7 @@ export class CheckoutComponent implements OnInit {
     const idToken = await this._oktaAuth.tokenManager.get('idToken');
     this.email = idToken.claims.email!
     this.name = idToken.claims.name!
-    
+
 
     this.setUpPaymentForm()
 
@@ -177,21 +177,34 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  getUserAddress()
-  {
-    this.addressService.getAddressById().subscribe((response) =>
-    {
+  getUserAddress() {
+    this.addressService.getAddressById().subscribe((response) => {
       this.userAddress = response;
       console.log(this.userAddress);
+      // Filters out addresses with duplicate street addresses and names (both in the same address)
+      this.userAddress = this.userAddress.filter((item, index, self) => (
+        index === self.findIndex((add) => (
+          add.streetAddress === item.streetAddress && add.firstName === item.firstName && add.lastName === item.lastName
+        )
+        ))
+        )
     })
   }
 
-  onSelectAddress()
-  {
-      //this.billingAddressId = a.value;
-      let i = (document.getElementById('addressSelect') as HTMLInputElement).value;
-      this.billingAddressId = this.userAddress[i];
-      console.log(this.billingAddressId);
+  onSelectAddress() {
+    let i = (document.getElementById('addressSelect') as HTMLInputElement).value;
+    this.billingAddressId = this.userAddress[i];
+    console.log(this.billingAddressId);
 
+  }
+
+  loadInitialAddress(){
+    const checked = (document.getElementById("addCheck") as HTMLInputElement).checked;
+    if (checked){
+      this.onSelectAddress();
+    }
+    else{
+      //empty the address data
+    }
   }
 }
