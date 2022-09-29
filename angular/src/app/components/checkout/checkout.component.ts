@@ -181,13 +181,13 @@ export class CheckoutComponent implements OnInit {
     this.addressService.getAddressById().subscribe((response) => {
       this.userAddress = response;
       console.log(this.userAddress);
-      // Filters out addresses with duplicate street addresses and names (both in the same address)
+      /* Filters out addresses with duplicate street addresses and names (both in the same address)
       this.userAddress = this.userAddress.filter((item, index, self) => (
         index === self.findIndex((add) => (
           add.streetAddress === item.streetAddress && add.firstName === item.firstName && add.lastName === item.lastName
         )
         ))
-        )
+        ) */
     })
   }
 
@@ -198,12 +198,12 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  loadInitialAddress(){
+  loadInitialAddress() {
     const checked = (document.getElementById("addCheck") as HTMLInputElement).checked;
-    if (checked){
+    if (checked) {
       this.onSelectAddress();
     }
-    else{
+    else {
       //empty the address data
     }
   }
