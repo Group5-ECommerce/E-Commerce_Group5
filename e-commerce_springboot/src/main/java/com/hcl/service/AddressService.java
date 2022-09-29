@@ -24,5 +24,12 @@ public class AddressService {
 	public List<Address> getAllAddress() {
 		return repo.findAll();
 	}
+	
+	public List<Address> getAddressById(String oktaId)
+	{
+		List <Address> address = repo.findByOktaId(oktaId);
+		return address;
+		
+	}
 
 }

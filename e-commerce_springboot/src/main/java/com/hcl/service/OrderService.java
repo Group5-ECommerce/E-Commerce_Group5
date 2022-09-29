@@ -21,8 +21,8 @@ public class OrderService {
 		return orderRepo.findAll();
 	}
 
-	public void save(Order order) {
-		orderRepo.save(order);
+	public Order save(Order order) {
+		return orderRepo.save(order);
 	}
 
 	public Optional<Order> findById(Integer id) {
