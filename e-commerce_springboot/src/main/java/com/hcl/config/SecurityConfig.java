@@ -19,8 +19,8 @@ import com.okta.spring.boot.oauth.Okta;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/admin").hasAuthority("Admin")
-		.antMatchers("/order").hasAuthority("Customer")
+		http.authorizeRequests()
+		// .antMatchers("/admin").hasAuthority("Admin") // We don't currently have any admin endpoints.
 		.antMatchers("/cart").hasAuthority("Customer")
 		.antMatchers("/").permitAll()
 		.and().oauth2ResourceServer().jwt(); // or .opaqueToken();

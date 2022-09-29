@@ -136,12 +136,12 @@ public class WebMvcOrderControllerTest {
 //				.claim("email", "email@email.com").claim("group", "Customer"))
 		)
 
-				.contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().is(200))
-				.andExpect(jsonPath("$.length()", is(3)));
+				.contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isForbidden());
+				// .andExpect(jsonPath("$.length()", is(3)));
 	}
 
 	@Test
-	void getAllOrder_Other() throws Exception {
+	void getAllOrder_Admin() throws Exception {
 		List<Order> list = new ArrayList();
 		list.add(new Order());
 		list.add(new Order());
@@ -154,7 +154,9 @@ public class WebMvcOrderControllerTest {
 		when(orderService.findAll()).thenReturn(list);
 
 		mockMvc.perform(get("/order").with(jwt().authorities(authorities)).contentType(MediaType.APPLICATION_JSON))
-				.andDo(print()).andExpect(status().isForbidden());
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(jsonPath("$.length()", is(3)));
+
 	}
 
 	@Test
@@ -182,11 +184,11 @@ public class WebMvcOrderControllerTest {
 		when(orderService.findById(requestBody.getOrderId())).thenReturn(Optional.of(persisted));
 		when(orderRepo.save(persisted)).thenReturn(requestBody);
 
-		/* mockMvc.perform(put("/order").content(mapper.writeValueAsString(requestBody))
+		mockMvc.perform(put("/order").content(mapper.writeValueAsString(requestBody))
 				.contentType(MediaType.APPLICATION_JSON).with(jwt().authorities(adminAuthority))).andDo(print())
 				.andExpect(status().isOk()).andExpect(jsonPath("$.orderId").value(1))
 				.andExpect(jsonPath("$.orderStatus").value("Shipped"));
-				*/
+				
 	}
 
 	@Test

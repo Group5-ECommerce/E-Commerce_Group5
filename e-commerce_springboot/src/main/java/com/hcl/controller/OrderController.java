@@ -187,7 +187,7 @@ public class OrderController {
 
 	@GetMapping("/order")
 	@ApiOperation(value = "Gets All Orders")
-	@PreAuthorize("hasAuthority('Customer')")
+	@PreAuthorize("hasAuthority('Admin')")
 	public List<Order> getAllOrders() {
 		return orderService.findAll();
 	}
