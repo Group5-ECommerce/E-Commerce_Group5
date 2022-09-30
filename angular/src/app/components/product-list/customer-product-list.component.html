@@ -36,9 +36,9 @@
               <h4 class="card-title text-center">{{product?.productName}}</h4>
               <h5 class="mx-3 text-center">Price: ${{product?.productPrice}}</h5>
 
-              <h5 *ngIf="product!.numberOfRatings > 0" class=" mx-3 text-center">Rating : {{(product?.totalOfRatings!/product?.numberOfRatings!) | round}}/5</h5>
-              <h5 *ngIf="product!.numberOfRatings == 0" class=" mx-3 text-center">Rating: 5/5</h5>
-              <!--<p-rating [ngModel] = "4" [readonly] = "true"></p-rating>-->
+              <p-rating class = "text-center" *ngIf="product!.numberOfRatings > 0" [ngModel] = "(((product?.totalOfRatings!/product?.numberOfRatings!) | round))"
+                 [readonly] = "true" [cancel] = "false"></p-rating>
+              <h5 *ngIf="product!.numberOfRatings == 0" class=" mx-3 text-center">No Ratings</h5>
 
               <h5 class=" mx-3 text-center stock-scroll">Left: {{product?.productStock}}</h5>
 

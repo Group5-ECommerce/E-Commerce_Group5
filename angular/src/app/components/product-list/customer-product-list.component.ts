@@ -11,7 +11,7 @@ interface ProductCategory {
   description: string;
 }
 
-
+// Thanks to https://stackoverflow.com/a/57790764 for describing how to round a number in html with an Angular pipe.
 @Pipe({name: 'round'})
 export class RoundPipe {
   transform (input:number) {

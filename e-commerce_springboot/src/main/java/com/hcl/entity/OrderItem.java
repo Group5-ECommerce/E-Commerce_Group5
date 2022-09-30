@@ -28,8 +28,7 @@ public class OrderItem implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderId")
 	@JsonIgnore
-	@ToString.Exclude // Thanks to https://stackoverflow.com/a/56263668 for mentioning this
-						// annotation.
+	@ToString.Exclude // Thanks to https://stackoverflow.com/a/56263668 for mentioning this annotation
 	private Order order;
 
 	@Id

@@ -67,16 +67,14 @@ public class ProductController {
 		Optional<Product> o_product = repo.findById(productId);
 		if (o_product.isPresent()) {
 			Product product = o_product.get();
-			ProductRating pr = new ProductRating();
-			pr.setProduct(product);
-			pr.setRating(rating);
-			pr.setUserId(principal.getName());
-			
+			String userId = principal.getName();
+			ProductRating pr = new ProductRating(product, userId, rating);
+
 			System.out.println(pr.getUserId());
 			
 			int totalOfRatings = product.getTotalOfRatings() + rating;
 			product.setTotalOfRatings(totalOfRatings);
-			int numberOfRatings =product.getNumberOfRatings() + 1;
+			int numberOfRatings = product.getNumberOfRatings() + 1;
 			product.setNumberOfRatings(numberOfRatings);
 			product.addRating(pr);
 			
