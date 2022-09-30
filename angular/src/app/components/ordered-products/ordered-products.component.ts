@@ -16,6 +16,7 @@ export class OrderedProductsComponent implements OnInit {
   @Input() orderItems!: OrderItem[]
   @Input() hideBackButton: boolean = false;
   pageNum?: number
+  hasEnteredRatingForProduct = new Array<boolean>();
 
   ngOnInit(): void {
     this.pageNum = 1
@@ -27,6 +28,9 @@ export class OrderedProductsComponent implements OnInit {
       console.log(response)
       this.orderItems = response;
     })
+  }
+  submitRating(){
+    console.log("submitting rating");
   }
 
 }
