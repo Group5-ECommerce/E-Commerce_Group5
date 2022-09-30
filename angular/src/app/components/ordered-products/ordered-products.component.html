@@ -1,11 +1,12 @@
 <div class="container">
+  <button *ngIf = "!hideBackButton" class="btn btn-secondary float-left mb-3" style="width: 20%; margin-right: 5px" [routerLink]="['../']">Back to
+    Orders</button>
+
   <h3 class="text-center">Order: <h5 class="d-inline">{{tracker}}</h5>
   </h3>
-</div>
 
-<div class="container-fluid">
-  <div class="container">
-    <table class="table table-light">
+  <div class="container-fluid">
+    <table class="table blue-white-table">
       <thead class="thead-light">
         <tr>
           <th>Product Name</th>

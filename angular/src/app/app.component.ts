@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
-import { AuthState, HttpRequestClient, OktaAuth } from '@okta/okta-auth-js';
+import { AuthState, OktaAuth } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IndexCartService } from './services/index-cart.service';
 
 @Component({
@@ -13,9 +14,9 @@ import { IndexCartService } from './services/index-cart.service';
 })
 
 export class AppComponent implements OnInit {
-  title = 'angular';
+  title = 'okta-angular-quickstart';
   isVisible: boolean = false;
-  cartUrl = "http://localhost:8000/cart"
+  cartUrl = environment.backendURL + '/cart';
   // count: number;
 
   @ViewChild('userBtn') userButton: ElementRef;
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
   public isAuthenticated$!: Observable<boolean>;
   public isAdmin$: Observable<boolean>;
 
-  name$!: Observable<String>;
+  name$!: Observable<string>;
 
   constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth, private http: HttpClient, private cartService: IndexCartService) {
   }
@@ -66,7 +67,6 @@ export class AppComponent implements OnInit {
 
   public async signIn() {
     // This may be useful in the future: { originalUri: '/' }
-    //works but duplicates on refresh and also persists when sign out in db
 
     await this._oktaAuth.signInWithRedirect().then(_ => {
 

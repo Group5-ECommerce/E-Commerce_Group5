@@ -19,11 +19,14 @@ export class AddProductComponent implements OnInit {
   //for form reset
   @ViewChild('addProductForm')
   form: NgForm
+  categories: string[];
+  makeNewCategory?: boolean;
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.fileUploaded = false;
+    this.categories = this.productService.categories;
   }
 
   async saveProduct() {

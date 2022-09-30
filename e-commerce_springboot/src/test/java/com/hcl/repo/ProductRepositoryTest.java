@@ -1,4 +1,4 @@
-package com.hcl.service;
+package com.hcl.repo;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hcl.entity.Product;
-import com.hcl.repo.ProductRepository;
 
 //@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 //@AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -69,12 +68,4 @@ public class ProductRepositoryTest {
 		productRepository.deleteById(product.getProductId());
 		Assertions.assertThat(productRepository.findAll()).isEmpty();
 	}
-	
-	@Test
-	void allArgsConstructorAndMethods() {
-		Product product2 = new Product(5, "name", 5, "testImg", 1.23, "1", "Device");
-		product2.hashCode();
-		product2.toString();
-	}
-
 }

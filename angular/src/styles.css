@@ -1,4 +1,7 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import "primeng/resources/themes/nova/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import  "primeicons/primeicons.css";
 /* You can add global styles to this file, and also import other style files
 @import "~bootstrap/dist/css/bootstrap.css"; */
 .ngx-pagination {
@@ -27,28 +30,28 @@
   padding:0px 15px;
 }
 
-#blue-white-table td,
+.blue-white-table td,
 th {
     border: 1px solid #ddd;
 }
 
-#blue-white-table th {
+.blue-white-table th {
     background-color: deepskyblue;
     color: white;
     border-top: 0px;
 }
 
-#blue-white-table tr:nth-child(even) {
+.blue-white-table tr:nth-child(even) {
     background-color: rgba(8, 192, 248, 0.164)
 }
 
-#blue-white-table th:first-of-type {
+.blue-white-table th:first-of-type {
     border-top-left-radius: 10px;
     border-left: 0px;
     border-top: 0px;
 }
 
-#blue-white-table th:last-of-type {
+.blue-white-table th:last-of-type {
     border-top-right-radius: 10px;
     border-right: 0px;
     border-top: 0px;
