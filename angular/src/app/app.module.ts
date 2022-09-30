@@ -17,7 +17,7 @@ import { AddProductComponent } from './components/admin/add-product/add-product.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { CustomerGuard, AdminGuard } from './auth/auth.guard';
-import { CustomerProductListComponent } from './components/product-list/customer-product-list.component';
+import { CustomerProductListComponent, RoundPipe } from './components/product-list/customer-product-list.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
@@ -61,7 +61,7 @@ const oktaAuth = new OktaAuth({
     OrderTrackComponent,
     FilterPipe,
     MyOrdersComponent,
-
+    RoundPipe,
     IndexCartComponent
 
   ],

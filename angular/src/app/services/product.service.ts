@@ -33,8 +33,10 @@ export class ProductService {
   deleteProduct(id: number) {
     return this.http.delete(this.url + "/product/" + id);
   }
-  addrating(id: number) {
-    return this.http.post(this.url + "/product/4/5", null);
+
+  rateProduct(productId: number, rating: number) {
+    const ratingUrl = this.url + `/rateProduct/${productId}?rating=${rating}`;
+    return this.http.post(ratingUrl, null);
   }
 
   saveImgToCloudinary(file: any) {

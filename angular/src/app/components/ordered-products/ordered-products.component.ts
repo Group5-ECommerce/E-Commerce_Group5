@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Product } from 'src/app/models/product.model';
 import { OrderService } from 'src/app/services/order.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-ordered-products',
@@ -11,7 +12,7 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class OrderedProductsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private orderService: OrderService) { }
+  constructor(private route: ActivatedRoute, private orderService: OrderService, private productService:ProductService) { }
   @Input() tracker!: string
   @Input() orderItems!: OrderItem[]
   @Input() hideBackButton: boolean = false;
@@ -29,7 +30,17 @@ export class OrderedProductsComponent implements OnInit {
       this.orderItems = response;
     })
   }
-  submitRating(){
+  submitRating(id:number, rating:number, submitBtn:HTMLButtonElement){
+    console.log(rating);
+    this.productService.rateProduct(id, rating).subscribe({
+      next: res =>{
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitted";
+      },
+      error: e =>{
+
+      }
+    });
     console.log("submitting rating");
   }
 

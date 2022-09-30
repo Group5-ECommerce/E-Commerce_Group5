@@ -72,10 +72,13 @@ public class ProductController {
 			pr.setRating(rating);
 			pr.setUserId(principal.getName());
 			
+			System.out.println(pr.getUserId());
+			
 			int totalOfRatings = product.getTotalOfRatings() + rating;
 			product.setTotalOfRatings(totalOfRatings);
 			int numberOfRatings =product.getNumberOfRatings() + 1;
 			product.setNumberOfRatings(numberOfRatings);
+			product.addRating(pr);
 			
 			repo.save(product);
 		}

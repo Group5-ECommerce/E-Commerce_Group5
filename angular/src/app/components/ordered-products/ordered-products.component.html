@@ -1,5 +1,6 @@
 <div class="container">
-  <button *ngIf = "!hideBackButton" class="btn btn-secondary float-left mb-3" style="width: 20%; margin-right: 5px" [routerLink]="['../']">Back to
+  <button *ngIf="!hideBackButton" class="btn btn-secondary float-left mb-3" style="width: 20%; margin-right: 5px"
+    [routerLink]="['../']">Back to
     Orders</button>
 
   <h3 class="text-center">Order: <h5 class="d-inline">{{tracker}}</h5>
@@ -24,10 +25,12 @@
           <td>${{oi.product?.productPrice}}</td>
           <td>{{oi.amt}}</td>
           <td>
-            <p-rating class = "d-inline-block me-3" (onRate)="hasEnteredRatingForProduct[oi.product?.productId!] = true" 
-            (onCancel)="hasEnteredRatingForProduct[oi.product?.productId!] = false" 
-            [cancel]="true"></p-rating>
-            <button [disabled] = "!hasEnteredRatingForProduct[oi.product?.productId!]" (click)="submitRating()" class="btn btn-success">Submit</button>
+            <p-rating #rating class="d-inline-block me-3"
+              (onRate)="hasEnteredRatingForProduct[oi.product?.productId!] = true"
+              (onCancel)="hasEnteredRatingForProduct[oi.product?.productId!] = false" [cancel]="true"></p-rating>
+            <button #submitRatingBtn [disabled]="!hasEnteredRatingForProduct[oi.product?.productId!]"
+              (click)="submitRating(oi.product?.productId!, rating.value, submitRatingBtn)"
+              class="btn btn-success">Submit</button>
           </td>
         </tr>
       </tbody>
