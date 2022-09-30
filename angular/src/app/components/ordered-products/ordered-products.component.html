@@ -24,8 +24,10 @@
           <td>${{oi.product?.productPrice}}</td>
           <td>{{oi.amt}}</td>
           <td>
-            <p-rating (onRate)="hasEnteredRatingForProduct[oi.product?.productId!] = true" [cancel]="true"></p-rating>
-            <button *ngIf = "hasEnteredRatingForProduct[oi.product?.productId!]" (click)="submitRating()" class="btn btn-success">Submit Rating</button>
+            <p-rating class = "d-inline-block me-3" (onRate)="hasEnteredRatingForProduct[oi.product?.productId!] = true" 
+            (onCancel)="hasEnteredRatingForProduct[oi.product?.productId!] = false" 
+            [cancel]="true"></p-rating>
+            <button [disabled] = "!hasEnteredRatingForProduct[oi.product?.productId!]" (click)="submitRating()" class="btn btn-success">Submit</button>
           </td>
         </tr>
       </tbody>

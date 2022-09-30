@@ -1,5 +1,6 @@
 package com.hcl.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.entity.Product;
+import com.hcl.entity.ProductRating;
 import com.hcl.repo.ProductRepository;
 
 import io.swagger.annotations.Api;
@@ -58,18 +61,23 @@ public class ProductController {
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}
-	@PostMapping("/product/{rating}/{productid}")
-	@PreAuthorize("hasAuthority('Admin')")
-	public void systemRating(@PathVariable Integer rating, @PathVariable Integer productId) {
-		//repo.save(rating);
-		//repo.findById(productId);
-		Optional<Product> product = repo.findById(productId);
-		if (product.isPresent()) {
-			int totalOfRatings = product.get().getTotalOfRatings() + rating;
-			product.get().setTotalOfRatings(totalOfRatings);
-			int numberOfRatings =product.get().getNumberOfRatings() + 1;
-			product.get().setNumberOfRatings(numberOfRatings);
-			repo.save(product.get());
+	@PostMapping("/rateProduct/{productId}")
+	@PreAuthorize("hasAuthority('Customer')")
+	public void rateProduct(Principal principal, @PathVariable Integer productId, @RequestParam Integer rating) {
+		Optional<Product> o_product = repo.findById(productId);
+		if (o_product.isPresent()) {
+			Product product = o_product.get();
+			ProductRating pr = new ProductRating();
+			pr.setProduct(product);
+			pr.setRating(rating);
+			pr.setUserId(principal.getName());
+			
+			int totalOfRatings = product.getTotalOfRatings() + rating;
+			product.setTotalOfRatings(totalOfRatings);
+			int numberOfRatings =product.getNumberOfRatings() + 1;
+			product.setNumberOfRatings(numberOfRatings);
+			
+			repo.save(product);
 		}
 		
 	}
