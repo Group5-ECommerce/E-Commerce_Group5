@@ -1,5 +1,6 @@
 import { Address } from "./address/address"
 import { CartItem } from "./cart-item.model"
+import { OrderAddress } from "./order-address"
 import { User } from "./user.model"
 
 export class Order {
@@ -9,7 +10,7 @@ export class Order {
   oktaId: string
   trackingNumber?: string
   totalPrice?: number
-  shippingAddress?: Address
+  shippingAddress?: OrderAddress
   orderTime?: string
   orderStatus?: string
 }

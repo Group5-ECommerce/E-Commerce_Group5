@@ -1,0 +1,112 @@
+<div class = "container pt-5">
+    <div class="row justify-content-sm-center pt-5">
+        <div class="col-sm-6 shadow round pb-3">
+            <h1 class="text-center pt-3 text-secondary">Update Address</h1>
+            <form #updateAddressForm="ngForm">
+                <div>
+                    <select (change) = "onSelectAddress()" id = "addressSelect">
+                        <option disabled hidden selected = "selected">Select Address to Update</option>
+                        <option *ngFor = "let selectedAddress of userAddress; index as i" value = "{{i}}">
+                             {{selectedAddress.streetAddress}}
+                        </option>
+                    </select>
+                  </div>
+                <div class="row">
+                    <label for="fistName">First Name</label>
+                    <input [(ngModel)]="updatedAddress.firstName" id="firstName" class="form-control" type="text"
+                      name="firstName" #firstName="ngModel" required>
+                    <span *ngIf="firstName.touched && firstName.invalid" class="errormessage" style="color:red">Enter first
+                      name</span>
+                </div>
+                <div class="row">
+                    <label for="lastName">Last Name</label>
+                    <input [(ngModel)]="updatedAddress.lastName" id="lastName" class="form-control" type="text"
+                      name="lastName" #lastName="ngModel" required>
+                    <span *ngIf="lastName.touched && lastName.invalid" class="errormessage" style="color:red">Enter last
+                      name</span>
+                </div>
+                <div class="row">
+                    <label for="streetAddress">Street Address</label>
+                    <input [(ngModel)]="updatedAddress.streetAddress" id="streetAddress" class="form-control" type="text"
+                      name="streetAddress" #streetAddress="ngModel" required>
+                    <span *ngIf="streetAddress.touched && streetAddress.invalid" class="errormessage" style="color:red">Enter street address</span>
+                </div>
+                <div class="row">
+                    <label for="city">City</label>
+                    <input [(ngModel)]="updatedAddress.city" id="city" class="form-control" type="text"
+                      name="city" #city="ngModel" required>
+                    <span *ngIf="city.touched && city.invalid" class="errormessage" style="color:red">Enter city</span>
+                </div>
+                <div class="row">
+                  <label for="state">State</label>
+                  <input [(ngModel)]="updatedAddress.state" id="state" class="form-control" type="text"
+                    name="state" #state="ngModel" required>
+                  <span *ngIf="state.touched && state.invalid" class="errormessage" style="color:red">Enter state</span>
+               </div>
+               <div class="row">
+                <label for="zip">Zip</label>
+                <input [(ngModel)]="updatedAddress.zip" id="zip" class="form-control" type="text"
+                  name="zip" #zip="ngModel" required>
+                <span *ngIf="zip.touched && zip.invalid" class="errormessage" style="color:red">Enter zip code</span>
+              </div>
+              <div class="row">
+                <label for="country">Country</label>
+                <select placeholder="Country" id="country" name="country" [(ngModel)]="updatedAddress.country" input class="form-control"
+                name="country" required #country="ngModel">
+                <option disabled hidden selected = "selected">Select Country</option>
+                <option value="AR">Argentina</option>
+                <option value="AW">Aruba</option>
+                <option value="BS">Bahamas</option>
+                <option value="BB">Barbados</option>
+                <option value="BZ">Belize</option>
+                <option value="BB">Bolivia</option>
+                <option value="BR">Brazil</option>
+                <option value="CA">Canada</option>
+                <option value="KY">Cayman Islands</option>
+                <option value="CL">Chile</option>
+                <option value="CO">Colombia</option>
+                <option value="CR">Costa Rica</option>
+                <option value="CU">Cuba</option>
+                <option value="DM">Dominica</option>
+                <option value="DO">Dominican Republic</option>
+                <option value="EC">Ecuador</option>
+                <option value="SV">El Salvador</option>
+                <option value="GD">Grenada</option>
+                <option value="GT">Guatemala</option>
+                <option value="GY">Guyana</option>
+                <option value="HT">Haiti</option>
+                <option value="HN">Honduras</option>
+                <option value="JM">Jamaica</option>
+                <option value="MX">Mexico</option>
+                <option value="NI">Nicaragua</option>
+                <option value="PA">Panama</option>
+                <option value="PY">Paraguay</option>
+                <option value="PE">Peru</option>
+                <option value="PR">Puerto Rico</option>      
+                <option value="SR">Suriname</option>    
+                <option value="TT">Trinidad and Tobago</option>
+                <option value="US">United States</option>
+                <option value="UM">United States Minor Outlying Islands</option>
+                <option value="UY">Uruguay</option>
+                <option value="VE">Venezuela</option>
+                <option value="VI">Virgin Islands, U.S.</option>
+              </select>
+              <span *ngIf="country.touched && country.invalid" class="errormessage" style="color:red">Select country</span>
+             </div>
+            </form>
+            <div class = "container text-center mt-3">
+              <button [disabled] = "updateAddressForm.invalid" type = "submit" class="btn btn-success" (click)="updateAddress()">Update Address</button>
+            </div>
+            <div class = "container text-center mt-3">
+                <button type = "button" class="btn btn-primary" routerLink = "/address">Back to Add Address</button>
+              </div>
+              <div class = "container text-center mt-3">
+                <button type = "button" class="btn btn-danger" routerLink = "/delete-address">Delete Address</button>
+              </div>
+            <div class="alert alert-success col-sm-5 my-2 mx-auto" role="alert" *ngIf="isSubmitted">
+              <strong>Address Updated!</strong>
+              <button class="close btn btn-sm mx-3 float-end" (click)="closeAlert()">X</button>
+            </div>     
+        </div>
+    </div>
+</div>

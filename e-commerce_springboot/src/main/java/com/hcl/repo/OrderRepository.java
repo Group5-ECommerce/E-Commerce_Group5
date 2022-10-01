@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.hcl.entity.Address;
 import com.hcl.entity.Order;
 //import com.hcl.entity.User;
 
@@ -16,6 +17,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
 	
 	List<Order> findByOktaId(String oktaId);
 
+	List<Order> findByShippingAddress(Address shippingAddressId);
   
 }
 

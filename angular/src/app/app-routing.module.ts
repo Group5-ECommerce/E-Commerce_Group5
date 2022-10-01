@@ -14,9 +14,15 @@ import { OrderTrackComponent } from './components/admin/order-track/order-track.
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { IndexCartComponent } from './components/index-cart/index-cart.component';
 import { OrderedProductsComponent } from './components/ordered-products/ordered-products.component';
+import { AddressComponent } from './components/address/address.component';
+import { UpdateAddressComponent } from './components/update-address/update-address.component';
+import { DeleteAddressComponent } from './components/delete-address/delete-address.component';
 
 
 const routes: Routes = [{ path: 'login/callback', component: OktaCallbackComponent },
+{path: 'delete-address', component: DeleteAddressComponent, canActivate: [CustomerGuard]},
+{path: 'update-address', component: UpdateAddressComponent, canActivate: [CustomerGuard]},
+{path: 'address', component: AddressComponent, canActivate: [CustomerGuard]},
 { path: 'my-orders', component: MyOrdersComponent, canActivate: [CustomerGuard] },
 { path: 'product', component: CustomerProductListComponent },
 { path: 'product-list', component: AdminProductListComponent, canActivate: [AdminGuard] },

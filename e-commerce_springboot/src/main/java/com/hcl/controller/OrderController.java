@@ -30,6 +30,7 @@ import com.hcl.config.MQConfig;
 import com.hcl.dto.Purchase;
 import com.hcl.entity.Address;
 import com.hcl.entity.Order;
+import com.hcl.entity.OrderAddress;
 import com.hcl.entity.OrderItem;
 import com.hcl.entity.PaymentInfo;
 import com.hcl.entity.Product;
@@ -37,6 +38,7 @@ import com.hcl.model.Message;
 //import com.hcl.entity.User;
 import com.hcl.model.cartItem;
 import com.hcl.repo.AddressRepository;
+import com.hcl.repo.OrderAddressRepository;
 import com.hcl.repo.OrderRepository;
 import com.hcl.repo.PaymentRepository;
 import com.hcl.repo.ProductRepository;
@@ -63,7 +65,7 @@ public class OrderController {
 //	UserService userService;
 
 	@Autowired
-	private AddressRepository addressRepo;
+	private OrderAddressRepository addressRepo;
 
 	@Autowired
 	private PaymentRepository paymentRepo;
@@ -126,12 +128,12 @@ public class OrderController {
 
 		// User u = userRepo.findByOktaId(oktaId).get();
 
-		Address s = p.getPayment().getShippingAddressId();
-		Address b = p.getPayment().getBillingAddressId();
+		OrderAddress s = p.getPayment().getShippingAddressId();
+		OrderAddress b = p.getPayment().getBillingAddressId();
 		
 		PaymentInfo payment = new PaymentInfo();
 		
-		List<Address> addressDb = addressRepo.findAll();
+		List<OrderAddress> addressDb = addressRepo.findAll();
 
 		if(addressDb.contains(b) == true && s.equals(b) == true)
 		{
@@ -142,16 +144,18 @@ public class OrderController {
 		}
 		else if(addressDb.contains(b) == false && s.equals(b) == true)
 		{
-			addressService.addAddress(oktaId, b);
-			order.setShippingAddress(b);
-			payment.setBillingAddressId(b);
-			payment.setShippingAddressId(b);
+			addressService.addOrderAddress(oktaId, b);
+			OrderAddress a = addressRepo.findById(b.getAddressId()).get();
+			System.out.println(a);
+			order.setShippingAddress(a);
+			payment.setBillingAddressId(a);
+			payment.setShippingAddressId(a);
 			System.out.println("2");
 				
 		}
 		else if(addressDb.contains(b) == true && s.equals(b) == false)
 		{
-			addressService.addAddress(oktaId, s);
+			addressService.addOrderAddress(oktaId, s);
 			order.setShippingAddress(s);
 			payment.setBillingAddressId(b);
 			payment.setShippingAddressId(s);
@@ -159,8 +163,8 @@ public class OrderController {
 		}
 		else
 		{
-			addressService.addAddress(oktaId, b);
-			addressService.addAddress(oktaId, s);
+			addressService.addOrderAddress(oktaId, b);
+			addressService.addOrderAddress(oktaId, s);
 			order.setShippingAddress(s);
 			payment.setBillingAddressId(b);
 			payment.setShippingAddressId(s);
@@ -173,7 +177,6 @@ public class OrderController {
 		order.setItems(orderItems);
 		order.setTotalPrice(totalPrice);
 		order.setOktaId(oktaId);
-		//order.setShippingAddress(p.getPayment().getShippingAddressId());
 		String number = generateTrackingNumber();
 		order.setTrackingNumber(number);
 		orderRepo.save(order);

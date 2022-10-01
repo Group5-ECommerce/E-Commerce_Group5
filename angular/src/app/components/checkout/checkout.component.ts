@@ -10,6 +10,7 @@ import { IndexCartService } from 'src/app/services/index-cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { environment } from 'src/environments/environment';
 import { AddressService } from 'src/app/services/address.service';
+import { OrderAddress } from 'src/app/models/order-address';
 
 @Component({
   selector: 'app-checkout',
@@ -22,8 +23,8 @@ export class CheckoutComponent implements OnInit {
 
   payment = new PaymentInfo()
   stripe = Stripe(environment.stripePublishableKey)
-  billingAddressId = new Address()
-  shippingAddressId = new Address()
+  billingAddressId = new OrderAddress()
+  shippingAddressId = new OrderAddress()
   currentUserAddress = new Address()
   val = new Address()
   cart: CartItem[]
@@ -190,8 +191,7 @@ export class CheckoutComponent implements OnInit {
   {
       //this.billingAddressId = a.value;
       let i = (document.getElementById('addressSelect') as HTMLInputElement).value;
-      this.billingAddressId = this.userAddress[i];
+      this.billingAddressId = this.userAddress[i] as OrderAddress;
       console.log(this.billingAddressId);
-
   }
 }
