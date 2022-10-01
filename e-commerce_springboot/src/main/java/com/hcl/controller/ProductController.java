@@ -70,13 +70,19 @@ public class ProductController {
 			String userId = principal.getName();
 			ProductRating pr = new ProductRating(product, userId, rating);
 
-			System.out.println(pr.getUserId());
 			
-			int totalOfRatings = product.getTotalOfRatings() + rating;
-			product.setTotalOfRatings(totalOfRatings);
-			int numberOfRatings = product.getNumberOfRatings() + 1;
-			product.setNumberOfRatings(numberOfRatings);
-			product.addRating(pr);
+			Object[] prev_rating = product.getRatings().stream().filter(e -> e.getOktaId() == userId).toArray();
+			if (prev_rating.length == 0) {
+				int totalOfRatings = product.getTotalOfRatings() + rating;
+				product.setTotalOfRatings(totalOfRatings);
+				int numberOfRatings = product.getNumberOfRatings() + 1;
+				product.setNumberOfRatings(numberOfRatings);
+				product.addRating(pr);
+			}
+			else {
+				List<ProductRating> prs = product.getRatings();
+				product.getRatings().set(prs.indexOf(prev_rating[0]), pr);
+			}
 			
 			repo.save(product);
 		}
