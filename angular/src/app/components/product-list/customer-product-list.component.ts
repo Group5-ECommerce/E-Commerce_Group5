@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { IndexCartService } from 'src/app/services/index-cart.service';
@@ -11,13 +11,19 @@ interface ProductCategory {
   description: string;
 }
 
+// Thanks to https://stackoverflow.com/a/57790764 for describing how to round a number in html with an Angular pipe.
+@Pipe({name: 'round'})
+export class RoundPipe {
+  transform (input:number) {
+    return Math.round(input);
+  }
+}
 
 @Component({
   selector: 'app-customer-product-list',
   templateUrl: './customer-product-list.component.html',
   styleUrls: ['./customer-product-list.component.css']
 })
-
 export class CustomerProductListComponent implements OnInit {
 
   products?: Product[];

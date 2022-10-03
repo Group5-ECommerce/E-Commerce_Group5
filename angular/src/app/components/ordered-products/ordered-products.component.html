@@ -1,5 +1,6 @@
 <div class="container">
-  <button *ngIf = "!hideBackButton" class="btn btn-secondary float-left mb-3" style="width: 20%; margin-right: 5px" [routerLink]="['../']">Back to
+  <button *ngIf="!hideBackButton" class="btn btn-secondary float-left mb-3" style="width: 20%; margin-right: 5px"
+    [routerLink]="['../']">Back to
     Orders</button>
 
   <h3 class="text-center">Order: <h5 class="d-inline">{{tracker}}</h5>
@@ -13,6 +14,7 @@
           <th>Image</th>
           <th>Price</th>
           <th>Amount</th>
+          <th *ngIf = "!isAdmin">Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +24,14 @@
               style=" width: 20;height: 20px;"></td>
           <td>${{oi.product?.productPrice}}</td>
           <td>{{oi.amt}}</td>
+          <td style="width:300px" *ngIf = "!isAdmin">
+            <p-rating #rating class="d-inline-block me-3"
+              (onRate)="hasEnteredRatingForProduct[oi.product?.productId!] = true"
+              (onCancel)="hasEnteredRatingForProduct[oi.product?.productId!] = false" [cancel]="false"></p-rating>
+            <button #submitRatingBtn [disabled]="!hasEnteredRatingForProduct[oi.product?.productId!]"
+              (click)="submitRating(oi.product?.productId!, rating, submitRatingBtn)"
+              class="btn btn-success">Submit</button>
+          </td>
         </tr>
       </tbody>
     </table>
