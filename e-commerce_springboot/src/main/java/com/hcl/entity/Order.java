@@ -52,7 +52,7 @@ public class Order {
 
 	@OneToOne
 	@JoinColumn(name = "shippingAddressId")
-	private Address shippingAddress;
+	private OrderAddress shippingAddress;
 
 	@Column(name = "orderTime")
 	private Timestamp orderTime;

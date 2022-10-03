@@ -1,0 +1,28 @@
+<div class = "container pt-5">
+    <div class="row justify-content-sm-center pt-5">
+        <div class="col-sm-6 shadow round pb-3">
+            <h1 class="text-center pt-3 text-secondary">Delete Address</h1>
+            <form #updateAddressForm="ngForm">
+                <div>
+                    <select (change) = "onSelectAddress()" id = "addressSelect">
+                        <option disabled hidden selected = "selected">Select Address to Delete</option>
+                        <option *ngFor = "let selectedAddress of userAddress; index as i" value = "{{i}}">
+                             {{selectedAddress.streetAddress}}
+                        </option>
+                    </select>
+                  </div>
+            </form>
+            <div class = "container text-center mt-3">
+                <button [disabled] = "isSubmitted" type = "button" class="btn btn-danger" (click)="deleteAddress()">Delete Address</button>
+              </div>
+              <div class = "container text-center mt-3">
+                  <button type = "button" class="btn btn-success" routerLink = "/update-address">Back to Update Address</button>
+                </div>
+                <div class = "container text-center mt-3">
+                  <button type = "button" class="btn btn-primary" routerLink = "/address">Back to Add Address</button>
+                </div>
+              <div class="alert alert-success col-sm-5 my-2 mx-auto" role="alert" *ngIf="isSubmitted">
+                <strong>Address Deleted</strong>
+                <button class="close btn btn-sm mx-3 float-end" (click)="closeAlert()">X</button>
+              </div>     
+     </div>
