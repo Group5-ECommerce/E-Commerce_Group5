@@ -15,6 +15,7 @@ export class UserDetailsService {
   firstName: string;
   email: string;
   id: string;
+  isAdmin:boolean;
 
   constructor(private httpClient: HttpClient, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) {
     if (this._oktaAuth.tokenManager) {
@@ -32,6 +33,7 @@ export class UserDetailsService {
         this.lastName = splitName[1];
         this.username = id.claims.preferred_username!;
         this.id = id.claims.sub;
+        this.isAdmin = id.claims.groups.includes("Admin");
       }
     );
   }
