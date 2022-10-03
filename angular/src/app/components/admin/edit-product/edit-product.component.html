@@ -69,7 +69,7 @@
         <div class="form-group mb-2">
           <label for="my-input">Price</label>
           <input [(ngModel)]="product.productPrice" id="my-input" class="form-control" type="number" name="price"
-            required #price="ngModel" pattern="^[1-9]+(?:\.[0-9]{1,2})?$">
+            required #price="ngModel" pattern="^[0-9]+(?:\.[0-9]{1,2})?$">
           <div *ngIf="price.invalid && (price.dirty || price.touched)"
             class="alert alert-danger error-message alert-dismissible fade show" role="alert">Invalid
             Price. Ex: 23.99
