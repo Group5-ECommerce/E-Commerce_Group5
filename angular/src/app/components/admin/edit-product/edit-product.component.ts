@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from '../../../services/product.service';
 
@@ -23,14 +24,17 @@ export class EditProductComponent implements OnInit {
   //for form reset
   @ViewChild('editProductForm')
   form: NgForm
+  categories: string[];
 
   useExistingImg?: boolean
+  makeNewCategory?: boolean;
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
 
     this.productService.getProduct(this.id).subscribe((response: any) => {
       this.product = response;
+      this.categories = this.productService.categories;
     })
 
     this.useExistingImg = true;

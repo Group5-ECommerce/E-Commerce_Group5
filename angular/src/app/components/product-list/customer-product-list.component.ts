@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { IndexCartService } from 'src/app/services/index-cart.service';
+import { filter, map, Observable } from 'rxjs';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { AuthState } from '@okta/okta-auth-js';
 
 interface ProductCategory {
   code: string;
@@ -24,6 +27,7 @@ export class CustomerProductListComponent implements OnInit {
   pageNum?: number
   selectedCategory?: string[];
   filteredCategory?= ''
+  isAdmin$: Observable<boolean>;
 
   public ChangeCategory($event: any) {
     this.filteredCategory = ($event.target as HTMLSelectElement).value;
@@ -31,13 +35,17 @@ export class CustomerProductListComponent implements OnInit {
   query?: string
   queryResults?: number
 
-  constructor(private productService: ProductService, private indexCartService: IndexCartService) { }
+  constructor(private productService: ProductService, private indexCartService: IndexCartService, private _oktaStateService: OktaAuthStateService) { }
 
 
   ngOnInit(): void {
     this.pageNum = 1
-
     this.retrieveProducts();
+
+    this.isAdmin$ = this._oktaStateService.authState$.pipe(
+      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+      map((authState: any) => authState.idToken?.claims.groups.includes("Admin") ?? false)
+    );
   }
   ngOnDestroy(): void {
   }
@@ -66,8 +74,10 @@ export class CustomerProductListComponent implements OnInit {
     this.productService.getProductList().subscribe({
       next: (data) => {
         this.products = (data);
+        console.log(data)
         this.displayedProducts = this.products;
         this.queryResults = this.displayedProducts.length;
+        // parsing selectedCategory a Set removes duplicate categories.
         this.selectedCategory = [...new Set(this.products.map(p => p.category))]
       },
       error: (e) => console.log(e)

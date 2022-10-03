@@ -11,7 +11,7 @@
   <ng-template #signedIn>
     <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
     <ul class="nav justify-content-end">
-      <!-- If they are an admin, display the admin links. Otherwise, display the customer links-->
+      <!-- If they are an admin, display the admin links. Otherwise, display the customer links.-->
       <ng-container *ngIf="(isAdmin$ | async) === true; else customerNav">
         <li class="navbarlinks"><button class = "btn-default navbar-btn"><a class="hoverbtn" routerLink="/product-list">Edit Catalogue</a></button></li>
         <li class="navbarlinks"><button class = "btn-default navbar-btn"><a class="hoverbtn" routerLink="/order-list">Orders</a></button></li>
@@ -21,6 +21,8 @@
       <ng-template #customerNav>
         <li class="navbarlinks"><button class = "btn-default navbar-btn hoverbtn"><a class="hoverbtn" routerLink="/product">Products</a></button></li>
         <li class="navbarlinks"><button class = "btn-default navbar-btn"><a class="hoverbtn" routerLink="/my-orders">My Orders</a></button></li>
+        
+
       </ng-template>
     </ul>
     <a class="hoverbtn" id="cartbutton" routerLink="/cart-list"><i class="bi bi-cart-fill " style="font-size: 1.75rem;"></i><span class="badge badge-secondary" id="cartcount">{{getCartLength()}}</span></a>
@@ -30,6 +32,8 @@
       <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
       <div id="accountDropdown" class="dropdown-content">
         <a routerLink="edit-user" class = "dropdownborder dropdown-top">Edit Details</a>
+        <a routerLink="address" class = "dropdownborder dropdown-top">Address Details</a>
+
         <a class="disabled" class = "dropdownborder" routerLink="change-password">Change Password</a>
         <a role="button" class="dropdown-bottom" (click)="signOut()">Sign out</a>
       </div>

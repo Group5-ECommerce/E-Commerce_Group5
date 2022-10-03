@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="card" style="width: 50%; margin: 10px auto;">
+    <div class="card-header">
+      Order Tracking
+    </div>
+    <div class="card-body">
+      <form name="trackingForm">
+
+        <label for="trackingNumber">Tracking Number</label>
+        <input [(ngModel)]="input.trackingNumber" input id="trackingNumber" class="form-control" type="text"
+          #trackingNumber="ngModel" minlength="36" maxlength="36" name="trackingNumber" placeholder="Tracking Number"
+          required>
+
+        <span *ngIf="trackingNumber.touched && trackingNumber.invalid" class="errormessage" style="color:red">Please
+          enter a 36 digit tracking number</span>
+        <br>
+        <button class="btn btn-primary" (click)="trackOrder()"
+          [disabled]="!trackingNumber.valid || canSubmit">Submit</button>
+        <button class="btn btn-secondary float-end" (click)="reset()"
+          [disabled]="trackingNumber?.value?.length == 0">Reset</button>
+      </form>
+      <br>
+      <div class="container-fluid px-0">
+        <div class="invisible alert text-center d-inline-block w-75" id="status">
+          <strong id="statusText"></strong>
+        </div>
+        <button class="btn btn-default float-end invisible" id="status-btn" style="font-size: 13.5px;"
+          (click)="editStatus=!editStatus">
+          <strong>Edit</strong>
+        </button>
+      </div>
+      <div *ngIf="editStatus">
+        <div class="input-group input-group-md justify-content-center">
+          <div class="form-outline">
+            <input [(ngModel)]="order!.orderStatus" input class="form-control " type="text" name="orderStatus" required>
+          </div>
+          <button (click)="changeOrderStatus()" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+
+
+      <div id="orderInfo" class="invisible mt-2">
+
+        <app-ordered-products [orderItems]="orderItems" [hideBackButton] = "true"></app-ordered-products>
+
+        <table class="table blue-white-table">
+          <thead class="thead-light">
+            <tr>
+              <th>Okta id</th>
+              <th>Order id</th>
+              <th>Date</th>
+              <th>Total bill</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{order?.oktaId}}</td>
+              <td>{{order?.orderId}}</td>
+              <td>{{order?.orderTime | date:"medium"}}</td>
+              <td>${{order?.totalPrice}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="text-center text-decoration-underline">Shipping Address</h2>
+        <h4>{{order?.shippingAddress?.firstName}} {{order?.shippingAddress?.lastName}}</h4>
+        <h4>{{order?.shippingAddress?.streetAddress}}, {{order?.shippingAddress?.city}}
+          {{order?.shippingAddress?.state}}, {{order?.shippingAddress?.zip}}
+        </h4>
+      </div>

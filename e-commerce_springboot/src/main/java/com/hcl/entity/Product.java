@@ -35,7 +35,9 @@ public class Product {
     private String storageId;
     @Column(name="category")
     private String category;
-   
-	
-    
+    @Column(name="numberOfRatings", columnDefinition = "integer default 0")
+    private int numberOfRatings = 0;
+    @Column(name="totalOfRatings" , columnDefinition = "integer default 0")
+    private int totalOfRatings = 0;
+  
 }
