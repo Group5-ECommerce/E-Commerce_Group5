@@ -18,6 +18,7 @@ export class OrderedProductsComponent implements OnInit {
   @Input() hideBackButton: boolean = false;
   pageNum?: number
   hasEnteredRatingForProduct = new Array<boolean>();
+  isAdmin: boolean;
 
   ngOnInit(): void {
     this.pageNum = 1

@@ -2,6 +2,7 @@ package com.hcl.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -51,8 +51,7 @@ public class Product {
     @Column(name="totalOfRatings" , columnDefinition = "integer default 0")
     private int totalOfRatings = 0;
     
-	@OneToMany(mappedBy = "product")
-	@Cascade({CascadeType.SAVE_UPDATE})
+	@OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	// Thanks to https://stackoverflow.com/a/61870411 for this property.
 	// Marking CascadeType as all in the OneToMany annotation wasn't adding a
 	// property, and I wasn't sure why. It seems to be a Hibernate <-> JPA nuance.
