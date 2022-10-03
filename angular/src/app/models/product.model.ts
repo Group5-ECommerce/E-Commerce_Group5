@@ -6,4 +6,6 @@ export class Product {
   productPrice!: number;
   storageId!: number;
   category!: string;
+  numberOfRatings!: number;
+  totalOfRatings!: number;
 }

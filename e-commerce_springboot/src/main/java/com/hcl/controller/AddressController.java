@@ -32,7 +32,6 @@ import io.swagger.annotations.Api;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @Api(tags= "Address")
 public class AddressController 
 {

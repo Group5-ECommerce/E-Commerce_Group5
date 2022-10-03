@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AdminProductListComponent implements OnInit {
   products!: Product[];
   pageNum?: number
+  categories: string[];
 
   constructor(private productService: ProductService, private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -22,6 +23,10 @@ export class AdminProductListComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProductList().subscribe((response: any) => {
       this.products = response;
+      this.categories = [...new Set(this.products.map(p => p.category))]
+
+      // We set the categories here so that we can get them in the edit and add product component.
+      this.productService.setCategories(this.categories);
     });
   }
 

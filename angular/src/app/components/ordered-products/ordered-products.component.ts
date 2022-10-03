@@ -14,6 +14,7 @@ export class OrderedProductsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
   @Input() tracker!: string
   @Input() orderItems!: OrderItem[]
+  @Input() hideBackButton: boolean = false;
   pageNum?: number
 
   ngOnInit(): void {

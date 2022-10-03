@@ -55,7 +55,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @Api(tags = "Order")
 public class OrderController {
 	@Autowired
@@ -89,7 +88,7 @@ public class OrderController {
 	private RabbitTemplate template;
 
 	@PostMapping("/checkout/{email}/{name}")
-	@PreAuthorize("hasAuthority('Customer')and !hasAuthority('Admin')")
+	@PreAuthorize("hasAuthority('Customer') and !hasAuthority('Admin')")
 	@ApiOperation(value = "Checkout for Order")
 	public Purchase checkout(@RequestBody Purchase p, @PathVariable String email, @PathVariable String name,
 			Principal principal) {
@@ -212,6 +211,7 @@ public class OrderController {
 
 	}
 
+	@PreAuthorize("hasAuthority('Customer')")
 	@PostMapping("/payment-intent")
 	public ResponseEntity<String> creatingPayment(@RequestBody Payment pmt) throws StripeException {
 		Stripe.apiKey = secretKey;
@@ -224,7 +224,7 @@ public class OrderController {
 
 	@GetMapping("/order")
 	@ApiOperation(value = "Gets All Orders")
-	@PreAuthorize("hasAuthority('Customer')")
+	@PreAuthorize("hasAuthority('Admin')")
 	public List<Order> getAllOrders() {
 		return orderService.findAll();
 	}

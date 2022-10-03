@@ -4,6 +4,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { BrowserAnimationsModule } 
+    from "@angular/platform-browser/animations";
+
 import { AuthInterceptor } from './auth/auth.interceptor';
 
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
@@ -23,12 +26,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './pipes/filter.pipe';
 import { OrderTrackComponent } from './components/admin/order-track/order-track.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
+import { RatingModule } from "primeng/rating";
 import { IndexCartComponent } from './components/index-cart/index-cart.component';
 import { IndexedDatabase } from './indexeddb';
 import { OrderedProductsComponent } from './components/ordered-products/ordered-products.component';
 import { AddressComponent } from './components/address/address.component';
 import { UpdateAddressComponent } from './components/update-address/update-address.component';
 import { DeleteAddressComponent } from './components/delete-address/delete-address.component';
+
 // This page may be helpful for getting these values: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#find-your-config-values
 // This page is helpful for future work: https://developer.okta.com/docs/guides/sign-into-spa-redirect/angular/main/#sign-in-a-user
 const oktaAuth = new OktaAuth({
@@ -69,7 +74,9 @@ const oktaAuth = new OktaAuth({
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    RatingModule
   ],
   providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth } },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

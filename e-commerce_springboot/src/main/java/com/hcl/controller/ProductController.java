@@ -29,8 +29,8 @@ public class ProductController {
 	@PostMapping("/product")
 	@ApiOperation(value = "Add Product")
 	@PreAuthorize("hasAuthority('Admin')")
-	public void addProduct(@RequestBody Product product) {
-		repo.save(product);
+	public Product addProduct(@RequestBody Product product) {
+		return repo.save(product);
 	}
 
 	@GetMapping("/product")
@@ -42,15 +42,14 @@ public class ProductController {
 	@GetMapping("/product/{id}")
 	@ApiOperation(value = "Get Product With Id")
 	public Optional<Product> getProductId(@PathVariable Integer id) {
-		Optional<Product> product = repo.findById(id);
-		return product;
+		return repo.findById(id);
 	}
 
 	@PutMapping("/product")
 	@ApiOperation(value = "Update specific product")
 	@PreAuthorize("hasAuthority('Admin')")
-	public void updateProduct(@RequestBody Product newProduct) {
-		repo.save(newProduct);
+	public Product updateProduct(@RequestBody Product newProduct) {
+		return repo.save(newProduct);
 	}
 
 	@DeleteMapping("/product/{id}")
@@ -59,4 +58,20 @@ public class ProductController {
 	public void deleteProduct(@PathVariable Integer id) {
 		repo.deleteById(id);
 	}
+	@PostMapping("/product/{rating}/{productid}")
+	@PreAuthorize("hasAuthority('Admin')")
+	public void systemRating(@PathVariable Integer rating, @PathVariable Integer productId) {
+		//repo.save(rating);
+		//repo.findById(productId);
+		Optional<Product> product = repo.findById(productId);
+		if (product.isPresent()) {
+			int totalOfRatings = product.get().getTotalOfRatings() + rating;
+			product.get().setTotalOfRatings(totalOfRatings);
+			int numberOfRatings =product.get().getNumberOfRatings() + 1;
+			product.get().setNumberOfRatings(numberOfRatings);
+			repo.save(product.get());
+		}
+		
+	}
+	
 }
