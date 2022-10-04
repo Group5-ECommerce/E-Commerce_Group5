@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
     "@cloudinary/angular-5.x": "^1.5.3",
+    "@microsoft/applicationinsights-web": "^2.8.8",
     "@okta/okta-angular": "5.1",
     "@okta/okta-auth-js": "6.0",
     "amqplib": "^0.10.3",
