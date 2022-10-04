@@ -12,8 +12,8 @@ describe('UserDetailsServiceService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule],
-      providers: [{provide: HttpClient, useValue: httpClientSpy}, 
-        { provide: OKTA_AUTH, useValue: authSpy }]
+      providers: [{ provide: HttpClient, useValue: httpClientSpy },
+      { provide: OKTA_AUTH, useValue: authSpy }]
     });
     service = TestBed.inject(UserDetailsService);
   });

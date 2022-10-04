@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.dto.Payment;
 import com.hcl.dto.Purchase;
 import com.hcl.entity.Order;
+import com.hcl.entity.OrderAddress;
 import com.hcl.entity.OrderItem;
 import com.hcl.entity.PaymentInfo;
 import com.hcl.entity.Product;
@@ -242,12 +243,22 @@ public class WebMvcOrderControllerTest {
 		items.add(new cartItem(new Product(), 1));
 		items.add(new cartItem(new Product(), 2));
 		items.add(new cartItem(new Product(), 3));
-		Purchase feed = new Purchase(new PaymentInfo(), items, "checkout successful");
 
-		/*
+		PaymentInfo p = new PaymentInfo();
+		
+		OrderAddress s = new OrderAddress();
+		
+		s.setCity("Horsham");
+		s.setCountry("US");
+		s.setAddressId(1);
+		
+		p.setBillingAddressId(s);
+		p.setShippingAddressId(s);
+		Purchase feed = new Purchase(p, items, "checkout successful");
+		
 		mockMvc.perform(post("/checkout/{email}/{name}", email, username).contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(feed))).andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$").exists());
-				*/
+				
 	}
 }

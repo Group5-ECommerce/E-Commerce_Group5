@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EditUserComponent } from './edit-user.component';
 import { OKTA_AUTH } from '@okta/okta-angular';
+import { FormsModule } from '@angular/forms';
 
 describe('EditUserComponent', () => {
   let component: EditUserComponent;
@@ -10,7 +11,7 @@ describe('EditUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, FormsModule ],
       providers: [HttpClient, { provide: OKTA_AUTH, useValue: authSpy }],
       declarations: [ EditUserComponent ]
     })

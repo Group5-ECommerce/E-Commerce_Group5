@@ -1,4 +1,6 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { UpdateAddressComponent } from './update-address.component';
 
@@ -8,6 +10,8 @@ describe('UpdateAddressComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule, FormsModule ],
+      providers: [HttpClient],
       declarations: [ UpdateAddressComponent ]
     })
     .compileComponents();

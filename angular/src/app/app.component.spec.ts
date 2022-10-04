@@ -5,7 +5,6 @@ import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { IndexedDatabase } from './indexeddb';
-import { MyMonitoringService } from './services/logging.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -31,7 +30,6 @@ describe('AppComponent', () => {
         { provide: OktaAuthStateService, useValue: authStateSpy },
         { provide: OKTA_AUTH, useValue: authSpy },
         {provide: HttpClient, useValue: httpClientSpy},
-        MyMonitoringService,
         IndexedDatabase
       ]
     }).compileComponents();

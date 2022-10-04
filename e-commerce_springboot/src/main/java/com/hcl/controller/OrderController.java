@@ -144,11 +144,11 @@ public class OrderController {
 		else if(addressDb.contains(b) == false && s.equals(b) == true)
 		{
 			addressService.addOrderAddress(oktaId, b);
-			OrderAddress a = addressRepo.findById(b.getAddressId()).get();
-			System.out.println(a);
-			order.setShippingAddress(a);
-			payment.setBillingAddressId(a);
-			payment.setShippingAddressId(a);
+			// OrderAddress a = addressRepo.findById(b.getAddressId()).get();
+			// System.out.println(a);
+			order.setShippingAddress(b);
+			payment.setBillingAddressId(b);
+			payment.setShippingAddressId(b);
 			System.out.println("2");
 				
 		}
