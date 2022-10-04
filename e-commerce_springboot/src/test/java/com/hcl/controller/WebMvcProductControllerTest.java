@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.entity.Product;
+import com.hcl.repo.ProductRatingRepository;
 import com.hcl.repo.ProductRepository;
 
 @WebMvcTest(controllers = ProductController.class)
@@ -40,6 +41,9 @@ public class WebMvcProductControllerTest {
 
 	@MockBean
 	ProductRepository repository;
+	
+	@MockBean
+	ProductRatingRepository ratingRepo;
 
 	@Autowired
 	ObjectMapper mapper;
