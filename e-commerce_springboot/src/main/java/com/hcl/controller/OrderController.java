@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.dto.OrderDTO;
 import com.hcl.dto.Payment;
 import com.hcl.config.MQConfig;
 import com.hcl.dto.Purchase;
@@ -263,7 +264,7 @@ public class OrderController {
 
 	@PutMapping("/order")
 	@PreAuthorize("hasAuthority('Admin')")
-	public Order changeOrderStatus(@RequestBody Order order) {
+	public Order changeOrderStatus(@RequestBody OrderDTO order) {
 		Optional<Order> persistedOrder = orderService.findById(order.getOrderId());
 		if (persistedOrder.isPresent()) {
 			Order persisted = persistedOrder.get();

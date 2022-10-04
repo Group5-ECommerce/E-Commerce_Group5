@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.dto.AddressDTO;
 import com.hcl.entity.Address;
 import com.hcl.entity.Order;
 import com.hcl.entity.PaymentInfo;
@@ -48,10 +49,21 @@ public class AddressController
 	private PaymentRepository paymentRepo;
 	
 	@PostMapping("/addAddress")
-	public void addAddress(@RequestBody Address a , String okta, Principal principal)
+	public void addAddress(@RequestBody AddressDTO a_dto, Principal principal)
 	{
-		okta = principal.getName();
-		addressService.addAddress(okta, a);		
+		String okta = principal.getName();
+		
+		Address a = new Address();
+		a.setAddressId(a_dto.getAddressId());
+		a.setCity(a_dto.getCity());
+		a.setCountry(a_dto.getCountry());
+		a.setFirstName(a_dto.getFirstName());
+		a.setLastName(a_dto.getLastName());
+		a.setState(a_dto.getState());
+		a.setStreetAddress(a_dto.getStreetAddress());
+		a.setZip(a_dto.getZip());
+		
+		addressService.addAddress(okta, a);
 	}
 	
 	@GetMapping("/listOfAddress")
@@ -72,7 +84,7 @@ public class AddressController
 
 	
 	@PutMapping("/updateAddress/{id}")
-	public void updateAddress(@PathVariable Integer id, @RequestBody Address b, Principal principal)
+	public void updateAddress(@PathVariable Integer id, @RequestBody AddressDTO b, Principal principal)
 	{
 		Address a = addressRepo.findById(id).get();
 		a.setOktaId(principal.getName());

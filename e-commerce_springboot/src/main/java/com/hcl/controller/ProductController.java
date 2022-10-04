@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.dto.ProductDTO;
 import com.hcl.entity.Product;
 import com.hcl.entity.ProductRating;
 import com.hcl.model.ProductRatingId;
@@ -37,8 +38,18 @@ public class ProductController {
 	@PostMapping("/product")
 	@ApiOperation(value = "Add Product")
 	@PreAuthorize("hasAuthority('Admin')")
-	public Product addProduct(@RequestBody Product product) {
-		return productRepo.save(product);
+	public Product addProduct(@RequestBody ProductDTO pDTO) {
+		Product p = new Product();
+		p.setCategory(pDTO.getCategory());
+		p.setNumberOfRatings(pDTO.getNumberOfRatings());
+		p.setProductId(pDTO.getProductId());
+		p.setProductImage(pDTO.getProductImage());
+		p.setProductName(pDTO.getProductName());
+		p.setProductPrice(pDTO.getProductPrice());
+		p.setProductStock(pDTO.getProductStock());
+		p.setStorageId(pDTO.getStorageId());
+		p.setTotalOfRatings(pDTO.getTotalOfRatings());
+		return productRepo.save(p);
 	}
 
 	@GetMapping("/product")
@@ -56,8 +67,21 @@ public class ProductController {
 	@PutMapping("/product")
 	@ApiOperation(value = "Update specific product")
 	@PreAuthorize("hasAuthority('Admin')")
-	public Product updateProduct(@RequestBody Product newProduct) {
-		return productRepo.save(newProduct);
+	public Product updateProduct(@RequestBody ProductDTO pDTO) {
+		Optional<Product> op_product = productRepo.findById(pDTO.getProductId());
+		if (!op_product.isPresent()) return null;
+		Product p = op_product.get();
+		
+		p.setCategory(pDTO.getCategory());
+		p.setNumberOfRatings(pDTO.getNumberOfRatings());
+		p.setProductId(pDTO.getProductId());
+		p.setProductImage(pDTO.getProductImage());
+		p.setProductName(pDTO.getProductName());
+		p.setProductPrice(pDTO.getProductPrice());
+		p.setProductStock(pDTO.getProductStock());
+		p.setStorageId(pDTO.getStorageId());
+		p.setTotalOfRatings(pDTO.getTotalOfRatings());
+		return productRepo.save(p);
 	}
 
 	@DeleteMapping("/product/{id}")
