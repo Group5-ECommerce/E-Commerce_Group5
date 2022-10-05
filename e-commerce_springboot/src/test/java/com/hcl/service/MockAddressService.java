@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -34,6 +35,7 @@ public class MockAddressService {
 	}
 
 	// add address
+	@Test
 	void addAddress() {
 		Address address = new Address();
 		address.setOktaId("okta1");
@@ -45,7 +47,7 @@ public class MockAddressService {
 	}
 
 	// get all addresses
-
+	@Test
 	void getAllAddress() {
 		List<Address> list = new ArrayList();
 		list.add(new Address());

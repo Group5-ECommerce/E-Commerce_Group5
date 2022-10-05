@@ -18,41 +18,6 @@ public class SendEmail {
 
 	// Huge thanks to this page https://mailtrap.io/blog/sending-email-using-java/
 	// for guidance on using mailtrap to send an email.
-	public static void sendRegistrationEmail(String email, String name) {
-		// Put recipient’s address
-		String to = email;
-
-		// Put sender’s address
-		String from = "no-reply@e-commerce.com";
-
-		Session session = setUpAndGetSession();
-
-		try {
-			// Create a default MimeMessage object.
-			Message message = new MimeMessage(session);
-
-			// Set From: header field
-			message.setFrom(new InternetAddress(from));
-
-			// Set To: header field
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-
-			// Set Subject: header field
-			message.setSubject("Welcome to Group 5's E-Commerce App!");
-
-			// Put the content of your message
-			message.setText("Hello " + name + ", we hope you enjoy your time on our app.");
-
-			// Send message
-			Transport.send(message);
-
-			System.out.println("Sent registration message successfully....");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static void sendOrderConfirmation(String email, String name, Order order) {
 		String to = email;
 		String from = "no-reply@e-commerce.com";
