@@ -40,6 +40,11 @@ public class ProductController {
 	@PreAuthorize("hasAuthority('Admin')")
 	public Product addProduct(@RequestBody ProductDTO pDTO) {
 		Product p = new Product();
+		p = copyDtoToProd(p, pDTO);
+		return productRepo.save(p);
+	}
+
+	private Product copyDtoToProd(Product p, ProductDTO pDTO) {
 		p.setCategory(pDTO.getCategory());
 		p.setNumberOfRatings(pDTO.getNumberOfRatings());
 		p.setProductId(pDTO.getProductId());
@@ -49,7 +54,7 @@ public class ProductController {
 		p.setProductStock(pDTO.getProductStock());
 		p.setStorageId(pDTO.getStorageId());
 		p.setTotalOfRatings(pDTO.getTotalOfRatings());
-		return productRepo.save(p);
+		return p;
 	}
 
 	@GetMapping("/product")
@@ -68,19 +73,12 @@ public class ProductController {
 	@ApiOperation(value = "Update specific product")
 	@PreAuthorize("hasAuthority('Admin')")
 	public Product updateProduct(@RequestBody ProductDTO pDTO) {
-		Optional<Product> op_product = productRepo.findById(pDTO.getProductId());
-		if (!op_product.isPresent()) return null;
-		Product p = op_product.get();
+		Optional<Product> opPrevRating = productRepo.findById(pDTO.getProductId());
+		if (!opPrevRating.isPresent()) return null;
+		Product p = opPrevRating.get();
 		
-		p.setCategory(pDTO.getCategory());
-		p.setNumberOfRatings(pDTO.getNumberOfRatings());
-		p.setProductId(pDTO.getProductId());
-		p.setProductImage(pDTO.getProductImage());
-		p.setProductName(pDTO.getProductName());
-		p.setProductPrice(pDTO.getProductPrice());
-		p.setProductStock(pDTO.getProductStock());
-		p.setStorageId(pDTO.getStorageId());
-		p.setTotalOfRatings(pDTO.getTotalOfRatings());
+		p = copyDtoToProd(p, pDTO);
+		
 		return productRepo.save(p);
 	}
 
@@ -104,11 +102,11 @@ public class ProductController {
 		String userId = principal.getName();
 
 		ProductRatingId prId = new ProductRatingId(product, userId);
-		Optional<ProductRating> op_prevRating = ratingRepo.findById(prId);
+		Optional<ProductRating> opPrevRating = ratingRepo.findById(prId);
 		
 		// If a rating for this product by this user already exists (the user has previously rated it), update that rating.
-		if (op_prevRating.isPresent()) {			
-			ProductRating prevRating = op_prevRating.get();
+		if (opPrevRating.isPresent()) {			
+			ProductRating prevRating = opPrevRating.get();
 			int totalOfRatings = product.getTotalOfRatings() - prevRating.getRating() + rating;
 			product.setTotalOfRatings(totalOfRatings);
 			prevRating.setRating(rating);
