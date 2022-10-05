@@ -86,7 +86,11 @@ public class AddressController
 	@PutMapping("/updateAddress/{id}")
 	public void updateAddress(@PathVariable Integer id, @RequestBody AddressDTO b, Principal principal)
 	{
-		Address a = addressRepo.findById(id).get();
+		Optional<Address> a_op = addressRepo.findById(id);
+		
+		if (!a_op.isPresent()) return;
+		
+		Address a = a_op.get();
 		a.setOktaId(principal.getName());
 		a.setFirstName(b.getFirstName());
 		a.setLastName(b.getLastName());
@@ -101,8 +105,11 @@ public class AddressController
 	@DeleteMapping("/deleteAddress/{id}")
 	public void deleteAddress(@PathVariable Integer id)
 	{
-		Address a = addressRepo.findById(id).get();
-		addressRepo.delete(a);
+		Optional<Address> a_op = addressRepo.findById(id);
+		
+		if (a_op.isPresent()) {
+			addressRepo.delete(a_op.get());
+		}
 	}
 	
 

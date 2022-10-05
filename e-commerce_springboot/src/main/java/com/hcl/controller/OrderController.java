@@ -95,8 +95,8 @@ public class OrderController {
 			Principal principal) {
 		String oktaId = principal.getName();
 		List<cartItem> items = p.getItems();
-		if (items == null)
-			System.out.println("null");
+		
+		if (items == null) return null;
 
 		// Creates a list of products from the cart items.
 		// Principal principal
