@@ -78,7 +78,6 @@ public class AddressController
 	{
 		List<Address> list = addressService.getAddressById(principal.getName());
 		return list;
-		
 	}
 	
 

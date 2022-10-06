@@ -89,13 +89,6 @@ public class WebMvcOrderControllerTest {
 	@MockBean
 	private RabbitTemplate template;
 
-//	@InjectMocks
-//	OrderService service;
-//
-//	@Mock
-//	OrderRepository repository;
-//	
-
 	@Autowired
 	MockMvc mockMvc;
 
@@ -113,22 +106,6 @@ public class WebMvcOrderControllerTest {
 		list.add(new Order());
 		list.add(new Order());
 		list.add(new Order());
-
-//		Principal mockPrincipal = Mockito.mock(Principal.class);
-//		Mockito.when(mockPrincipal.getName()).thenReturn("dmqkirezbllxgnitjm@bvhrk.com"); // customer
-//		when(orderService.findAll()).thenReturn(list);
-
-//		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/order").principal(mockPrincipal)
-//				.accept(MediaType.APPLICATION_JSON);
-//
-//		MvcResult result = mockMvc.perform(requestBuilder).andExpect(jsonPath("$.length()", is(3))).andReturn();
-//
-//		MockHttpServletResponse response = result.getResponse();
-//		int status = response.getStatus();
-//		assertEquals(status, 200);
-
-//		mockMvc.perform(get("/order").with(user("customer").password("pass").roles("Customer"))
-//				.contentType(MediaType.APPLICATION_JSON)).andExpect(jsonPath("$.length()", is(3)));
 
 		when(orderService.findAll()).thenReturn(list);
 		mockMvc.perform(get("/order").with(jwt().authorities(customerAuthority)

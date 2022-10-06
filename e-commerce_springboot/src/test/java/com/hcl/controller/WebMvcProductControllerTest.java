@@ -103,7 +103,12 @@ public class WebMvcProductControllerTest {
 	@Test
 	void updateProduct_Admin() throws JsonProcessingException, Exception {
 		Product product = new Product();
+		product.setProductId(123);
+		
+		Optional<Product> pOp = Optional.of(product);
+		when(repository.findById(123)).thenReturn(pOp);
 		when(repository.save(product)).thenReturn(product);
+		
 		mockMvc.perform(put("/product").with(jwt().authorities(adminAuthority)).contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(product))).andDo(print()).equals(product);
 	}
