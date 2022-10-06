@@ -165,8 +165,7 @@ public class WebMvcOrderControllerTest {
 		mockMvc.perform(put("/order").content(mapper.writeValueAsString(requestBody))
 				.contentType(MediaType.APPLICATION_JSON).with(jwt().authorities(adminAuthority))).andDo(print())
 				.andExpect(status().isOk()).andExpect(jsonPath("$.orderId").value(1))
-				.andExpect(jsonPath("$.orderStatus").value("Shipped"));
-				
+				.andExpect(jsonPath("$.orderStatus").value("Shipped"));	
 	}
 
 	@Test
@@ -200,6 +199,21 @@ public class WebMvcOrderControllerTest {
 
 		orderService.deleteAll();
 	}
+	
+	@Test
+	void trackOrder_Admin() throws Exception {
+		Order o = new Order();
+		o.setOrderId(1);
+		o.setOrderStatus("Shipped");
+		Optional<Order> oOp = Optional.of(o);
+		
+		when(orderService.findByTrackingNumber(o.getTrackingNumber())).thenReturn(oOp);
+		when(orderRepo.save(o)).thenReturn(o);
+
+		mockMvc.perform(get("/order/{trackingNumber}", o.getTrackingNumber())
+				.contentType(MediaType.APPLICATION_JSON).with(jwt().authorities(adminAuthority))).andDo(print())
+				.andExpect(status().isOk());
+	}
 
 	@Test
 	void creatingPayment_Customer() throws JsonProcessingException, Exception {
@@ -223,8 +237,8 @@ public class WebMvcOrderControllerTest {
 
 		PaymentInfo p = new PaymentInfo();
 		
+		//Tests the branch where the addresses are not found in the repo, but are the same.
 		OrderAddress s = new OrderAddress();
-		
 		s.setCity("Horsham");
 		s.setCountry("US");
 		s.setAddressId(1);
@@ -236,6 +250,35 @@ public class WebMvcOrderControllerTest {
 		mockMvc.perform(post("/checkout/{email}/{name}", email, username).contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(feed))).andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$").exists());
-				
+		
+		// Tests the branch where the addresses are not found in the repo, and are different.
+		OrderAddress s2 = new OrderAddress();
+		s2.setCity("Zihuatanejo");
+		s2.setAddressId(2);
+		s2.setCountry("Mexico");
+		p.setShippingAddressId(s2);
+		
+		feed.setPayment(p);
+		
+		mockMvc.perform(post("/checkout/{email}/{name}", email, username).contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(feed))).andDo(print()).andExpect(status().isOk())
+				.andExpect(jsonPath("$").exists());
+		
+		//Tests the branch where the addresses are found in the repo, and are different.
+		List<OrderAddress> addresses = new ArrayList<OrderAddress>();
+		addresses.add(s);
+		addresses.add(s2);
+		
+		when(addressRepo.findAll()).thenReturn(addresses);
+		mockMvc.perform(post("/checkout/{email}/{name}", email, username).contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(feed))).andDo(print()).andExpect(status().isOk())
+				.andExpect(jsonPath("$").exists());
+		
+		//Tests the branch where the addresses are found in the repo AND the same.
+		p.setShippingAddressId(s);
+		feed.setPayment(p);
+		mockMvc.perform(post("/checkout/{email}/{name}", email, username).contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(feed))).andDo(print()).andExpect(status().isOk())
+				.andExpect(jsonPath("$").exists());
 	}
 }
