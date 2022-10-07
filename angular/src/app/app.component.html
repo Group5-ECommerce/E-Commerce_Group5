@@ -31,10 +31,10 @@
       <button (click)="toggleDropdown()" class="dropbtn" #userBtn>{{name$ | async}}</button>
       <!-- Thanks to https://www.w3schools.com/howto/howto_js_dropdown.asp for the logic on dropdown menus.*/ -->
       <div id="accountDropdown" class="dropdown-content">
-        <a routerLink="edit-user" class = "dropdownborder dropdown-top">Edit Details</a>
-        <a routerLink="address" class = "dropdownborder dropdown-top">Address Details</a>
+        <a routerLink="/edit-user" class = "dropdownborder dropdown-top">Edit Details</a>
+        <a *ngIf="(isAdmin$ | async) === false" routerLink="/address" class = "dropdownborder dropdown-top">Address Details</a>
 
-        <a class="disabled" class = "dropdownborder" routerLink="change-password">Change Password</a>
+        <a class="disabled" class = "dropdownborder" routerLink="/change-password">Change Password</a>
         <a role="button" class="dropdown-bottom" (click)="signOut()">Sign out</a>
       </div>
     </div>

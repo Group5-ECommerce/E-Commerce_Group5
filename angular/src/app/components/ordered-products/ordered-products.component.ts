@@ -25,7 +25,11 @@ export class OrderedProductsComponent implements OnInit {
   ngOnInit(): void {
     this.pageNum = 1
     this.tracker = this.route.snapshot.params.tracker
-    this.viewProducts();
+    // HideBackButton is only set true when displaying on the order Tracking page.
+    // (Order tracking sends the request itself, and passes in an array of orderItems to display. This prevents an unnecessary request.)
+    if (!this.hideBackButton){
+      this.viewProducts();
+    }
     this.isAdmin = this.userService.isAdmin;
   }
   viewProducts() {

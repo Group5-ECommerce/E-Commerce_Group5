@@ -231,11 +231,25 @@ public class WebMvcOrderControllerTest {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		String email = username + "@" + username + ".com";
 		List<cartItem> items = new ArrayList();
-		items.add(new cartItem(new Product(), 1));
-		items.add(new cartItem(new Product(), 2));
-		items.add(new cartItem(new Product(), 3));
+		Product p1 = new Product();
+		p1.setProductId(1);
+		
+		Product p2 = new Product();
+		p2.setProductId(2);
+		
+		Product p3 = new Product();
+		p3.setProductId(3);
+		
+		items.add(new cartItem(p1, 1));
+		items.add(new cartItem(p2, 2));
+		items.add(new cartItem(p3, 3));
 
 		PaymentInfo p = new PaymentInfo();
+		
+		when(productRepository.findById(1)).thenReturn(Optional.of(p1));
+		when(productRepository.findById(2)).thenReturn(Optional.of(p2));
+		when(productRepository.findById(3)).thenReturn(Optional.of(p3));
+
 		
 		//Tests the branch where the addresses are not found in the repo, but are the same.
 		OrderAddress s = new OrderAddress();

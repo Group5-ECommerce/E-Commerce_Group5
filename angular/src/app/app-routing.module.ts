@@ -36,6 +36,7 @@ const routes: Routes = [{ path: 'login/callback', component: OktaCallbackCompone
 {path: 'edit-user', component: EditUserComponent, canActivate: [OktaAuthGuard]},
 {path: 'change-password', component: ChangePasswordComponent, canActivate: [OktaAuthGuard]},
 {path: 'order-track', component: OrderTrackComponent, canActivate: [AdminGuard] },
+{path: 'order-track/:tracker', component: OrderTrackComponent, canActivate: [AdminGuard] },
 { path: '', redirectTo: "product-list", pathMatch: "full"},
 ];
 

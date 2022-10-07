@@ -55,9 +55,6 @@ export class UserDetailsService {
   changePassword(data: any) {
     const url = config.apiBaseURL + "/api/v1/authn/credentials/change_password";
     return this.httpClient.post(config.apiBaseURL + "/api/v1/authn", data).subscribe();
-
-    return this.httpClient.post(url, data).pipe(catchError(async (error) => { console.log(error); return false; }))
-      .subscribe((response) => { console.log(response); return true; });
   }
 
 }

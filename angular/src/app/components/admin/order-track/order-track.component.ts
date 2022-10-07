@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from '../../../services/order.service'
@@ -19,9 +20,13 @@ export class OrderTrackComponent implements OnInit {
   order?: Order;
   editStatus = false;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.input.trackingNumber = this.route.snapshot.params.tracker
+    if (this.input.trackingNumber && this.input.trackingNumber.length >= 20){
+      this.trackOrder();
+    }
   }
 
   trackOrder() {
