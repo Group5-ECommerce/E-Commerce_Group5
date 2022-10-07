@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { OrderTrackComponent } from './order-track.component';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 describe('OrderTrackComponent', () => {
   let component: OrderTrackComponent;
@@ -9,11 +10,11 @@ describe('OrderTrackComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, FormsModule],
+      imports: [HttpClientModule, FormsModule, RouterModule.forRoot([])],
       providers: [HttpClient],
-      declarations: [ OrderTrackComponent ]
+      declarations: [OrderTrackComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(OrderTrackComponent);
     component = fixture.componentInstance;
