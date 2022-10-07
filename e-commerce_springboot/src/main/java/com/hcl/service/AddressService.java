@@ -30,7 +30,7 @@ public class AddressService {
 		return repo.findAll();
 	}
 	
-	public List<Address> getAddressById(String oktaId)
+	public List<Address> getAddressByAccount(String oktaId)
 	{
 		List <Address> address = repo.findByOktaId(oktaId);
 		return address;

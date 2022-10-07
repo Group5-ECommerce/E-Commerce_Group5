@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,7 @@ public class AddressController
 	private PaymentRepository paymentRepo;
 	
 	@PostMapping("/addAddress")
+	@PreAuthorize("hasAuthority('Customer') and !hasAuthority('Admin')")
 	public void addAddress(@RequestBody AddressDTO a_dto, Principal principal)
 	{
 		String okta = principal.getName();
@@ -67,22 +69,25 @@ public class AddressController
 	}
 	
 	@GetMapping("/listOfAddress")
+	@PreAuthorize("hasAuthority('Admin')")
 	public List<Address> getAddress()
 	{
 		List<Address> list = addressService.getAllAddress();
 		return list;
 	}
 	
-	@GetMapping("/listOfAddressById")
-	public List<Address> getAddressById(Principal principal)
+	@GetMapping("/myAddress")
+	@PreAuthorize("hasAuthority('Customer')")
+	public List<Address> getMyOrders(Principal principal)
 	{
-		List<Address> list = addressService.getAddressById(principal.getName());
+		List<Address> list = addressService.getAddressByAccount(principal.getName());
 		return list;
 	}
 	
 
 	
 	@PutMapping("/updateAddress/{id}")
+	@PreAuthorize("hasAuthority('Customer') or hasAuthority('Admin')")
 	public void updateAddress(@PathVariable Integer id, @RequestBody AddressDTO b, Principal principal)
 	{
 		Optional<Address> a_op = addressRepo.findById(id);
@@ -102,6 +107,7 @@ public class AddressController
 	}
 	
 	@DeleteMapping("/deleteAddress/{id}")
+	@PreAuthorize("hasAuthority('Customer') or hasAuthority('Admin')")
 	public void deleteAddress(@PathVariable Integer id)
 	{
 		Optional<Address> a_op = addressRepo.findById(id);

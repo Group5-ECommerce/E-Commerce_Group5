@@ -8,14 +8,14 @@ import { Address } from '../models/address/address';
 })
 export class AddressService {
 
-  private addressUrl = environment.backendURL + "/listOfAddressById";
+  private addressUrl = environment.backendURL + "/myAddress";
 
   private updateAddressUrl = environment.backendURL+ "/updateAddress";
   private deleteAddressUrl = environment.backendURL+ "/deleteAddress";
 
   constructor(private HttpClient: HttpClient) { }
 
-  getAddressById()
+  getAddressByAccount()
   {
     return this.HttpClient.get<Address[]>(`${this.addressUrl}`);
   }

@@ -82,7 +82,7 @@ public class MockAddressServiceTest {
 		list.add(new Address());
 		
 		when(addressRepository.findByOktaId("123")).thenReturn(list);
-		list = addressService.getAddressById("123");
+		list = addressService.getAddressByAccount("123");
 		Assertions.assertThat(list).hasSize(3);
 		// verify(addressRepository, times(1)).findAll();
 		

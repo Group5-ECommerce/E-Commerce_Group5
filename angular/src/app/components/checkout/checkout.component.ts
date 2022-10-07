@@ -179,7 +179,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getUserAddress() {
-    this.addressService.getAddressById().subscribe((response) => {
+    this.addressService.getAddressByAccount().subscribe((response) => {
       this.userAddress = response;
       console.log(this.userAddress);
       /* Filters out addresses with duplicate street addresses and names (both in the same address)

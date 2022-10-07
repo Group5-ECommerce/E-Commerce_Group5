@@ -52,7 +52,7 @@ public class AddressControllerTest {
 	@MockBean
 	private PaymentRepository paymentRepo;
 
-	private GrantedAuthority customerAuthority;
+	private GrantedAuthority customerAuthority, adminAuthority;
 
 	@Autowired
 	ObjectMapper mapper;
@@ -60,6 +60,7 @@ public class AddressControllerTest {
 	@BeforeEach
 	public void setup() {
 		customerAuthority = new SimpleGrantedAuthority("Customer");
+		adminAuthority = new SimpleGrantedAuthority("Admin");
 	}
 
 	@AfterEach
@@ -72,7 +73,7 @@ public class AddressControllerTest {
 		Address address = new Address();
 		when(addressRepo.save(address)).thenReturn(address);
 
-		mockMvc.perform(post("/addAddress").with(jwt().authorities(customerAuthority))
+		mockMvc.perform(post("/addAddress").with(jwt().authorities(adminAuthority))
 				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(address))).andDo(print())
 				.equals(address);
 	}
@@ -85,7 +86,7 @@ public class AddressControllerTest {
 
 		when(addressService.getAllAddress()).thenReturn(list);
 		
-		mockMvc.perform(get("/listOfAddress").contentType(MediaType.APPLICATION_JSON)).andDo(print())
+		mockMvc.perform(get("/listOfAddress").with(jwt().authorities(adminAuthority)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk()).andExpect(jsonPath("$.length()", is(2)));
 	}
 
@@ -97,9 +98,9 @@ public class AddressControllerTest {
 		address.setAddressId(123);
 		List<Address> list = new ArrayList<Address>();
 		list.add(address);
-		when(addressService.getAddressById("tuco")).thenReturn(list);
+		when(addressService.getAddressByAccount("tuco")).thenReturn(list);
 		
-		mockMvc.perform(get("/listOfAddressById").contentType(MediaType.APPLICATION_JSON)).andDo(print())
+		mockMvc.perform(get("/myAddress").contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk()).andExpect(jsonPath("$[0].addressId", is(123)));
 	}
 

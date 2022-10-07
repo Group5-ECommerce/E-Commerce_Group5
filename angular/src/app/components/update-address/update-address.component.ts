@@ -36,7 +36,7 @@ export class UpdateAddressComponent implements OnInit {
 
   getUserAddress()
   {
-    this.addressService.getAddressById().subscribe((response) =>
+    this.addressService.getAddressByAccount().subscribe((response) =>
     {
       this.userAddress = response;
       console.log(this.userAddress);
@@ -45,7 +45,6 @@ export class UpdateAddressComponent implements OnInit {
 
   onSelectAddress()
   {
-      //this.billingAddressId = a.value;
       let i = (document.getElementById('addressSelect') as HTMLInputElement).value;
       this.updatedAddress= this.userAddress[i] 
       console.log(this.oldAddress);
