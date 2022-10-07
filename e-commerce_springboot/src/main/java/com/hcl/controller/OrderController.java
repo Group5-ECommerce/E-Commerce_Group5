@@ -108,11 +108,15 @@ public class OrderController {
 		// Loops through the items list to create orderItem entries from it,
 		// decrease product stock, and calculate total price.
 		for (int i = 0; i < items.size(); i++) {
-			Product product = items.get(i).getProduct();
+			Product itemProd = items.get(i).getProduct();
+			
+			Optional<Product> opProd = productRepository.findById(itemProd.getProductId());
+			if (!opProd.isPresent()) return null;
+			Product product = opProd.get();
+		
 			int amt = items.get(i).getAmt();
 			// Adds an OrderItem entry connected to this order, which holds a product and
 			// amount.
-
 			orderItems.add(new OrderItem(order, product, amt));
 
 			totalPrice += product.getProductPrice() * amt;
