@@ -73,8 +73,9 @@ public class AddressControllerTest {
 		Address address = new Address();
 		when(addressRepo.save(address)).thenReturn(address);
 
-		mockMvc.perform(post("/addAddress").with(jwt().authorities(adminAuthority))
-				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(address))).andDo(print())
+		mockMvc.perform(post("/addAddress").with(jwt().authorities(customerAuthority))
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(address)))
+				.andExpect(status().is(200)).andDo(print())
 				.equals(address);
 	}
 
