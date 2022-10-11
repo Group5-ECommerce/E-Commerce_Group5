@@ -2,6 +2,8 @@ package com.hcl.controller;
 
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -19,6 +21,8 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -48,6 +52,7 @@ import com.hcl.repo.PaymentRepository;
 import com.hcl.repo.ProductRepository;
 import com.hcl.service.AddressService;
 import com.hcl.service.OrderService;
+import com.hcl.service.SendEmail;
 
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 //@SpringBootTest
@@ -88,7 +93,7 @@ public class WebMvcOrderControllerTest {
 	
 	@MockBean
 	private RabbitTemplate template;
-
+	
 	@Autowired
 	MockMvc mockMvc;
 
@@ -230,6 +235,9 @@ public class WebMvcOrderControllerTest {
 	void checkout_Customer() throws JsonProcessingException, Exception {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		String email = username + "@" + username + ".com";
+		
+		MockedStatic<SendEmail> mockEmail = Mockito.mockStatic(SendEmail.class);
+				
 		List<cartItem> items = new ArrayList();
 		Product p1 = new Product();
 		p1.setProductId(1);
@@ -245,7 +253,6 @@ public class WebMvcOrderControllerTest {
 		items.add(new cartItem(p3, 3));
 
 		PaymentInfo p = new PaymentInfo();
-		
 		when(productRepository.findById(1)).thenReturn(Optional.of(p1));
 		when(productRepository.findById(2)).thenReturn(Optional.of(p2));
 		when(productRepository.findById(3)).thenReturn(Optional.of(p3));
