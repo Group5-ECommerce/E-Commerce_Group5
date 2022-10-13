@@ -3,9 +3,15 @@
     [routerLink]="['../']">Back to
     Orders</button>
 
-  <h3 class="text-center">Order: <h5 class="d-inline">{{tracker}}</h5>
-  </h3>
 
+  <div class="container">
+    <h3 class="text-center">Order: <h5 class="d-inline">{{tracker}}</h5>
+    </h3>
+    <!-- <h4 class="text-center"><strong>Total: $</strong>
+      {{totalPrice | number:'1.2-2'}}</h4> -->
+
+
+  </div>
   <div class="container-fluid">
     <table class="table blue-white-table">
       <thead class="thead-light">
@@ -14,7 +20,7 @@
           <th>Image</th>
           <th>Price</th>
           <th>Amount</th>
-          <th *ngIf = "!isAdmin">Rating</th>
+          <th *ngIf="!isAdmin">Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -24,7 +30,7 @@
               style=" width: 20;height: 20px;"></td>
           <td>${{oi.product?.productPrice}}</td>
           <td>{{oi.amt}}</td>
-          <td style="width:300px" *ngIf = "!isAdmin">
+          <td style="width:300px" *ngIf="!isAdmin">
             <p-rating #rating class="d-inline-block me-3"
               (onRate)="hasEnteredRatingForProduct[oi.product?.productId!] = true"
               (onCancel)="hasEnteredRatingForProduct[oi.product?.productId!] = false" [cancel]="false"></p-rating>

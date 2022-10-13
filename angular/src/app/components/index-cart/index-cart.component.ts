@@ -11,6 +11,7 @@ import { IndexCartService } from 'src/app/services/index-cart.service';
 export class IndexCartComponent implements OnInit {
   cartItems: any[];
   pageNum!: number;
+  totalPrice = 0;
 
   constructor(private cartService: IndexCartService) { }
 
@@ -21,6 +22,10 @@ export class IndexCartComponent implements OnInit {
 
     this.cartService.activateWatcher().subscribe(res => {
       this.cartItems = res
+      this.totalPrice = this.cartItems.reduce((accumalator, item) => {
+        accumalator = accumalator + item.productPrice * item.amt;
+        return accumalator;
+      }, 0);
     })
 
 

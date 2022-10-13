@@ -14,39 +14,56 @@ import { UserDetailsService } from 'src/app/services/user-details.service';
 })
 export class OrderedProductsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private orderService: OrderService, private productService:ProductService, private userService:UserDetailsService) { }
+  constructor(private route: ActivatedRoute, private orderService: OrderService, private productService: ProductService, private userService: UserDetailsService) { }
   @Input() tracker!: string
   @Input() orderItems!: OrderItem[]
   @Input() hideBackButton: boolean = false;
   pageNum?: number
   hasEnteredRatingForProduct = new Array<boolean>();
   isAdmin: boolean;
+  // totalPrice!: number;
 
   ngOnInit(): void {
     this.pageNum = 1
     this.tracker = this.route.snapshot.params.tracker
     // HideBackButton is only set true when displaying on the order Tracking page.
     // (Order tracking sends the request itself, and passes in an array of orderItems to display. This prevents an unnecessary request.)
-    if (!this.hideBackButton){
+
+    if (!this.hideBackButton) {
       this.viewProducts();
     }
+
     this.isAdmin = this.userService.isAdmin;
   }
+
+  // ngOnChanges(): void {
+  //   if (this.orderItems && this.orderItems.length > 0) {
+  //     this.totalPrice = this.orderItems.reduce((accumalator, item) => {
+  //       return accumalator + item!.product!.productPrice * item.amt!;
+  //     }, 0);
+  //   }
+  // }
   viewProducts() {
     this.orderService.getOrderItemsByTracking(this.tracker).subscribe((response) => {
       console.log(response)
       this.orderItems = response;
+      // if (this.orderItems.length > 0) {
+      //   this.totalPrice = this.orderItems.reduce((accumalator, item) => {
+      //     return accumalator + item!.product!.productPrice * item.amt!;
+      //   }, 0);
+      // }
+
     })
   }
-  submitRating(id:number, rating:Rating, submitBtn:HTMLButtonElement){
+  submitRating(id: number, rating: Rating, submitBtn: HTMLButtonElement) {
     console.log(rating);
     this.productService.rateProduct(id, rating.value).subscribe({
-      next: res =>{
+      next: res => {
         submitBtn.disabled = true;
         submitBtn.textContent = "Submitted";
         rating.readonly = true;
       },
-      error: e =>{
+      error: e => {
 
       }
     });

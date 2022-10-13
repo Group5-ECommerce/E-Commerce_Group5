@@ -1,17 +1,32 @@
 <div class="container-fluid">
   <div class="container">
+    <h3 class="text-center">My Cart</h3>
+    <h4 class="text-center" *ngIf="cartItems.length!=0"><strong>Total: $</strong>
+      {{totalPrice | number:'1.2-2'}}</h4>
+    <ng-template #noItems>
+      <h5 class="text-center my-5">No Items ...</h5>
+    </ng-template>
+
+  </div>
+  <div class="container" *ngIf="cartItems.length!=0; else noItems">
     <table class="table blue-white-table">
       <thead class="thead-light">
         <tr>
-          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productId')">Product Id</button></th>
-          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productName')">Name</button></th>
-          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('category')">Category</button></th>
-          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productPrice')">Price</button></th>
-          <th><button class = "btn btn-outline-light border-0 no-hover" >Image</button></th>
-          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('amt')">Amount</button></th>
-          <th><button type="button" class = "btn btn-outline-light border-0" (click)="sortCart('productStock')">Stock</button></th>
+          <th><button type="button" class="btn btn-outline-light border-0" (click)="sortCart('productId')">Product
+              Id</button></th>
+          <th><button type="button" class="btn btn-outline-light border-0"
+              (click)="sortCart('productName')">Name</button></th>
+          <th><button type="button" class="btn btn-outline-light border-0"
+              (click)="sortCart('category')">Category</button></th>
+          <th><button type="button" class="btn btn-outline-light border-0"
+              (click)="sortCart('productPrice')">Price</button></th>
+          <th><button class="btn btn-outline-light border-0 no-hover">Image</button></th>
+          <th><button type="button" class="btn btn-outline-light border-0" (click)="sortCart('amt')">Amount</button>
+          </th>
+          <th><button type="button" class="btn btn-outline-light border-0"
+              (click)="sortCart('productStock')">Stock</button></th>
 
-          <th><button class = "btn btn-outline-light border-0 no-hover" >Action</button></th>
+          <th><button class="btn btn-outline-light border-0 no-hover">Action</button></th>
         </tr>
       </thead>
       <tbody>
@@ -42,7 +57,7 @@
           </td>
           <td>{{c.productStock}} in stock</td>
           <td>
-            <button class="btn btn-warning btn-sm" (click) = "deleteItem(c)">Delete</button>
+            <button class="btn btn-warning btn-sm" (click)="deleteItem(c)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -52,6 +67,10 @@
   <div class="col-lg-6 container justify-content-center d-flex mt-3" *ngIf="cartItems && cartItems!.length>5">
     <pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
   </div>
+
+
+
+
   <div class="checkoutbtn mt-3 d-flex justify-content-center" *ngIf="cartItems && cartItems!.length>0">
     <a class="btn btn-primary" role="button" routerLink="/checkout">Checkout</a>
   </div>
